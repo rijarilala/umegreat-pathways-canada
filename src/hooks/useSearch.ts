@@ -30,7 +30,7 @@ export function useSearch(query: string) {
     };
 
     // Utiliser un debounce pour éviter des recherches inutiles
-    const timeoutId = setTimeout(search, 300);
+    const timeoutId = setTimeout(search, 200);
     return () => clearTimeout(timeoutId);
   }, [query]);
 

@@ -108,6 +108,7 @@ const searchDatabase: SearchResult[] = [
 
 /**
  * Recherche dans les données en fonction de la requête
+ * Optimisée pour des résultats instantanés et pertinents
  */
 export function searchData(query: string): SearchResult[] {
   const normalizedQuery = query.toLowerCase().trim();
@@ -115,9 +116,35 @@ export function searchData(query: string): SearchResult[] {
   // Si la requête est vide, ne pas renvoyer de résultats
   if (!normalizedQuery) return [];
   
+  // Algorithme de recherche amélioré avec priorité
   return searchDatabase.filter(item => {
-    const matchInTitle = item.title.toLowerCase().includes(normalizedQuery);
-    const matchInDescription = item.description.toLowerCase().includes(normalizedQuery);
-    return matchInTitle || matchInDescription;
+    // Priorité 1: Correspondance exacte dans le titre
+    const exactTitleMatch = item.title.toLowerCase() === normalizedQuery;
+    
+    // Priorité 2: Début de titre correspond
+    const titleStartMatch = item.title.toLowerCase().startsWith(normalizedQuery);
+    
+    // Priorité 3: Contient dans le titre
+    const titleContains = item.title.toLowerCase().includes(normalizedQuery);
+    
+    // Priorité 4: Contient dans la description
+    const descriptionContains = item.description.toLowerCase().includes(normalizedQuery);
+    
+    // Renvoie true si l'une des conditions est remplie
+    return exactTitleMatch || titleStartMatch || titleContains || descriptionContains;
+  }).sort((a, b) => {
+    // Tri par pertinence: services d'abord, puis par correspondance exacte
+    const aExactMatch = a.title.toLowerCase() === normalizedQuery;
+    const bExactMatch = b.title.toLowerCase() === normalizedQuery;
+    
+    if (aExactMatch && !bExactMatch) return -1;
+    if (!aExactMatch && bExactMatch) return 1;
+    
+    // Ensuite par catégorie (services en premier)
+    if (a.category === "service" && b.category !== "service") return -1;
+    if (a.category !== "service" && b.category === "service") return 1;
+    
+    // Enfin par ordre alphabétique
+    return a.title.localeCompare(b.title);
   });
 }

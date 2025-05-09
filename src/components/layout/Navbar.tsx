@@ -1,8 +1,8 @@
 
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, Menu } from "lucide-react";
+import { ChevronDown, Menu, X } from "lucide-react";
 import SearchBar from "@/components/shared/SearchBar";
 import {
   DropdownMenu,
@@ -13,19 +13,48 @@ import {
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
+
+  // Gestion du scroll pour la navbar sticky avec réduction de hauteur
+  useEffect(() => {
+    const handleScroll = () => {
+      const offset = window.scrollY;
+      setScrolled(offset > 50);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Fermer le menu mobile lors du changement de route
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [location.pathname]);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
   return (
-    <nav className="bg-white border-b sticky top-0 z-50 shadow-sm">
+    <nav 
+      className={`bg-white border-b sticky top-0 z-50 ${
+        scrolled ? "shadow-md" : "shadow-sm"
+      } transition-all duration-300`}
+      aria-label="Navigation principale"
+    >
       <div className="container mx-auto px-4 md:px-6">
-        <div className="flex items-center justify-between h-16">
+        <div 
+          className={`flex items-center justify-between ${
+            scrolled ? "h-14" : "h-16"
+          } transition-all duration-300`}
+        >
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link to="/" className="flex items-center">
-              <span className="font-bold text-xl text-primary">UMEGREAT Pro</span>
+              <span className="font-bold text-2xl text-primary hover:text-primary/90 transition-colors">
+                UMEGREAT Pro
+              </span>
             </Link>
           </div>
 
@@ -37,118 +66,186 @@ const Navbar = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-center space-x-4">
-              <Link to="/" className="text-gray-700 hover:text-primary px-3 py-2">
+              <NavLink 
+                to="/" 
+                className={({ isActive }) => 
+                  `text-gray-700 hover:text-primary px-3 py-2 relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left ${
+                    isActive ? "text-primary font-medium after:scale-x-100" : ""
+                  }`
+                }
+                aria-current={location.pathname === "/" ? "page" : undefined}
+              >
                 Accueil
-              </Link>
+              </NavLink>
               
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <button className="text-gray-700 hover:text-primary px-3 py-2 inline-flex items-center">
-                    Services <ChevronDown className="ml-1 h-4 w-4" />
+                  <button 
+                    className="text-gray-700 hover:text-primary px-3 py-2 inline-flex items-center group"
+                    aria-expanded={isMenuOpen}
+                  >
+                    Services 
+                    <ChevronDown className="ml-1 h-4 w-4 transition-transform group-data-[state=open]:rotate-180" />
                   </button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="center" className="w-56 bg-white">
+                <DropdownMenuContent align="center" className="w-56 bg-white animate-fade-in">
                   <DropdownMenuItem asChild>
-                    <Link to="/services/orientation" className="w-full cursor-pointer">
+                    <Link to="/services/orientation" className="w-full cursor-pointer hover:text-primary">
                       Orientation Professionnelle
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
-                    <Link to="/services/formation" className="w-full cursor-pointer">
+                    <Link to="/services/formation" className="w-full cursor-pointer hover:text-primary">
                       Formation
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
-                    <Link to="/services/coaching" className="w-full cursor-pointer">
+                    <Link to="/services/coaching" className="w-full cursor-pointer hover:text-primary">
                       Coaching
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
-                    <Link to="/services/etudes" className="w-full cursor-pointer">
+                    <Link to="/services/etudes" className="w-full cursor-pointer hover:text-primary">
                       Études au Canada
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
-                    <Link to="/services/immigration" className="w-full cursor-pointer">
+                    <Link to="/services/immigration" className="w-full cursor-pointer hover:text-primary">
                       Immigration & Accompagnement
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
-                    <Link to="/services/test" className="w-full cursor-pointer">
+                    <Link to="/services/test" className="w-full cursor-pointer hover:text-primary">
                       Test d'éligibilité
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
-                    <Link to="/services/recrutement" className="w-full cursor-pointer">
+                    <Link to="/services/recrutement" className="w-full cursor-pointer hover:text-primary">
                       Recrutement
                     </Link>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
               
-              <Link to="/services" className="text-gray-700 hover:text-primary px-3 py-2">
-                Tous les services
-              </Link>
+              <NavLink 
+                to="/services" 
+                className={({ isActive }) => 
+                  `text-gray-700 hover:text-primary px-3 py-2 relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left ${
+                    isActive ? "text-primary font-medium after:scale-x-100" : ""
+                  }`
+                }
+                aria-current={location.pathname === "/services" ? "page" : undefined}
+              >
+                Explorer
+              </NavLink>
               
-              <Link to="/about" className="text-gray-700 hover:text-primary px-3 py-2">
+              <NavLink 
+                to="/about" 
+                className={({ isActive }) => 
+                  `text-gray-700 hover:text-primary px-3 py-2 relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left ${
+                    isActive ? "text-primary font-medium after:scale-x-100" : ""
+                  }`
+                }
+                aria-current={location.pathname === "/about" ? "page" : undefined}
+              >
                 À propos
-              </Link>
+              </NavLink>
               
-              <Link to="/testimonials" className="text-gray-700 hover:text-primary px-3 py-2">
+              <NavLink 
+                to="/testimonials" 
+                className={({ isActive }) => 
+                  `text-gray-700 hover:text-primary px-3 py-2 relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left ${
+                    isActive ? "text-primary font-medium after:scale-x-100" : ""
+                  }`
+                }
+                aria-current={location.pathname === "/testimonials" ? "page" : undefined}
+              >
                 Témoignages
-              </Link>
+              </NavLink>
               
-              <Link to="/faq" className="text-gray-700 hover:text-primary px-3 py-2">
+              <NavLink 
+                to="/faq" 
+                className={({ isActive }) => 
+                  `text-gray-700 hover:text-primary px-3 py-2 relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left ${
+                    isActive ? "text-primary font-medium after:scale-x-100" : ""
+                  }`
+                }
+                aria-current={location.pathname === "/faq" ? "page" : undefined}
+              >
                 FAQ
-              </Link>
+              </NavLink>
               
-              <Link to="/contact" className="text-gray-700 hover:text-primary px-3 py-2">
+              <NavLink 
+                to="/contact" 
+                className={({ isActive }) => 
+                  `text-gray-700 hover:text-primary px-3 py-2 relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left ${
+                    isActive ? "text-primary font-medium after:scale-x-100" : ""
+                  }`
+                }
+                aria-current={location.pathname === "/contact" ? "page" : undefined}
+              >
                 Contact
-              </Link>
+              </NavLink>
             </div>
           </div>
 
           {/* Contact button */}
           <div className="hidden md:block">
-            <Button asChild className="bg-secondary hover:bg-secondary/90">
+            <Button 
+              asChild 
+              className="bg-secondary hover:bg-secondary/90 transform transition-all hover:scale-105 duration-200"
+            >
               <Link to="/contact">Nous contacter</Link>
             </Button>
           </div>
 
-          {/* Mobile menu button */}
+          {/* Mobile menu button and search */}
           <div className="md:hidden flex items-center gap-2">
             <SearchBar />
             <button
               type="button"
               className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-primary focus:outline-none"
               onClick={toggleMenu}
+              aria-expanded={isMenuOpen}
+              aria-label="Menu principal"
             >
-              <Menu className="h-6 w-6" />
+              {isMenuOpen ? (
+                <X className="h-6 w-6 animate-fade-in" />
+              ) : (
+                <Menu className="h-6 w-6 animate-fade-in" />
+              )}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile menu with animation */}
       {isMenuOpen && (
-        <div className="md:hidden bg-white shadow-lg">
+        <div className="md:hidden bg-white shadow-lg animate-fade-in">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <Link
+            <NavLink
               to="/"
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary"
+              className={({ isActive }) =>
+                `block px-3 py-2 rounded-md text-base ${
+                  isActive 
+                    ? "text-primary font-medium border-l-2 border-primary pl-2" 
+                    : "text-gray-700 hover:text-primary"
+                }`
+              }
               onClick={toggleMenu}
+              aria-current={location.pathname === "/" ? "page" : undefined}
             >
               Accueil
-            </Link>
+            </NavLink>
             
             <div className="relative">
               <details className="group [&_summary::-webkit-details-marker]:hidden">
                 <summary className="flex cursor-pointer items-center gap-2 px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary">
                   <span>Services</span>
-                  <ChevronDown className="h-4 w-4" />
+                  <ChevronDown className="h-4 w-4 transition-transform group-open:rotate-180" />
                 </summary>
 
-                <nav className="mt-1.5 ml-6 flex flex-col space-y-2">
+                <nav className="mt-1.5 ml-6 flex flex-col space-y-2 animate-slide-in">
                   <Link 
                     to="/services/orientation" 
                     className="block px-3 py-1.5 text-sm text-gray-700 hover:text-primary"
@@ -202,49 +299,84 @@ const Navbar = () => {
               </details>
             </div>
             
-            <Link
+            <NavLink
               to="/services"
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary"
+              className={({ isActive }) =>
+                `block px-3 py-2 rounded-md text-base ${
+                  isActive 
+                    ? "text-primary font-medium border-l-2 border-primary pl-2" 
+                    : "text-gray-700 hover:text-primary"
+                }`
+              }
               onClick={toggleMenu}
+              aria-current={location.pathname === "/services" ? "page" : undefined}
             >
-              Tous les services
-            </Link>
+              Explorer
+            </NavLink>
             
-            <Link
+            <NavLink
               to="/about"
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary"
+              className={({ isActive }) =>
+                `block px-3 py-2 rounded-md text-base ${
+                  isActive 
+                    ? "text-primary font-medium border-l-2 border-primary pl-2" 
+                    : "text-gray-700 hover:text-primary"
+                }`
+              }
               onClick={toggleMenu}
+              aria-current={location.pathname === "/about" ? "page" : undefined}
             >
               À propos
-            </Link>
+            </NavLink>
             
-            <Link
+            <NavLink
               to="/testimonials"
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary"
+              className={({ isActive }) =>
+                `block px-3 py-2 rounded-md text-base ${
+                  isActive 
+                    ? "text-primary font-medium border-l-2 border-primary pl-2" 
+                    : "text-gray-700 hover:text-primary"
+                }`
+              }
               onClick={toggleMenu}
+              aria-current={location.pathname === "/testimonials" ? "page" : undefined}
             >
               Témoignages
-            </Link>
+            </NavLink>
             
-            <Link
+            <NavLink
               to="/faq"
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary"
+              className={({ isActive }) =>
+                `block px-3 py-2 rounded-md text-base ${
+                  isActive 
+                    ? "text-primary font-medium border-l-2 border-primary pl-2" 
+                    : "text-gray-700 hover:text-primary"
+                }`
+              }
               onClick={toggleMenu}
+              aria-current={location.pathname === "/faq" ? "page" : undefined}
             >
               FAQ
-            </Link>
+            </NavLink>
             
-            <Link
+            <NavLink
               to="/contact"
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary"
+              className={({ isActive }) =>
+                `block px-3 py-2 rounded-md text-base ${
+                  isActive 
+                    ? "text-primary font-medium border-l-2 border-primary pl-2" 
+                    : "text-gray-700 hover:text-primary"
+                }`
+              }
               onClick={toggleMenu}
+              aria-current={location.pathname === "/contact" ? "page" : undefined}
             >
               Contact
-            </Link>
+            </NavLink>
             
             <Link
               to="/contact"
-              className="block px-3 py-2 rounded-md text-base font-medium bg-secondary text-white hover:bg-secondary/90 text-center mt-4"
+              className="block px-3 py-2 rounded-md text-base font-medium bg-secondary text-white hover:bg-secondary/90 text-center mt-4 transform transition-all hover:scale-105 duration-200"
               onClick={toggleMenu}
             >
               Nous contacter

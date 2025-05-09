@@ -1,6 +1,6 @@
 
 import { useState, useRef, useEffect } from "react";
-import { Search, X } from "lucide-react";
+import { Search, X, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { 
@@ -79,20 +79,20 @@ const SearchBar = () => {
     <div className="relative" ref={searchRef}>
       <Button
         variant="outline"
-        className="relative h-9 w-9 md:w-64 md:justify-start justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none"
+        className="relative h-9 w-9 md:w-64 md:justify-start justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none hover:border-primary"
         onClick={() => setIsOpen(true)}
         aria-label="Rechercher les services"
       >
-        <Search className="h-4 w-4 md:mr-2" />
-        <span className="hidden md:inline-flex">Rechercher...</span>
-        <span className="sr-only md:hidden lg:inline-flex ml-auto text-xs tracking-widest opacity-60">
-          Ctrl+K
-        </span>
+        <Search className="h-4 w-4 md:mr-2 text-muted-foreground" />
+        <span className="hidden md:inline-flex text-muted-foreground">Rechercher...</span>
+        <kbd className="pointer-events-none absolute right-1.5 top-1.5 hidden h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex">
+          <abbr title="Control">Ctrl</abbr>K
+        </kbd>
       </Button>
 
       {isOpen && (
         <div className="absolute top-full mt-2 w-screen max-w-md -translate-x-1/3 sm:-translate-x-1/2 z-50">
-          <Command className="rounded-lg border shadow-md">
+          <Command className="rounded-lg border shadow-md animate-fade-in">
             <div className="flex items-center border-b px-3">
               <Search className="mr-2 h-4 w-4 shrink-0 opacity-50" />
               <CommandInput
@@ -120,7 +120,10 @@ const SearchBar = () => {
               ) : (
                 <>
                   {isLoading ? (
-                    <CommandEmpty>Recherche en cours...</CommandEmpty>
+                    <div className="flex items-center justify-center py-6">
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                      <span className="ml-2 text-sm text-muted-foreground">Recherche en cours...</span>
+                    </div>
                   ) : results.length === 0 ? (
                     <CommandEmpty>Aucun résultat trouvé</CommandEmpty>
                   ) : (
