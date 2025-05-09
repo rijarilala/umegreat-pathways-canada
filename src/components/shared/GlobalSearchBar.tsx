@@ -1,0 +1,182 @@
+
+import { useState, useEffect, useRef } from "react";
+import { Search, X, Loader2 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { useSearch } from "@/contexts/SearchContext";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+
+export const GlobalSearchBar = () => {
+  const {
+    query,
+    results,
+    isLoading,
+    isOpen,
+    setIsOpen,
+    updateQuery,
+    clearSearch
+  } = useSearch();
+  
+  const navigate = useNavigate();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const searchRef = useRef<HTMLDivElement>(null);
+
+  // Handle keyboard shortcut (Ctrl+K)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === "k") {
+        e.preventDefault();
+        setIsOpen(true);
+        setTimeout(() => {
+          inputRef.current?.focus();
+        }, 100);
+      }
+
+      if (e.key === "Escape" && isOpen) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen, setIsOpen]);
+
+  // Handle clicks outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen, setIsOpen]);
+
+  // Navigate to the selected result
+  const handleResultClick = (url: string) => {
+    navigate(url);
+    clearSearch();
+    setIsOpen(false);
+  };
+
+  // Group results by category
+  const groupedResults = results.reduce((acc, result) => {
+    const category = result.category;
+    if (!acc[category]) {
+      acc[category] = [];
+    }
+    acc[category].push(result);
+    return acc;
+  }, {} as Record<string, typeof results>);
+
+  const categoryLabels: Record<string, string> = {
+    'service': 'Services',
+    'formation': 'Formations',
+    'faq': 'FAQ',
+    'page': 'Pages'
+  };
+
+  return (
+    <>
+      {/* Search trigger button */}
+      <button
+        onClick={() => setIsOpen(true)}
+        className="flex items-center gap-2 text-sm text-gray-500 px-3 py-2 rounded-md border border-gray-300 bg-white hover:bg-gray-50"
+        aria-label="Rechercher"
+      >
+        <Search className="w-4 h-4" />
+        <span className="hidden md:inline">Rechercher</span>
+        <kbd className="hidden md:inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground ml-auto">
+          <span className="text-xs">⌘</span>K
+        </kbd>
+      </button>
+
+      {/* Search modal dialog */}
+      <Dialog open={isOpen} onOpenChange={setIsOpen}>
+        <DialogContent className="p-0 gap-0 max-w-2xl w-[90vw] rounded-lg">
+          <div className="relative" ref={searchRef}>
+            {/* Search input */}
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
+                {isLoading ? (
+                  <Loader2 className="w-5 h-5 text-gray-400 animate-spin" />
+                ) : (
+                  <Search className="w-5 h-5 text-gray-400" />
+                )}
+              </div>
+              <input
+                type="text"
+                ref={inputRef}
+                value={query}
+                onChange={(e) => updateQuery(e.target.value)}
+                placeholder="Rechercher dans tout le site..."
+                className="w-full p-4 pl-12 pr-10 text-base text-gray-900 border-b border-gray-200 focus:outline-none"
+                autoFocus
+              />
+              {query && (
+                <button
+                  onClick={clearSearch}
+                  className="absolute inset-y-0 right-0 flex items-center pr-4"
+                >
+                  <X className="w-5 h-5 text-gray-400 hover:text-gray-700" />
+                </button>
+              )}
+            </div>
+
+            {/* Results section */}
+            {(query.length >= 2 || results.length > 0) && (
+              <div className="max-h-[60vh] overflow-y-auto p-2">
+                {Object.keys(groupedResults).length > 0 ? (
+                  Object.entries(groupedResults).map(([category, categoryResults]) => (
+                    <div key={category} className="mb-4">
+                      <div className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md">
+                        {categoryLabels[category] || category}
+                      </div>
+                      <div className="mt-1">
+                        {categoryResults.map((result) => (
+                          <button
+                            key={result.id}
+                            onClick={() => result.url && handleResultClick(result.url)}
+                            className="w-full text-left px-4 py-3 hover:bg-gray-50 rounded-md transition-colors"
+                          >
+                            <div className="font-medium text-primary">{result.title}</div>
+                            <div className="text-sm text-gray-500 line-clamp-1">
+                              {result.description}
+                            </div>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div className="flex flex-col items-center justify-center py-12">
+                    <div className="text-center">
+                      <p className="mt-2 text-lg font-medium text-gray-900">Aucun résultat trouvé</p>
+                      <p className="mt-1 text-sm text-gray-500">
+                        Essayez de modifier votre recherche ou vos filtres
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                {/* Show loading indicator if isLoading is true */}
+                {isLoading && results.length === 0 && (
+                  <div className="flex justify-center py-8">
+                    <Loader2 className="w-8 h-8 text-primary animate-spin" />
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
+    </>
+  );
+};
+
+export default GlobalSearchBar;

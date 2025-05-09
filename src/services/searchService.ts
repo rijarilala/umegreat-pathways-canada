@@ -1,5 +1,5 @@
 
-import type { SearchResult } from "@/components/shared/SearchBar";
+import type { SearchResult } from "@/contexts/SearchContext";
 
 // Données des services et formations pour la recherche
 const searchDatabase: SearchResult[] = [
@@ -90,19 +90,72 @@ const searchDatabase: SearchResult[] = [
     description: "Développez vos compétences en management et gestion RH",
     url: "/services/formation#rh"
   },
+  
+  // Pages
   {
-    id: "pack-insertion",
-    title: "Pack Insertion Pro",
-    category: "formation",
-    description: "Pack complet pour réussir votre insertion professionnelle",
-    url: "/services/formation?tab=packs#insertion"
+    id: "accueil",
+    title: "Accueil",
+    category: "page",
+    description: "Page d'accueil du site UMEGREAT Pro",
+    url: "/"
   },
   {
-    id: "pack-rh",
-    title: "Pack RH Starter",
-    category: "formation",
-    description: "Ensemble de formations pour démarrer dans les ressources humaines",
-    url: "/services/formation?tab=packs#rh-starter"
+    id: "a-propos",
+    title: "À propos de nous",
+    category: "page",
+    description: "Découvrez notre histoire et notre mission",
+    url: "/about"
+  },
+  {
+    id: "contact",
+    title: "Contact",
+    category: "page",
+    description: "Prenez contact avec notre équipe",
+    url: "/contact"
+  },
+  {
+    id: "temoignages",
+    title: "Témoignages",
+    category: "page",
+    description: "Découvrez les retours de nos clients satisfaits",
+    url: "/testimonials"
+  },
+
+  // FAQ
+  {
+    id: "faq-orientation",
+    title: "Comment choisir ma voie professionnelle ?",
+    category: "faq",
+    description: "Conseils pour trouver votre orientation idéale",
+    url: "/faq#orientation"
+  },
+  {
+    id: "faq-canada",
+    title: "Quelles sont les conditions d'immigration au Canada ?",
+    category: "faq",
+    description: "Informations sur le processus d'immigration canadien",
+    url: "/faq#immigration"
+  },
+  {
+    id: "faq-formation",
+    title: "Combien de temps durent vos formations ?",
+    category: "faq",
+    description: "Détails sur la durée des différents programmes de formation",
+    url: "/faq#durees"
+  },
+  {
+    id: "faq-coaching",
+    title: "En quoi consiste un coaching professionnel ?",
+    category: "faq",
+    description: "Explications sur notre approche du coaching professionnel",
+    url: "/faq#coaching"
+  },
+  {
+    id: "faq-tarifs",
+    title: "Quels sont vos tarifs ?",
+    category: "faq",
+    description: "Informations sur nos grilles tarifaires",
+    url: "/faq#tarifs"
   }
 ];
 
@@ -140,9 +193,13 @@ export function searchData(query: string): SearchResult[] {
       if (aStartsWith && !bStartsWith) return -1;
       if (!aStartsWith && bStartsWith) return 1;
       
-      // Priorité 3: Services avant formations
-      if (a.category === "service" && b.category !== "service") return -1;
-      if (a.category !== "service" && b.category === "service") return 1;
+      // Priorité 3: Pages et FAQ avant services et formations
+      const categoryOrder = { "page": 1, "faq": 2, "service": 3, "formation": 4 };
+      const aOrder = categoryOrder[a.category as keyof typeof categoryOrder] || 99;
+      const bOrder = categoryOrder[b.category as keyof typeof categoryOrder] || 99;
+      
+      if (aOrder < bOrder) return -1;
+      if (aOrder > bOrder) return 1;
       
       // Priorité 4: Ordre alphabétique
       return a.title.localeCompare(b.title);

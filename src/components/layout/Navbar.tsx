@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ChevronDown, Menu, X } from "lucide-react";
-import SearchBar from "@/components/shared/SearchBar";
+import GlobalSearchBar from "@/components/shared/GlobalSearchBar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -60,7 +60,7 @@ const Navbar = () => {
 
           {/* Search Bar (visible on desktop) */}
           <div className="hidden md:flex md:mx-4 lg:mx-8">
-            <SearchBar />
+            <GlobalSearchBar />
           </div>
 
           {/* Desktop Navigation */}
@@ -201,7 +201,7 @@ const Navbar = () => {
 
           {/* Mobile menu button and search */}
           <div className="md:hidden flex items-center gap-2">
-            <SearchBar />
+            <GlobalSearchBar />
             <button
               type="button"
               className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-primary focus:outline-none"
