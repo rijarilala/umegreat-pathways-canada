@@ -39,35 +39,11 @@ const ImmigrationSection = () => {
             <div className="relative">
               <div className="absolute -top-4 -left-4 w-24 h-24 bg-primary/10 rounded-full"></div>
               <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-secondary/10 rounded-full"></div>
-              <div className="rounded-lg shadow-xl relative z-10 w-full bg-white p-8">
-                <svg 
-                  viewBox="0 0 300 300" 
-                  fill="none" 
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-full h-auto"
-                >
-                  {/* Border */}
-                  <circle cx="150" cy="150" r="145" stroke="#FFA500" strokeWidth="2" fill="white" />
-                  
-                  {/* Passport */}
-                  <rect x="75" y="120" width="150" height="110" rx="8" fill="#87CEEB" />
-                  <rect x="85" y="130" width="130" height="90" rx="4" fill="white" />
-                  
-                  {/* Passport Lines */}
-                  <line x1="100" y1="150" x2="200" y2="150" stroke="#87CEEB" strokeWidth="1" />
-                  <line x1="100" y1="165" x2="200" y2="165" stroke="#87CEEB" strokeWidth="1" />
-                  <line x1="100" y1="180" x2="200" y2="180" stroke="#87CEEB" strokeWidth="1" />
-                  <line x1="100" y1="195" x2="170" y2="195" stroke="#87CEEB" strokeWidth="1" />
-                  
-                  {/* Graduation Cap */}
-                  <path d="M75 100 L150 70 L225 100 L150 130 Z" fill="#87CEEB" />
-                  <rect x="140" y="100" width="20" height="50" fill="#87CEEB" />
-                  <path d="M120 130 L180 130 L180 140 L120 140 Z" fill="#87CEEB" />
-                  <circle cx="150" cy="85" r="10" fill="white" />
-                  <path d="M150 95 L160 120" stroke="#FFA500" strokeWidth="3" />
-                  <circle cx="160" cy="120" r="6" fill="#FFA500" />
-                </svg>
-              </div>
+              <img 
+                src="https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&q=80&w=1200" 
+                alt="Immigration au Canada" 
+                className="rounded-lg shadow-xl relative z-10 w-full"
+              />
             </div>
           </div>
         </div>
