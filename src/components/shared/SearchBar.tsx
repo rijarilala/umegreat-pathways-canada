@@ -28,8 +28,9 @@ const SearchBar = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
   
-  const { results, isLoading, query, updateQuery, performSearch } = useSearch();
+  const { results, isLoading, query, updateQuery } = useSearch();
 
+  // Gestion des clics à l'extérieur pour fermer la recherche
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
@@ -55,9 +56,9 @@ const SearchBar = () => {
     };
   }, []);
 
-  // Assurer que la recherche est effectuée dès que l'utilisateur commence à taper
+  // Ouvrir automatiquement les résultats dès que l'utilisateur commence à taper
   useEffect(() => {
-    if (query && !isOpen) {
+    if (query && query.length > 0) {
       setIsOpen(true);
     }
   }, [query]);
@@ -82,22 +83,22 @@ const SearchBar = () => {
     }
   };
 
-  // Forcer la réouverture de la barre de recherche après toute interaction
   const handleSearchInteraction = () => {
-    if (!isOpen) {
-      setIsOpen(true);
-      // Lancer une nouvelle recherche si la requête existe déjà
-      if (query) {
-        performSearch(query);
-      }
-    }
-    
-    // Focus sur le champ de recherche
+    setIsOpen(true);
     setTimeout(() => {
       if (inputRef.current) {
         inputRef.current.focus();
       }
     }, 10);
+  };
+
+  // Gérer le changement de texte directement dans l'input
+  const handleInputChange = (value: string) => {
+    updateQuery(value);
+    // S'assurer que les résultats sont visibles
+    if (!isOpen && value.length > 0) {
+      setIsOpen(true);
+    }
   };
 
   return (
@@ -125,7 +126,7 @@ const SearchBar = () => {
                 placeholder="Rechercher un service, une formation..."
                 className="flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50"
                 value={query}
-                onValueChange={updateQuery}
+                onValueChange={handleInputChange}
                 autoFocus
               />
               {query && (
@@ -154,42 +155,47 @@ const SearchBar = () => {
                     <CommandEmpty>Aucun résultat trouvé</CommandEmpty>
                   ) : (
                     <>
-                      <CommandGroup heading="Services">
-                        {results
-                          .filter((result) => result.category === "service")
-                          .map((result) => (
-                            <CommandItem
-                              key={result.id}
-                              onSelect={() => handleSelectItem(result)}
-                              className="cursor-pointer"
-                            >
-                              <div className="flex flex-col">
-                                <span>{result.title}</span>
-                                <span className="text-xs text-gray-500 truncate">
-                                  {result.description}
-                                </span>
-                              </div>
-                            </CommandItem>
-                          ))}
-                      </CommandGroup>
-                      <CommandGroup heading="Formations">
-                        {results
-                          .filter((result) => result.category === "formation")
-                          .map((result) => (
-                            <CommandItem
-                              key={result.id}
-                              onSelect={() => handleSelectItem(result)}
-                              className="cursor-pointer"
-                            >
-                              <div className="flex flex-col">
-                                <span>{result.title}</span>
-                                <span className="text-xs text-gray-500 truncate">
-                                  {result.description}
-                                </span>
-                              </div>
-                            </CommandItem>
-                          ))}
-                      </CommandGroup>
+                      {results.filter(result => result.category === "service").length > 0 && (
+                        <CommandGroup heading="Services">
+                          {results
+                            .filter((result) => result.category === "service")
+                            .map((result) => (
+                              <CommandItem
+                                key={result.id}
+                                onSelect={() => handleSelectItem(result)}
+                                className="cursor-pointer"
+                              >
+                                <div className="flex flex-col">
+                                  <span>{result.title}</span>
+                                  <span className="text-xs text-gray-500 truncate">
+                                    {result.description}
+                                  </span>
+                                </div>
+                              </CommandItem>
+                            ))}
+                        </CommandGroup>
+                      )}
+                      
+                      {results.filter(result => result.category === "formation").length > 0 && (
+                        <CommandGroup heading="Formations">
+                          {results
+                            .filter((result) => result.category === "formation")
+                            .map((result) => (
+                              <CommandItem
+                                key={result.id}
+                                onSelect={() => handleSelectItem(result)}
+                                className="cursor-pointer"
+                              >
+                                <div className="flex flex-col">
+                                  <span>{result.title}</span>
+                                  <span className="text-xs text-gray-500 truncate">
+                                    {result.description}
+                                  </span>
+                                </div>
+                              </CommandItem>
+                            ))}
+                        </CommandGroup>
+                      )}
                     </>
                   )}
                 </>
