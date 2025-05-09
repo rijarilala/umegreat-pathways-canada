@@ -10,11 +10,13 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const isMobile = useIsMobile();
 
   // Gestion du scroll pour la navbar sticky avec réduction de hauteur
   useEffect(() => {
@@ -38,7 +40,7 @@ const Navbar = () => {
 
   return (
     <nav 
-      className={`bg-white border-b sticky top-0 z-50 ${
+      className={`bg-white backdrop-blur-sm bg-opacity-95 border-b sticky top-0 z-50 ${
         scrolled ? "shadow-md" : "shadow-sm"
       } transition-all duration-300`}
       aria-label="Navigation principale"
@@ -220,170 +222,172 @@ const Navbar = () => {
       </div>
 
       {/* Mobile menu with animation */}
-      {isMenuOpen && (
-        <div className="md:hidden bg-white shadow-lg animate-fade-in">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <NavLink
-              to="/"
-              className={({ isActive }) =>
-                `block px-3 py-2 rounded-md text-base ${
-                  isActive 
-                    ? "text-primary font-medium border-l-2 border-primary pl-2" 
-                    : "text-gray-700 hover:text-primary"
-                }`
-              }
-              onClick={toggleMenu}
-              aria-current={location.pathname === "/" ? "page" : undefined}
-            >
-              Accueil
-            </NavLink>
-            
-            <div className="relative">
-              <details className="group [&_summary::-webkit-details-marker]:hidden">
-                <summary className="flex cursor-pointer items-center gap-2 px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary">
-                  <span>Services</span>
-                  <ChevronDown className="h-4 w-4 transition-transform group-open:rotate-180" />
-                </summary>
+      <div 
+        className={`md:hidden bg-white shadow-lg overflow-hidden transition-all duration-300 ease-in-out ${
+          isMenuOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
+        }`}
+      >
+        <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              `block px-3 py-2 rounded-md text-base ${
+                isActive 
+                  ? "text-primary font-medium border-l-2 border-primary pl-2" 
+                  : "text-gray-700 hover:text-primary"
+              }`
+            }
+            onClick={toggleMenu}
+            aria-current={location.pathname === "/" ? "page" : undefined}
+          >
+            Accueil
+          </NavLink>
+          
+          <div className="relative">
+            <details className="group [&_summary::-webkit-details-marker]:hidden">
+              <summary className="flex cursor-pointer items-center gap-2 px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary">
+                <span>Services</span>
+                <ChevronDown className="h-4 w-4 transition-transform group-open:rotate-180" />
+              </summary>
 
-                <nav className="mt-1.5 ml-6 flex flex-col space-y-2 animate-slide-in">
-                  <Link 
-                    to="/services/orientation" 
-                    className="block px-3 py-1.5 text-sm text-gray-700 hover:text-primary"
-                    onClick={toggleMenu}
-                  >
-                    Orientation Professionnelle
-                  </Link>
-                  <Link 
-                    to="/services/formation" 
-                    className="block px-3 py-1.5 text-sm text-gray-700 hover:text-primary"
-                    onClick={toggleMenu}
-                  >
-                    Formation
-                  </Link>
-                  <Link 
-                    to="/services/coaching" 
-                    className="block px-3 py-1.5 text-sm text-gray-700 hover:text-primary"
-                    onClick={toggleMenu}
-                  >
-                    Coaching
-                  </Link>
-                  <Link 
-                    to="/services/etudes" 
-                    className="block px-3 py-1.5 text-sm text-gray-700 hover:text-primary"
-                    onClick={toggleMenu}
-                  >
-                    Études au Canada
-                  </Link>
-                  <Link 
-                    to="/services/immigration" 
-                    className="block px-3 py-1.5 text-sm text-gray-700 hover:text-primary"
-                    onClick={toggleMenu}
-                  >
-                    Immigration & Accompagnement
-                  </Link>
-                  <Link 
-                    to="/services/test" 
-                    className="block px-3 py-1.5 text-sm text-gray-700 hover:text-primary"
-                    onClick={toggleMenu}
-                  >
-                    Test d'éligibilité
-                  </Link>
-                  <Link 
-                    to="/services/recrutement" 
-                    className="block px-3 py-1.5 text-sm text-gray-700 hover:text-primary"
-                    onClick={toggleMenu}
-                  >
-                    Recrutement
-                  </Link>
-                </nav>
-              </details>
-            </div>
-            
-            <NavLink
-              to="/services"
-              className={({ isActive }) =>
-                `block px-3 py-2 rounded-md text-base ${
-                  isActive 
-                    ? "text-primary font-medium border-l-2 border-primary pl-2" 
-                    : "text-gray-700 hover:text-primary"
-                }`
-              }
-              onClick={toggleMenu}
-              aria-current={location.pathname === "/services" ? "page" : undefined}
-            >
-              Explorer
-            </NavLink>
-            
-            <NavLink
-              to="/about"
-              className={({ isActive }) =>
-                `block px-3 py-2 rounded-md text-base ${
-                  isActive 
-                    ? "text-primary font-medium border-l-2 border-primary pl-2" 
-                    : "text-gray-700 hover:text-primary"
-                }`
-              }
-              onClick={toggleMenu}
-              aria-current={location.pathname === "/about" ? "page" : undefined}
-            >
-              À propos
-            </NavLink>
-            
-            <NavLink
-              to="/testimonials"
-              className={({ isActive }) =>
-                `block px-3 py-2 rounded-md text-base ${
-                  isActive 
-                    ? "text-primary font-medium border-l-2 border-primary pl-2" 
-                    : "text-gray-700 hover:text-primary"
-                }`
-              }
-              onClick={toggleMenu}
-              aria-current={location.pathname === "/testimonials" ? "page" : undefined}
-            >
-              Témoignages
-            </NavLink>
-            
-            <NavLink
-              to="/faq"
-              className={({ isActive }) =>
-                `block px-3 py-2 rounded-md text-base ${
-                  isActive 
-                    ? "text-primary font-medium border-l-2 border-primary pl-2" 
-                    : "text-gray-700 hover:text-primary"
-                }`
-              }
-              onClick={toggleMenu}
-              aria-current={location.pathname === "/faq" ? "page" : undefined}
-            >
-              FAQ
-            </NavLink>
-            
-            <NavLink
-              to="/contact"
-              className={({ isActive }) =>
-                `block px-3 py-2 rounded-md text-base ${
-                  isActive 
-                    ? "text-primary font-medium border-l-2 border-primary pl-2" 
-                    : "text-gray-700 hover:text-primary"
-                }`
-              }
-              onClick={toggleMenu}
-              aria-current={location.pathname === "/contact" ? "page" : undefined}
-            >
-              Contact
-            </NavLink>
-            
-            <Link
-              to="/contact"
-              className="block px-3 py-2 rounded-md text-base font-medium bg-secondary text-white hover:bg-secondary/90 text-center mt-4 transform transition-all hover:scale-105 duration-200"
-              onClick={toggleMenu}
-            >
-              Nous contacter
-            </Link>
+              <nav className="mt-1.5 ml-6 flex flex-col space-y-2 animate-slide-in">
+                <Link 
+                  to="/services/orientation" 
+                  className="block px-3 py-1.5 text-sm text-gray-700 hover:text-primary"
+                  onClick={toggleMenu}
+                >
+                  Orientation Professionnelle
+                </Link>
+                <Link 
+                  to="/services/formation" 
+                  className="block px-3 py-1.5 text-sm text-gray-700 hover:text-primary"
+                  onClick={toggleMenu}
+                >
+                  Formation
+                </Link>
+                <Link 
+                  to="/services/coaching" 
+                  className="block px-3 py-1.5 text-sm text-gray-700 hover:text-primary"
+                  onClick={toggleMenu}
+                >
+                  Coaching
+                </Link>
+                <Link 
+                  to="/services/etudes" 
+                  className="block px-3 py-1.5 text-sm text-gray-700 hover:text-primary"
+                  onClick={toggleMenu}
+                >
+                  Études au Canada
+                </Link>
+                <Link 
+                  to="/services/immigration" 
+                  className="block px-3 py-1.5 text-sm text-gray-700 hover:text-primary"
+                  onClick={toggleMenu}
+                >
+                  Immigration & Accompagnement
+                </Link>
+                <Link 
+                  to="/services/test" 
+                  className="block px-3 py-1.5 text-sm text-gray-700 hover:text-primary"
+                  onClick={toggleMenu}
+                >
+                  Test d'éligibilité
+                </Link>
+                <Link 
+                  to="/services/recrutement" 
+                  className="block px-3 py-1.5 text-sm text-gray-700 hover:text-primary"
+                  onClick={toggleMenu}
+                >
+                  Recrutement
+                </Link>
+              </nav>
+            </details>
           </div>
+          
+          <NavLink
+            to="/services"
+            className={({ isActive }) =>
+              `block px-3 py-2 rounded-md text-base ${
+                isActive 
+                  ? "text-primary font-medium border-l-2 border-primary pl-2" 
+                  : "text-gray-700 hover:text-primary"
+              }`
+            }
+            onClick={toggleMenu}
+            aria-current={location.pathname === "/services" ? "page" : undefined}
+          >
+            Explorer
+          </NavLink>
+          
+          <NavLink
+            to="/about"
+            className={({ isActive }) =>
+              `block px-3 py-2 rounded-md text-base ${
+                isActive 
+                  ? "text-primary font-medium border-l-2 border-primary pl-2" 
+                  : "text-gray-700 hover:text-primary"
+              }`
+            }
+            onClick={toggleMenu}
+            aria-current={location.pathname === "/about" ? "page" : undefined}
+          >
+            À propos
+          </NavLink>
+          
+          <NavLink
+            to="/testimonials"
+            className={({ isActive }) =>
+              `block px-3 py-2 rounded-md text-base ${
+                isActive 
+                  ? "text-primary font-medium border-l-2 border-primary pl-2" 
+                  : "text-gray-700 hover:text-primary"
+              }`
+            }
+            onClick={toggleMenu}
+            aria-current={location.pathname === "/testimonials" ? "page" : undefined}
+          >
+            Témoignages
+          </NavLink>
+          
+          <NavLink
+            to="/faq"
+            className={({ isActive }) =>
+              `block px-3 py-2 rounded-md text-base ${
+                isActive 
+                  ? "text-primary font-medium border-l-2 border-primary pl-2" 
+                  : "text-gray-700 hover:text-primary"
+              }`
+            }
+            onClick={toggleMenu}
+            aria-current={location.pathname === "/faq" ? "page" : undefined}
+          >
+            FAQ
+          </NavLink>
+          
+          <NavLink
+            to="/contact"
+            className={({ isActive }) =>
+              `block px-3 py-2 rounded-md text-base ${
+                isActive 
+                  ? "text-primary font-medium border-l-2 border-primary pl-2" 
+                  : "text-gray-700 hover:text-primary"
+              }`
+            }
+            onClick={toggleMenu}
+            aria-current={location.pathname === "/contact" ? "page" : undefined}
+          >
+            Contact
+          </NavLink>
+          
+          <Link
+            to="/contact"
+            className="block px-3 py-2 rounded-md text-base font-medium bg-secondary text-white hover:bg-secondary/90 text-center mt-4 transform transition-all hover:scale-105 duration-200"
+            onClick={toggleMenu}
+          >
+            Nous contacter
+          </Link>
         </div>
-      )}
+      </div>
     </nav>
   );
 };
