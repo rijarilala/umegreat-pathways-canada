@@ -14,19 +14,16 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 const TestEligibility = () => {
   const { toast } = useToast();
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
     age: "",
     education: "",
-    workExperience: "",
+    experience: "",
     language: "",
     languageLevel: "",
-    immigrationGoals: "",
-    additionalInfo: ""
+    goals: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showResults, setShowResults] = useState(false);
+  const [eligibilityResult, setEligibilityResult] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -37,32 +34,58 @@ const TestEligibility = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+  const determineEligibility = () => {
+    // Très simple logique d'évaluation basée sur l'âge, l'éducation et l'expérience
+    const { age, education, experience, languageLevel } = formData;
+    const ageNum = parseInt(age);
+    
+    if ((ageNum >= 21 && ageNum <= 45) && 
+        (education === "bachelor" || education === "master" || education === "phd") && 
+        (experience === "three_to_five" || experience === "more_than_five") &&
+        (languageLevel === "intermediate" || languageLevel === "advanced" || languageLevel === "fluent")) {
+      return "positive";
+    } else if ((ageNum >= 18 && ageNum <= 50) && 
+              (education !== "none") && 
+              (experience !== "none")) {
+      return "neutral";
+    } else {
+      return "negative";
+    }
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate form submission
+    // Simuler un traitement
     setTimeout(() => {
-      toast({
-        title: "Formulaire envoyé avec succès",
-        description: "Notre équipe analysera votre éligibilité et vous contactera dans les plus brefs délais.",
-        duration: 5000,
-      });
+      const result = determineEligibility();
+      
+      let resultMessage = "";
+      if (result === "positive") {
+        resultMessage = "Selon les informations fournies, votre profil semble prometteur pour une potentielle immigration au Canada. Nous vous recommandons de prendre rendez-vous avec l'un de nos conseillers pour une évaluation complète et personnalisée.";
+      } else if (result === "neutral") {
+        resultMessage = "Votre profil présente des aspects intéressants, mais une évaluation plus approfondie est nécessaire pour déterminer les meilleures options pour votre situation. Nous vous invitons à contacter un de nos conseillers pour discuter de votre cas en détail.";
+      } else {
+        resultMessage = "Votre profil actuel pourrait présenter certains défis pour l'immigration immédiate. Nous vous recommandons de consulter un de nos experts pour explorer d'autres options ou des stratégies pour renforcer votre candidature.";
+      }
+      
+      setEligibilityResult(resultMessage);
+      setShowResults(true);
       setIsSubmitting(false);
-      setFormData({
-        firstName: "",
-        lastName: "",
-        email: "",
-        phone: "",
-        age: "",
-        education: "",
-        workExperience: "",
-        language: "",
-        languageLevel: "",
-        immigrationGoals: "",
-        additionalInfo: ""
-      });
     }, 1500);
+  };
+
+  const resetForm = () => {
+    setFormData({
+      age: "",
+      education: "",
+      experience: "",
+      language: "",
+      languageLevel: "",
+      goals: ""
+    });
+    setShowResults(false);
   };
 
   return (
@@ -92,19 +115,19 @@ const TestEligibility = () => {
                   <ul className="space-y-2">
                     <li className="flex items-start">
                       <div className="mr-2 mt-1 h-1.5 w-1.5 rounded-full bg-secondary"></div>
-                      <span>Une évaluation personnalisée de votre éligibilité</span>
+                      <span>Une évaluation préliminaire de votre éligibilité</span>
                     </li>
                     <li className="flex items-start">
                       <div className="mr-2 mt-1 h-1.5 w-1.5 rounded-full bg-secondary"></div>
-                      <span>Des recommandations sur les programmes d'immigration adaptés à votre profil</span>
+                      <span>Une première indication de vos chances d'immigration</span>
                     </li>
                     <li className="flex items-start">
                       <div className="mr-2 mt-1 h-1.5 w-1.5 rounded-full bg-secondary"></div>
-                      <span>Des conseils personnalisés pour améliorer vos chances</span>
+                      <span>Des conseils personnalisés pour améliorer votre profil</span>
                     </li>
                     <li className="flex items-start">
                       <div className="mr-2 mt-1 h-1.5 w-1.5 rounded-full bg-secondary"></div>
-                      <span>Un aperçu des prochaines étapes de votre parcours d'immigration</span>
+                      <span>Une idée des prochaines étapes à suivre</span>
                     </li>
                   </ul>
                 </div>
@@ -123,181 +146,187 @@ const TestEligibility = () => {
             </div>
             
             <div className="lg:col-span-2">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Test d'éligibilité gratuit</CardTitle>
-                  <CardDescription>
-                    Remplissez le formulaire ci-dessous pour évaluer vos chances d'immigrer au Canada
-                  </CardDescription>
-                </CardHeader>
-                <form onSubmit={handleSubmit}>
-                  <CardContent className="space-y-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="firstName">Prénom</Label>
-                        <Input 
-                          id="firstName" 
-                          name="firstName" 
-                          placeholder="Votre prénom"
-                          value={formData.firstName}
-                          onChange={handleChange}
-                          required
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="lastName">Nom</Label>
-                        <Input 
-                          id="lastName" 
-                          name="lastName" 
-                          placeholder="Votre nom"
-                          value={formData.lastName}
-                          onChange={handleChange}
-                          required
-                        />
-                      </div>
-                    </div>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="email">Email</Label>
-                        <Input 
-                          id="email" 
-                          name="email" 
-                          type="email" 
-                          placeholder="votre@email.com"
-                          value={formData.email}
-                          onChange={handleChange}
-                          required
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="phone">Téléphone</Label>
-                        <Input 
-                          id="phone" 
-                          name="phone" 
-                          placeholder="Votre téléphone"
-                          value={formData.phone}
-                          onChange={handleChange}
-                        />
-                      </div>
-                    </div>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="age">Âge</Label>
-                        <Input 
-                          id="age" 
-                          name="age" 
-                          placeholder="Votre âge"
-                          value={formData.age}
-                          onChange={handleChange}
-                          required
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="education">Niveau d'études</Label>
-                        <Select 
-                          value={formData.education} 
-                          onValueChange={(value) => handleSelectChange("education", value)}
+              <Card className="overflow-hidden">
+                {!showResults ? (
+                  <>
+                    <CardHeader>
+                      <CardTitle>Test d'éligibilité gratuit</CardTitle>
+                      <CardDescription>
+                        Répondez à ces quelques questions pour évaluer votre potentiel d'immigration
+                      </CardDescription>
+                    </CardHeader>
+                    <form onSubmit={handleSubmit}>
+                      <CardContent className="space-y-6">
+                        <div className="space-y-2">
+                          <Label htmlFor="age">Quel est votre âge ?</Label>
+                          <Input 
+                            id="age" 
+                            name="age" 
+                            type="number"
+                            placeholder="Entrez votre âge"
+                            value={formData.age}
+                            onChange={handleChange}
+                            required
+                          />
+                        </div>
+                        
+                        <div className="space-y-2">
+                          <Label htmlFor="education">Quel est votre niveau d'éducation le plus élevé ?</Label>
+                          <Select 
+                            value={formData.education} 
+                            onValueChange={(value) => handleSelectChange("education", value)}
+                            required
+                          >
+                            <SelectTrigger id="education" name="education">
+                              <SelectValue placeholder="Sélectionnez votre niveau" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="none">Aucun diplôme formel</SelectItem>
+                              <SelectItem value="secondary">Diplôme secondaire</SelectItem>
+                              <SelectItem value="diploma">Diplôme post-secondaire</SelectItem>
+                              <SelectItem value="bachelor">Baccalauréat</SelectItem>
+                              <SelectItem value="master">Maîtrise</SelectItem>
+                              <SelectItem value="phd">Doctorat</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        
+                        <div className="space-y-2">
+                          <Label htmlFor="experience">Combien d'années d'expérience professionnelle possédez-vous ?</Label>
+                          <Select 
+                            value={formData.experience} 
+                            onValueChange={(value) => handleSelectChange("experience", value)}
+                            required
+                          >
+                            <SelectTrigger id="experience" name="experience">
+                              <SelectValue placeholder="Sélectionnez votre expérience" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="none">Aucune expérience</SelectItem>
+                              <SelectItem value="less_than_one">Moins d'un an</SelectItem>
+                              <SelectItem value="one_to_three">1 à 3 ans</SelectItem>
+                              <SelectItem value="three_to_five">3 à 5 ans</SelectItem>
+                              <SelectItem value="more_than_five">Plus de 5 ans</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div className="space-y-2">
+                            <Label htmlFor="language">Quelle langue maîtrisez-vous le mieux ?</Label>
+                            <Select 
+                              value={formData.language} 
+                              onValueChange={(value) => handleSelectChange("language", value)}
+                              required
+                            >
+                              <SelectTrigger id="language" name="language">
+                                <SelectValue placeholder="Sélectionnez une langue" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="english">Anglais</SelectItem>
+                                <SelectItem value="french">Français</SelectItem>
+                                <SelectItem value="both">Les deux</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="languageLevel">Quel est votre niveau ?</Label>
+                            <Select 
+                              value={formData.languageLevel} 
+                              onValueChange={(value) => handleSelectChange("languageLevel", value)}
+                              required
+                            >
+                              <SelectTrigger id="languageLevel" name="languageLevel">
+                                <SelectValue placeholder="Sélectionnez votre niveau" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="beginner">Débutant</SelectItem>
+                                <SelectItem value="intermediate">Intermédiaire</SelectItem>
+                                <SelectItem value="advanced">Avancé</SelectItem>
+                                <SelectItem value="fluent">Courant</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                        </div>
+                        
+                        <div className="space-y-2">
+                          <Label htmlFor="goals">Quels sont vos objectifs en venant au Canada ?</Label>
+                          <Textarea 
+                            id="goals" 
+                            name="goals" 
+                            placeholder="Décrivez brièvement pourquoi vous souhaitez venir au Canada (travail, études, famille, etc.)"
+                            rows={3}
+                            value={formData.goals}
+                            onChange={handleChange}
+                            required
+                          />
+                        </div>
+                      </CardContent>
+                      <CardFooter>
+                        <Button 
+                          type="submit" 
+                          disabled={isSubmitting} 
+                          className="w-full bg-secondary hover:bg-secondary/90"
                         >
-                          <SelectTrigger id="education" name="education">
-                            <SelectValue placeholder="Sélectionnez votre niveau" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="secondary">Secondaire</SelectItem>
-                            <SelectItem value="diploma">Diplôme post-secondaire</SelectItem>
-                            <SelectItem value="bachelor">Baccalauréat</SelectItem>
-                            <SelectItem value="master">Maîtrise</SelectItem>
-                            <SelectItem value="phd">Doctorat</SelectItem>
-                          </SelectContent>
-                        </Select>
+                          {isSubmitting ? "Analyse en cours..." : "Évaluer mon éligibilité"}
+                        </Button>
+                      </CardFooter>
+                    </form>
+                  </>
+                ) : (
+                  <>
+                    <CardHeader>
+                      <CardTitle className="text-center">Résultat de votre évaluation</CardTitle>
+                      <div className="flex justify-center my-6">
+                        <div className="w-16 h-16 bg-secondary/20 rounded-full flex items-center justify-center">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                        </div>
                       </div>
-                    </div>
-                    
-                    <div className="space-y-2">
-                      <Label htmlFor="workExperience">Expérience professionnelle</Label>
-                      <Textarea 
-                        id="workExperience" 
-                        name="workExperience" 
-                        placeholder="Décrivez brièvement votre expérience professionnelle (postes, années d'expérience, secteurs)"
-                        rows={3}
-                        value={formData.workExperience}
-                        onChange={handleChange}
-                        required
-                      />
-                    </div>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="language">Compétences linguistiques</Label>
-                        <Select 
-                          value={formData.language} 
-                          onValueChange={(value) => handleSelectChange("language", value)}
+                    </CardHeader>
+                    <CardContent className="space-y-6">
+                      <div className="bg-secondary/10 p-4 rounded-lg">
+                        <p className="text-gray-800">{eligibilityResult}</p>
+                      </div>
+                      
+                      <div className="bg-gray-50 p-4 rounded-lg">
+                        <h3 className="font-semibold text-gray-800 mb-3">Prochaines étapes suggérées :</h3>
+                        <ul className="space-y-3">
+                          <li className="flex items-start">
+                            <div className="mr-3 mt-1 h-1.5 w-1.5 rounded-full bg-secondary"></div>
+                            <span>Prenez rendez-vous avec l'un de nos conseillers en immigration pour une évaluation complète</span>
+                          </li>
+                          <li className="flex items-start">
+                            <div className="mr-3 mt-1 h-1.5 w-1.5 rounded-full bg-secondary"></div>
+                            <span>Rassemblez vos documents essentiels (diplômes, certificats de langue, expérience de travail)</span>
+                          </li>
+                          <li className="flex items-start">
+                            <div className="mr-3 mt-1 h-1.5 w-1.5 rounded-full bg-secondary"></div>
+                            <span>Explorez nos ressources gratuites pour vous préparer à votre projet d'immigration</span>
+                          </li>
+                        </ul>
+                      </div>
+                    </CardContent>
+                    <CardFooter>
+                      <div className="w-full space-y-4">
+                        <Button 
+                          onClick={resetForm}
+                          variant="outline" 
+                          className="w-full"
                         >
-                          <SelectTrigger id="language" name="language">
-                            <SelectValue placeholder="Sélectionnez une langue" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="english">Anglais</SelectItem>
-                            <SelectItem value="french">Français</SelectItem>
-                            <SelectItem value="both">Les deux</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="languageLevel">Niveau</Label>
-                        <Select 
-                          value={formData.languageLevel} 
-                          onValueChange={(value) => handleSelectChange("languageLevel", value)}
+                          Recommencer le test
+                        </Button>
+                        <Button 
+                          className="w-full bg-secondary hover:bg-secondary/90" 
+                          asChild
                         >
-                          <SelectTrigger id="languageLevel" name="languageLevel">
-                            <SelectValue placeholder="Sélectionnez votre niveau" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="beginner">Débutant</SelectItem>
-                            <SelectItem value="intermediate">Intermédiaire</SelectItem>
-                            <SelectItem value="advanced">Avancé</SelectItem>
-                            <SelectItem value="fluent">Courant</SelectItem>
-                          </SelectContent>
-                        </Select>
+                          <a href="/contact">Contacter un conseiller</a>
+                        </Button>
                       </div>
-                    </div>
-                    
-                    <div className="space-y-2">
-                      <Label htmlFor="immigrationGoals">Objectifs d'immigration</Label>
-                      <Textarea 
-                        id="immigrationGoals" 
-                        name="immigrationGoals" 
-                        placeholder="Quels sont vos objectifs en termes d'immigration au Canada ? (travail, études, regroupement familial, etc.)"
-                        rows={3}
-                        value={formData.immigrationGoals}
-                        onChange={handleChange}
-                        required
-                      />
-                    </div>
-                    
-                    <div className="space-y-2">
-                      <Label htmlFor="additionalInfo">Informations supplémentaires</Label>
-                      <Textarea 
-                        id="additionalInfo" 
-                        name="additionalInfo" 
-                        placeholder="Y a-t-il d'autres informations que vous souhaitez partager ? (situation familiale, contraintes particulières, etc.)"
-                        rows={3}
-                        value={formData.additionalInfo}
-                        onChange={handleChange}
-                      />
-                    </div>
-                  </CardContent>
-                  <CardFooter>
-                    <Button 
-                      type="submit" 
-                      disabled={isSubmitting} 
-                      className="w-full bg-secondary hover:bg-secondary/90"
-                    >
-                      {isSubmitting ? "Envoi en cours..." : "Évaluer mon éligibilité"}
-                    </Button>
-                  </CardFooter>
-                </form>
+                    </CardFooter>
+                  </>
+                )}
               </Card>
             </div>
           </div>
