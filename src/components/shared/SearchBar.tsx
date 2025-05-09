@@ -1,36 +1,71 @@
 
-import { useRef, useEffect, useState } from "react";
-import { Search, X, Loader2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { 
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList
-} from "@/components/ui/command";
-import { useNavigate } from "react-router-dom";
-import { useSearch } from "@/hooks/useSearch";
+import { useState, useEffect, useRef } from "react";
+import { Search, X } from "lucide-react";
 
-export interface SearchResult {
+// Type pour les résultats de recherche
+interface SearchResult {
   id: string;
   title: string;
   category: string;
   description: string;
-  url: string;
 }
 
-const SearchBar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const searchRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
-  const navigate = useNavigate();
-  
-  const { results, isLoading, query, updateQuery } = useSearch();
+// Données fictives pour notre moteur de recherche
+const mockData: SearchResult[] = [
+  {
+    id: "1",
+    title: "Orientation Professionnelle",
+    category: "service",
+    description: "Trouvez votre voie professionnelle avec notre accompagnement personnalisé"
+  },
+  {
+    id: "2",
+    title: "Formation",
+    category: "service",
+    description: "Développez vos compétences professionnelles avec nos formations spécialisées"
+  },
+  {
+    id: "3",
+    title: "Coaching",
+    category: "service",
+    description: "Atteignez vos objectifs avec l'accompagnement de nos coachs certifiés"
+  },
+  {
+    id: "4",
+    title: "Rédiger un CV efficace",
+    category: "formation",
+    description: "Apprenez à créer un CV qui attire l'attention des recruteurs"
+  },
+  {
+    id: "5",
+    title: "Lettres de motivation",
+    category: "formation",
+    description: "Maîtrisez l'art d'écrire des lettres de motivation convaincantes"
+  }
+];
 
-  // Gestion des clics à l'extérieur pour fermer la recherche
+const SearchBar = () => {
+  const [query, setQuery] = useState<string>("");
+  const [results, setResults] = useState<SearchResult[]>([]);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const searchRef = useRef<HTMLDivElement>(null);
+
+  // Mise à jour des résultats en temps réel
+  useEffect(() => {
+    if (query.trim().length > 0) {
+      const searchResults = mockData.filter(item => 
+        item.title.toLowerCase().includes(query.toLowerCase()) || 
+        item.description.toLowerCase().includes(query.toLowerCase())
+      );
+      setResults(searchResults);
+      setIsOpen(true);
+    } else {
+      setResults([]);
+      setIsOpen(false);
+    }
+  }, [query]);
+
+  // Gestion des clics en dehors de la barre de recherche
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
@@ -38,170 +73,102 @@ const SearchBar = () => {
       }
     };
 
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setIsOpen(false);
-      } else if ((event.metaKey || event.ctrlKey) && event.key === "k") {
-        event.preventDefault();
-        setIsOpen((prev) => !prev);
-      }
-    };
-
-    document.addEventListener("click", handleClickOutside);
-    document.addEventListener("keydown", handleKeyDown);
-
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener("click", handleClickOutside);
-      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
-  // Ouvrir automatiquement les résultats dès que l'utilisateur commence à taper
-  useEffect(() => {
-    if (query && query.length > 0) {
-      setIsOpen(true);
-    }
-  }, [query]);
-
-  // Focus sur l'input quand la barre de recherche s'ouvre
-  useEffect(() => {
-    if (isOpen && inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, [isOpen]);
-
-  const handleSelectItem = (result: SearchResult) => {
-    navigate(result.url);
+  // Fonction pour effacer la recherche
+  const handleClear = () => {
+    setQuery("");
+    setResults([]);
     setIsOpen(false);
-    updateQuery("");
   };
 
-  const handleClearSearch = () => {
-    updateQuery("");
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
+  // Fonction pour gérer les changements dans l'input
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQuery(e.target.value);
   };
 
-  const handleSearchInteraction = () => {
-    setIsOpen(true);
-    setTimeout(() => {
-      if (inputRef.current) {
-        inputRef.current.focus();
-      }
-    }, 10);
-  };
-
-  // Gérer le changement de texte directement dans l'input
-  const handleInputChange = (value: string) => {
-    updateQuery(value);
-    // S'assurer que les résultats sont visibles
-    if (!isOpen && value.length > 0) {
-      setIsOpen(true);
-    }
-  };
+  // Grouper les résultats par catégorie
+  const serviceResults = results.filter(result => result.category === "service");
+  const formationResults = results.filter(result => result.category === "formation");
 
   return (
-    <div className="relative" ref={searchRef}>
-      <Button
-        variant="outline"
-        className="relative h-9 w-9 md:w-64 md:justify-start justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none hover:border-primary"
-        onClick={handleSearchInteraction}
-        aria-label="Rechercher les services"
-      >
-        <Search className="h-4 w-4 md:mr-2 text-muted-foreground" />
-        <span className="hidden md:inline-flex text-muted-foreground">Rechercher...</span>
-        <kbd className="pointer-events-none absolute right-1.5 top-1.5 hidden h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex">
-          <abbr title="Control">Ctrl</abbr>K
-        </kbd>
-      </Button>
+    <div className="relative w-full max-w-md" ref={searchRef}>
+      {/* Champ de recherche */}
+      <div className="relative">
+        <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+          <Search className="w-5 h-5 text-gray-400" />
+        </div>
+        <input
+          type="text"
+          value={query}
+          onChange={handleInputChange}
+          placeholder="Rechercher..."
+          className="w-full p-2 pl-10 pr-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-white focus:ring-blue-500 focus:border-blue-500"
+        />
+        {query && (
+          <button
+            onClick={handleClear}
+            className="absolute inset-y-0 right-0 flex items-center pr-3"
+          >
+            <X className="w-5 h-5 text-gray-400 hover:text-gray-700" />
+          </button>
+        )}
+      </div>
 
+      {/* Liste des résultats */}
       {isOpen && (
-        <div className="absolute top-full mt-2 w-screen max-w-md -translate-x-1/3 sm:-translate-x-1/2 z-50">
-          <Command className="rounded-lg border shadow-md animate-fade-in">
-            <div className="flex items-center border-b px-3">
-              <Search className="mr-2 h-4 w-4 shrink-0 opacity-50" />
-              <CommandInput
-                ref={inputRef}
-                placeholder="Rechercher un service, une formation..."
-                className="flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50"
-                value={query}
-                onValueChange={handleInputChange}
-                autoFocus
-              />
-              {query && (
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-6 w-6"
-                  onClick={handleClearSearch}
-                  aria-label="Effacer la recherche"
-                >
-                  <X className="h-4 w-4" />
-                </Button>
+        <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-96 overflow-auto">
+          {results.length > 0 ? (
+            <div className="py-1">
+              {/* Résultats de services */}
+              {serviceResults.length > 0 && (
+                <div>
+                  <div className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100">
+                    Services
+                  </div>
+                  {serviceResults.map(result => (
+                    <div
+                      key={result.id}
+                      className="px-4 py-2 text-sm cursor-pointer hover:bg-gray-100"
+                    >
+                      <div className="font-medium">{result.title}</div>
+                      <div className="text-xs text-gray-500 truncate">
+                        {result.description}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Résultats de formations */}
+              {formationResults.length > 0 && (
+                <div>
+                  <div className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100">
+                    Formations
+                  </div>
+                  {formationResults.map(result => (
+                    <div
+                      key={result.id}
+                      className="px-4 py-2 text-sm cursor-pointer hover:bg-gray-100"
+                    >
+                      <div className="font-medium">{result.title}</div>
+                      <div className="text-xs text-gray-500 truncate">
+                        {result.description}
+                      </div>
+                    </div>
+                  ))}
+                </div>
               )}
             </div>
-            <CommandList>
-              {query === "" ? (
-                <CommandEmpty>Commencez à taper pour rechercher</CommandEmpty>
-              ) : (
-                <>
-                  {isLoading ? (
-                    <div className="flex items-center justify-center py-6">
-                      <Loader2 className="h-4 w-4 animate-spin" />
-                      <span className="ml-2 text-sm text-muted-foreground">Recherche en cours...</span>
-                    </div>
-                  ) : results.length === 0 ? (
-                    <CommandEmpty>Aucun résultat trouvé</CommandEmpty>
-                  ) : (
-                    <>
-                      {results.filter(result => result.category === "service").length > 0 && (
-                        <CommandGroup heading="Services">
-                          {results
-                            .filter((result) => result.category === "service")
-                            .map((result) => (
-                              <CommandItem
-                                key={result.id}
-                                onSelect={() => handleSelectItem(result)}
-                                className="cursor-pointer"
-                              >
-                                <div className="flex flex-col">
-                                  <span>{result.title}</span>
-                                  <span className="text-xs text-gray-500 truncate">
-                                    {result.description}
-                                  </span>
-                                </div>
-                              </CommandItem>
-                            ))}
-                        </CommandGroup>
-                      )}
-                      
-                      {results.filter(result => result.category === "formation").length > 0 && (
-                        <CommandGroup heading="Formations">
-                          {results
-                            .filter((result) => result.category === "formation")
-                            .map((result) => (
-                              <CommandItem
-                                key={result.id}
-                                onSelect={() => handleSelectItem(result)}
-                                className="cursor-pointer"
-                              >
-                                <div className="flex flex-col">
-                                  <span>{result.title}</span>
-                                  <span className="text-xs text-gray-500 truncate">
-                                    {result.description}
-                                  </span>
-                                </div>
-                              </CommandItem>
-                            ))}
-                        </CommandGroup>
-                      )}
-                    </>
-                  )}
-                </>
-              )}
-            </CommandList>
-          </Command>
+          ) : (
+            <div className="px-4 py-2 text-sm text-gray-700">
+              Aucun résultat trouvé
+            </div>
+          )}
         </div>
       )}
     </div>
