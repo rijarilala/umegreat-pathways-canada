@@ -1,5 +1,5 @@
 
-import { useState, useRef, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import { Search, X, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -24,12 +24,11 @@ export interface SearchResult {
 
 const SearchBar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
   const searchRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
   
-  const { results, isLoading } = useSearch(searchQuery);
+  const { results, isLoading, query, updateQuery, performSearch } = useSearch();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -56,13 +55,14 @@ const SearchBar = () => {
     };
   }, []);
 
-  // Ouvrir automatiquement le menu quand l'utilisateur commence à taper
+  // Assurer que la recherche est effectuée dès que l'utilisateur commence à taper
   useEffect(() => {
-    if (searchQuery.length > 0 && !isOpen) {
+    if (query && !isOpen) {
       setIsOpen(true);
     }
-  }, [searchQuery]);
+  }, [query]);
 
+  // Focus sur l'input quand la barre de recherche s'ouvre
   useEffect(() => {
     if (isOpen && inputRef.current) {
       inputRef.current.focus();
@@ -72,14 +72,32 @@ const SearchBar = () => {
   const handleSelectItem = (result: SearchResult) => {
     navigate(result.url);
     setIsOpen(false);
-    setSearchQuery("");
+    updateQuery("");
   };
 
   const handleClearSearch = () => {
-    setSearchQuery("");
+    updateQuery("");
     if (inputRef.current) {
       inputRef.current.focus();
     }
+  };
+
+  // Forcer la réouverture de la barre de recherche après toute interaction
+  const handleSearchInteraction = () => {
+    if (!isOpen) {
+      setIsOpen(true);
+      // Lancer une nouvelle recherche si la requête existe déjà
+      if (query) {
+        performSearch(query);
+      }
+    }
+    
+    // Focus sur le champ de recherche
+    setTimeout(() => {
+      if (inputRef.current) {
+        inputRef.current.focus();
+      }
+    }, 10);
   };
 
   return (
@@ -87,7 +105,7 @@ const SearchBar = () => {
       <Button
         variant="outline"
         className="relative h-9 w-9 md:w-64 md:justify-start justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none hover:border-primary"
-        onClick={() => setIsOpen(true)}
+        onClick={handleSearchInteraction}
         aria-label="Rechercher les services"
       >
         <Search className="h-4 w-4 md:mr-2 text-muted-foreground" />
@@ -106,11 +124,11 @@ const SearchBar = () => {
                 ref={inputRef}
                 placeholder="Rechercher un service, une formation..."
                 className="flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50"
-                value={searchQuery}
-                onValueChange={setSearchQuery}
+                value={query}
+                onValueChange={updateQuery}
                 autoFocus
               />
-              {searchQuery && (
+              {query && (
                 <Button
                   variant="ghost"
                   size="icon"
@@ -123,7 +141,7 @@ const SearchBar = () => {
               )}
             </div>
             <CommandList>
-              {searchQuery === "" ? (
+              {query === "" ? (
                 <CommandEmpty>Commencez à taper pour rechercher</CommandEmpty>
               ) : (
                 <>
