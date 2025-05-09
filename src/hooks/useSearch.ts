@@ -14,11 +14,13 @@ export function useSearch(query: string) {
       return;
     }
 
-    const search = async () => {
-      setIsLoading(true);
+    // Marquer le début de la recherche
+    setIsLoading(true);
+    
+    // Utiliser un debounce plus court pour une réponse plus rapide
+    const timeoutId = setTimeout(() => {
       try {
-        // Simuler un délai réseau court
-        await new Promise(resolve => setTimeout(resolve, 150));
+        // Récupérer les résultats synchrones (puisque searchData n'est pas asynchrone)
         const searchResults = searchData(query);
         setResults(searchResults);
       } catch (error) {
@@ -27,10 +29,8 @@ export function useSearch(query: string) {
       } finally {
         setIsLoading(false);
       }
-    };
+    }, 100); // Réduit à 100ms pour une réponse plus rapide
 
-    // Utiliser un debounce pour éviter des recherches inutiles
-    const timeoutId = setTimeout(search, 200);
     return () => clearTimeout(timeoutId);
   }, [query]);
 

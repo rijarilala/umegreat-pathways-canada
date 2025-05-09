@@ -56,6 +56,13 @@ const SearchBar = () => {
     };
   }, []);
 
+  // Ouvrir automatiquement le menu quand l'utilisateur commence à taper
+  useEffect(() => {
+    if (searchQuery.length > 0 && !isOpen) {
+      setIsOpen(true);
+    }
+  }, [searchQuery]);
+
   useEffect(() => {
     if (isOpen && inputRef.current) {
       inputRef.current.focus();
@@ -101,6 +108,7 @@ const SearchBar = () => {
                 className="flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50"
                 value={searchQuery}
                 onValueChange={setSearchQuery}
+                autoFocus
               />
               {searchQuery && (
                 <Button
