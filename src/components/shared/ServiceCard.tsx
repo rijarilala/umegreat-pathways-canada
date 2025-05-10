@@ -40,7 +40,7 @@ const ServiceCard = ({
 
   return (
     <>
-      <Card className="hover-card overflow-hidden">
+      <Card className="hover-card overflow-hidden h-full flex flex-col">
         <div className="h-40 w-full overflow-hidden">
           <img
             src={image}
@@ -51,7 +51,7 @@ const ServiceCard = ({
         <CardHeader className="p-4">
           <CardTitle className="text-xl">{title}</CardTitle>
         </CardHeader>
-        <CardContent className="p-4 pt-0">
+        <CardContent className="p-4 pt-0 flex-grow">
           <CardDescription className="text-gray-600">
             {description}
           </CardDescription>
