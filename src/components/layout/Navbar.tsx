@@ -1,4 +1,5 @@
 
+
 import { useState, useEffect } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -45,33 +46,33 @@ const Navbar = () => {
       } transition-all duration-300`}
       aria-label="Navigation principale"
     >
-      <div className="container mx-auto px-4 md:px-6">
+      <div className="container mx-auto px-3 md:px-4">
         <div 
           className={`flex items-center justify-between ${
-            scrolled ? "h-14" : "h-16"
+            scrolled ? "h-12" : "h-14"
           } transition-all duration-300`}
         >
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link to="/" className="flex items-center">
-              <span className="font-bold text-2xl text-primary hover:text-primary/90 transition-colors">
+              <span className="font-bold text-xl text-primary hover:text-primary/90 transition-colors">
                 UMEGREAT Pro
               </span>
             </Link>
           </div>
 
           {/* Search Bar (visible on desktop) */}
-          <div className="hidden md:flex md:mx-4 lg:mx-8">
+          <div className="hidden md:flex md:mx-3 lg:mx-6">
             <GlobalSearchBar />
           </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:block">
-            <div className="ml-10 flex items-center space-x-4">
+            <div className="ml-6 flex items-center space-x-2">
               <NavLink 
                 to="/" 
                 className={({ isActive }) => 
-                  `text-gray-700 hover:text-primary px-3 py-2 relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left ${
+                  `text-gray-700 hover:text-primary px-2 py-1.5 text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left ${
                     isActive ? "text-primary font-medium after:scale-x-100" : ""
                   }`
                 }
@@ -83,11 +84,11 @@ const Navbar = () => {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <button 
-                    className="text-gray-700 hover:text-primary px-3 py-2 inline-flex items-center group"
+                    className="text-gray-700 hover:text-primary px-2 py-1.5 text-sm inline-flex items-center group"
                     aria-expanded={isMenuOpen}
                   >
                     Services 
-                    <ChevronDown className="ml-1 h-4 w-4 transition-transform group-data-[state=open]:rotate-180" />
+                    <ChevronDown className="ml-1 h-3.5 w-3.5 transition-transform group-data-[state=open]:rotate-180" />
                   </button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="center" className="w-56 bg-white animate-fade-in">
@@ -132,7 +133,7 @@ const Navbar = () => {
               <NavLink 
                 to="/services" 
                 className={({ isActive }) => 
-                  `text-gray-700 hover:text-primary px-3 py-2 relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left ${
+                  `text-gray-700 hover:text-primary px-2 py-1.5 text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left ${
                     isActive ? "text-primary font-medium after:scale-x-100" : ""
                   }`
                 }
@@ -144,7 +145,7 @@ const Navbar = () => {
               <NavLink 
                 to="/about" 
                 className={({ isActive }) => 
-                  `text-gray-700 hover:text-primary px-3 py-2 relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left ${
+                  `text-gray-700 hover:text-primary px-2 py-1.5 text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left ${
                     isActive ? "text-primary font-medium after:scale-x-100" : ""
                   }`
                 }
@@ -156,7 +157,7 @@ const Navbar = () => {
               <NavLink 
                 to="/testimonials" 
                 className={({ isActive }) => 
-                  `text-gray-700 hover:text-primary px-3 py-2 relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left ${
+                  `text-gray-700 hover:text-primary px-2 py-1.5 text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left ${
                     isActive ? "text-primary font-medium after:scale-x-100" : ""
                   }`
                 }
@@ -168,7 +169,7 @@ const Navbar = () => {
               <NavLink 
                 to="/faq" 
                 className={({ isActive }) => 
-                  `text-gray-700 hover:text-primary px-3 py-2 relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left ${
+                  `text-gray-700 hover:text-primary px-2 py-1.5 text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left ${
                     isActive ? "text-primary font-medium after:scale-x-100" : ""
                   }`
                 }
@@ -180,7 +181,7 @@ const Navbar = () => {
               <NavLink 
                 to="/contact" 
                 className={({ isActive }) => 
-                  `text-gray-700 hover:text-primary px-3 py-2 relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left ${
+                  `text-gray-700 hover:text-primary px-2 py-1.5 text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left ${
                     isActive ? "text-primary font-medium after:scale-x-100" : ""
                   }`
                 }
@@ -195,7 +196,7 @@ const Navbar = () => {
           <div className="hidden md:block">
             <Button 
               asChild 
-              className="bg-secondary hover:bg-secondary/90 transform transition-all hover:scale-105 duration-200"
+              className="bg-secondary hover:bg-secondary/90 transform transition-all hover:scale-105 duration-200 text-sm py-1 px-4 h-auto"
             >
               <Link to="/contact">Nous contacter</Link>
             </Button>
@@ -206,15 +207,15 @@ const Navbar = () => {
             <GlobalSearchBar />
             <button
               type="button"
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-primary focus:outline-none"
+              className="inline-flex items-center justify-center p-1.5 rounded-md text-gray-700 hover:text-primary focus:outline-none"
               onClick={toggleMenu}
               aria-expanded={isMenuOpen}
               aria-label="Menu principal"
             >
               {isMenuOpen ? (
-                <X className="h-6 w-6 animate-fade-in" />
+                <X className="h-5 w-5 animate-fade-in" />
               ) : (
-                <Menu className="h-6 w-6 animate-fade-in" />
+                <Menu className="h-5 w-5 animate-fade-in" />
               )}
             </button>
           </div>
@@ -231,7 +232,7 @@ const Navbar = () => {
           <NavLink
             to="/"
             className={({ isActive }) =>
-              `block px-3 py-2 rounded-md text-base ${
+              `block px-3 py-2 rounded-md text-sm ${
                 isActive 
                   ? "text-primary font-medium border-l-2 border-primary pl-2" 
                   : "text-gray-700 hover:text-primary"
@@ -245,7 +246,7 @@ const Navbar = () => {
           
           <div className="relative">
             <details className="group [&_summary::-webkit-details-marker]:hidden">
-              <summary className="flex cursor-pointer items-center gap-2 px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary">
+              <summary className="flex cursor-pointer items-center gap-2 px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-primary">
                 <span>Services</span>
                 <ChevronDown className="h-4 w-4 transition-transform group-open:rotate-180" />
               </summary>
@@ -307,7 +308,7 @@ const Navbar = () => {
           <NavLink
             to="/services"
             className={({ isActive }) =>
-              `block px-3 py-2 rounded-md text-base ${
+              `block px-3 py-2 rounded-md text-sm ${
                 isActive 
                   ? "text-primary font-medium border-l-2 border-primary pl-2" 
                   : "text-gray-700 hover:text-primary"
@@ -322,7 +323,7 @@ const Navbar = () => {
           <NavLink
             to="/about"
             className={({ isActive }) =>
-              `block px-3 py-2 rounded-md text-base ${
+              `block px-3 py-2 rounded-md text-sm ${
                 isActive 
                   ? "text-primary font-medium border-l-2 border-primary pl-2" 
                   : "text-gray-700 hover:text-primary"
@@ -337,7 +338,7 @@ const Navbar = () => {
           <NavLink
             to="/testimonials"
             className={({ isActive }) =>
-              `block px-3 py-2 rounded-md text-base ${
+              `block px-3 py-2 rounded-md text-sm ${
                 isActive 
                   ? "text-primary font-medium border-l-2 border-primary pl-2" 
                   : "text-gray-700 hover:text-primary"
@@ -352,7 +353,7 @@ const Navbar = () => {
           <NavLink
             to="/faq"
             className={({ isActive }) =>
-              `block px-3 py-2 rounded-md text-base ${
+              `block px-3 py-2 rounded-md text-sm ${
                 isActive 
                   ? "text-primary font-medium border-l-2 border-primary pl-2" 
                   : "text-gray-700 hover:text-primary"
@@ -367,7 +368,7 @@ const Navbar = () => {
           <NavLink
             to="/contact"
             className={({ isActive }) =>
-              `block px-3 py-2 rounded-md text-base ${
+              `block px-3 py-2 rounded-md text-sm ${
                 isActive 
                   ? "text-primary font-medium border-l-2 border-primary pl-2" 
                   : "text-gray-700 hover:text-primary"
@@ -381,7 +382,7 @@ const Navbar = () => {
           
           <Link
             to="/contact"
-            className="block px-3 py-2 rounded-md text-base font-medium bg-secondary text-white hover:bg-secondary/90 text-center mt-4 transform transition-all hover:scale-105 duration-200"
+            className="block px-3 py-2 rounded-md text-sm font-medium bg-secondary text-white hover:bg-secondary/90 text-center mt-4 transform transition-all hover:scale-105 duration-200"
             onClick={toggleMenu}
           >
             Nous contacter
@@ -393,3 +394,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
