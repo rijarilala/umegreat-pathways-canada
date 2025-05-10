@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import MainLayout from "@/components/layout/MainLayout";
@@ -20,7 +19,14 @@ const formations = {
         publicCible: "Demandeurs d'emploi, personnes en reconversion professionnelle, jeunes diplômés",
         duree: "4 heures",
         format: "Atelier interactif en groupe restreint ou coaching individuel"
-      }
+      },
+      packReferences: [
+        {
+          id: 1,
+          title: "Pack Insertion Pro",
+          linkTo: "/services/formation?tab=packs"
+        }
+      ]
     },
     {
       id: 2,
@@ -32,7 +38,14 @@ const formations = {
         publicCible: "Demandeurs d'emploi, personnes en reconversion professionnelle, jeunes diplômés",
         duree: "4 heures",
         format: "Atelier interactif en groupe restreint ou coaching individuel"
-      }
+      },
+      packReferences: [
+        {
+          id: 1,
+          title: "Pack Insertion Pro",
+          linkTo: "/services/formation?tab=packs"
+        }
+      ]
     },
     {
       id: 3,
@@ -44,7 +57,14 @@ const formations = {
         publicCible: "Demandeurs d'emploi, personnes en reconversion professionnelle, jeunes diplômés",
         duree: "8 heures",
         format: "Atelier pratique avec simulations d'entretiens et feedback personnalisé"
-      }
+      },
+      packReferences: [
+        {
+          id: 1,
+          title: "Pack Insertion Pro",
+          linkTo: "/services/formation?tab=packs"
+        }
+      ]
     },
     {
       id: 4,
@@ -56,7 +76,14 @@ const formations = {
         publicCible: "Jeunes diplômés, étudiants en fin de cursus",
         duree: "12 heures",
         format: "Formation en groupe avec exercices pratiques et mises en situation"
-      }
+      },
+      packReferences: [
+        {
+          id: 1,
+          title: "Pack Insertion Pro",
+          linkTo: "/services/formation?tab=packs"
+        }
+      ]
     }
   ],
   rh: [
@@ -70,7 +97,14 @@ const formations = {
         publicCible: "Responsables RH débutants, managers, entrepreneurs",
         duree: "20 heures",
         format: "Formation théorique et pratique avec études de cas réels"
-      }
+      },
+      packReferences: [
+        {
+          id: 2,
+          title: "Pack RH Starter",
+          linkTo: "/services/formation?tab=packs"
+        }
+      ]
     },
     {
       id: 6,
@@ -82,7 +116,14 @@ const formations = {
         publicCible: "Recruteurs, responsables RH, managers impliqués dans le recrutement",
         duree: "16 heures",
         format: "Formation pratique avec simulations d'entretiens et études de cas"
-      }
+      },
+      packReferences: [
+        {
+          id: 2,
+          title: "Pack RH Starter",
+          linkTo: "/services/formation?tab=packs"
+        }
+      ]
     },
     {
       id: 7,
@@ -94,7 +135,14 @@ const formations = {
         publicCible: "Responsables RH, managers d'équipe",
         duree: "12 heures",
         format: "Formation pratique avec outils et modèles adaptables à votre organisation"
-      }
+      },
+      packReferences: [
+        {
+          id: 2,
+          title: "Pack RH Starter",
+          linkTo: "/services/formation?tab=packs"
+        }
+      ]
     }
   ]
 };
@@ -179,6 +227,7 @@ const Formation = () => {
                       description={formation.description}
                       image={formation.image}
                       details={formation.details}
+                      packReferences={formation.packReferences}
                     />
                   ))}
                 </div>
@@ -198,6 +247,7 @@ const Formation = () => {
                       description={formation.description}
                       image={formation.image}
                       details={formation.details}
+                      packReferences={formation.packReferences}
                     />
                   ))}
                 </div>
@@ -219,6 +269,7 @@ const Formation = () => {
                     description={pack.description}
                     image={pack.image}
                     modules={pack.modules}
+                    linkTo={pack.linkTo}
                   />
                 ))}
               </div>

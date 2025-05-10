@@ -5,6 +5,12 @@ import { Button } from "@/components/ui/button";
 import DetailModal from "./DetailModal";
 import { Link } from "react-router-dom";
 
+interface PackReference {
+  id: number;
+  title: string;
+  linkTo: string;
+}
+
 interface ServiceCardProps {
   title: string;
   description: string;
@@ -18,6 +24,7 @@ interface ServiceCardProps {
     format?: string;
     modules?: string[];
   };
+  packReferences?: PackReference[];
 }
 
 const ServiceCard = ({
@@ -27,6 +34,7 @@ const ServiceCard = ({
   linkTo,
   showDetailButton = true,
   details,
+  packReferences,
 }: ServiceCardProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -76,6 +84,7 @@ const ServiceCard = ({
         details={details}
         linkTo={linkTo}
         image={image}
+        packReferences={packReferences}
       />
     </>
   );
