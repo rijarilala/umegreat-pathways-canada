@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { X, ChevronDown } from "lucide-react";
+import { X, ChevronDown, ArrowLeft, Info } from "lucide-react";
 import { Link } from "react-router-dom";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
@@ -198,16 +198,42 @@ const DetailModal = ({
                   </div>
                 )}
 
-                {/* Call to action button - now properly accessible */}
-                {linkTo && (
-                  <div className="mt-6 pt-4 border-t border-gray-100">
+                {/* Call to action buttons - now with the new CTA options */}
+                <div className="mt-6 pt-4 border-t border-gray-100 space-y-3">
+                  {/* Original CTA */}
+                  {linkTo && (
                     <Button asChild className="w-full bg-primary hover:bg-primary/90">
                       <Link to={linkTo} onClick={onClose}>
                         {linkText}
                       </Link>
                     </Button>
+                  )}
+                  
+                  {/* New CTAs */}
+                  <div className="grid grid-cols-2 gap-3">
+                    <Button 
+                      variant="outline" 
+                      className="w-full flex items-center justify-center gap-2"
+                      asChild
+                    >
+                      <Link to="/services/formation" onClick={onClose}>
+                        <ArrowLeft className="h-4 w-4" />
+                        <span>Retour aux formations</span>
+                      </Link>
+                    </Button>
+                    
+                    <Button 
+                      variant="secondary" 
+                      className="w-full flex items-center justify-center gap-2"
+                      asChild
+                    >
+                      <Link to="/contact" onClick={onClose}>
+                        <Info className="h-4 w-4" />
+                        <span>Demandez plus d'infos</span>
+                      </Link>
+                    </Button>
                   </div>
-                )}
+                </div>
               </div>
             </div>
           </ScrollArea>
