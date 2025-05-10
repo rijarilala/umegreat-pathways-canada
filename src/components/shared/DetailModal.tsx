@@ -4,6 +4,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { X, ChevronDown } from "lucide-react";
 import { Link } from "react-router-dom";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 
 interface PackReference {
@@ -42,6 +43,7 @@ const DetailModal = ({
   packReferences
 }: DetailModalProps) => {
   const [showScrollIndicator, setShowScrollIndicator] = useState(true);
+  const [hasScrollContent, setHasScrollContent] = useState(false);
 
   // Handle keyboard events (Escape key)
   useEffect(() => {
@@ -59,43 +61,47 @@ const DetailModal = ({
     }
   }, [isOpen, onClose]);
 
-  // Handle scroll indicator visibility
+  // Check if content is scrollable when modal opens
   useEffect(() => {
     if (!isOpen) return;
     
-    const modalContent = document.querySelector('.modal-content');
-    if (!modalContent) return;
-
-    const handleScroll = () => {
-      const { scrollTop, scrollHeight, clientHeight } = modalContent;
-      // Hide indicator once user has scrolled a bit
-      if (scrollTop > 50) {
-        setShowScrollIndicator(false);
-      } else if (scrollHeight > clientHeight + 20) {
-        setShowScrollIndicator(true);
-      } else {
-        setShowScrollIndicator(false);
-      }
+    const checkScrollable = () => {
+      const contentDiv = document.querySelector('.modal-scroll-content');
+      if (!contentDiv) return;
+      
+      const hasOverflow = contentDiv.scrollHeight > contentDiv.clientHeight;
+      setHasScrollContent(hasOverflow);
+      setShowScrollIndicator(hasOverflow);
     };
-
-    modalContent.addEventListener('scroll', handleScroll);
-    // Check initially if content is scrollable
-    handleScroll();
-
+    
+    // Check after a short delay to ensure content is rendered
+    setTimeout(checkScrollable, 100);
+    
+    // Also check on window resize
+    window.addEventListener('resize', checkScrollable);
     return () => {
-      modalContent.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', checkScrollable);
     };
   }, [isOpen]);
 
+  // Handle scroll event to hide indicator once user has scrolled
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    if (e.currentTarget.scrollTop > 30) {
+      setShowScrollIndicator(false);
+    } else {
+      setShowScrollIndicator(hasScrollContent);
+    }
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="max-w-[90%] md:max-w-[70%] lg:max-w-[60%] xl:max-w-2xl p-0 rounded-xl border-0 shadow-lg">
+      <DialogContent className="max-w-[90%] md:max-w-[70%] lg:max-w-[60%] xl:max-w-2xl p-0 rounded-xl border-0 shadow-lg overflow-hidden">
         <div className="relative flex flex-col max-h-[90vh]">
-          {/* Close button - repositioned to be clearly visible */}
+          {/* Close button - always visible and accessible */}
           <Button 
             onClick={onClose} 
             size="icon" 
-            className="absolute right-4 top-4 z-10 h-8 w-8 rounded-full bg-white/80 hover:bg-white shadow-sm"
+            className="absolute right-4 top-4 z-50 h-8 w-8 rounded-full bg-white/80 hover:bg-white shadow-sm"
             aria-label="Fermer"
           >
             <X className="h-4 w-4" />
@@ -112,98 +118,101 @@ const DetailModal = ({
             </div>
           )}
 
-          {/* Content container with proper scrolling */}
-          <div 
-            className="p-5 md:p-6 overflow-y-auto modal-content flex-grow"
-            style={{ overflowY: 'auto', WebkitOverflowScrolling: 'touch' }}
+          {/* Content container with ScrollArea for proper scrolling */}
+          <ScrollArea 
+            className="flex-grow modal-scroll-content"
+            onScrollCapture={handleScroll}
+            style={{ maxHeight: "calc(90vh - (image ? 14rem : 0))" }}
           >
-            {/* Title and description */}
-            <div className="mb-6">
-              <h3 className="text-2xl font-bold mb-3">{title}</h3>
-              {description && (
-                <p className="text-gray-600 text-lg">{description}</p>
-              )}
-            </div>
+            <div className="p-5 md:p-6">
+              {/* Title and description */}
+              <div className="mb-6">
+                <h3 className="text-2xl font-bold mb-3 pr-8">{title}</h3>
+                {description && (
+                  <p className="text-gray-600 text-lg">{description}</p>
+                )}
+              </div>
 
-            {/* Details content */}
-            <div className="space-y-6">
-              {details?.objectif && (
-                <div>
-                  <h4 className="text-lg font-semibold text-gray-900 mb-2">Objectif</h4>
-                  <p className="text-gray-600">{details.objectif}</p>
-                </div>
-              )}
-              
-              {details?.publicCible && (
-                <div>
-                  <h4 className="text-lg font-semibold text-gray-900 mb-2">Public cible</h4>
-                  <p className="text-gray-600">{details.publicCible}</p>
-                </div>
-              )}
-              
-              {details?.duree && (
-                <div>
-                  <h4 className="text-lg font-semibold text-gray-900 mb-2">Durée</h4>
-                  <p className="text-gray-600">{details.duree}</p>
-                </div>
-              )}
-              
-              {details?.format && (
-                <div>
-                  <h4 className="text-lg font-semibold text-gray-900 mb-2">Format</h4>
-                  <p className="text-gray-600">{details.format}</p>
-                </div>
-              )}
-              
-              {details?.modules && details.modules.length > 0 && (
-                <div>
-                  <h4 className="text-lg font-semibold text-gray-900 mb-2">Modules inclus</h4>
-                  <ul className="list-disc list-inside text-gray-600 space-y-2 pl-2">
-                    {details.modules.map((module, index) => (
-                      <li key={index} className="pl-1">{module}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {/* Pack references */}
-              {packReferences && packReferences.length > 0 && (
-                <div className="pt-2 pb-2">
-                  <h4 className="text-lg font-semibold text-gray-900 mb-3">Cette formation est incluse dans ces packs</h4>
-                  <div className="space-y-3">
-                    {packReferences.map((pack) => (
-                      <div 
-                        key={pack.id} 
-                        className="bg-blue-50 p-4 rounded-lg transition-all hover:bg-blue-100"
-                      >
-                        <Link 
-                          to={pack.linkTo}
-                          className="flex items-center justify-between text-blue-600 hover:text-blue-800 font-medium"
-                          onClick={onClose}
-                        >
-                          <span>{pack.title}</span>
-                          <span className="text-lg">→</span>
-                        </Link>
-                      </div>
-                    ))}
+              {/* Details content */}
+              <div className="space-y-6">
+                {details?.objectif && (
+                  <div>
+                    <h4 className="text-lg font-semibold text-gray-900 mb-2">Objectif</h4>
+                    <p className="text-gray-600">{details.objectif}</p>
                   </div>
-                </div>
-              )}
+                )}
+                
+                {details?.publicCible && (
+                  <div>
+                    <h4 className="text-lg font-semibold text-gray-900 mb-2">Public cible</h4>
+                    <p className="text-gray-600">{details.publicCible}</p>
+                  </div>
+                )}
+                
+                {details?.duree && (
+                  <div>
+                    <h4 className="text-lg font-semibold text-gray-900 mb-2">Durée</h4>
+                    <p className="text-gray-600">{details.duree}</p>
+                  </div>
+                )}
+                
+                {details?.format && (
+                  <div>
+                    <h4 className="text-lg font-semibold text-gray-900 mb-2">Format</h4>
+                    <p className="text-gray-600">{details.format}</p>
+                  </div>
+                )}
+                
+                {details?.modules && details.modules.length > 0 && (
+                  <div>
+                    <h4 className="text-lg font-semibold text-gray-900 mb-2">Modules inclus</h4>
+                    <ul className="list-disc list-inside text-gray-600 space-y-2 pl-2">
+                      {details.modules.map((module, index) => (
+                        <li key={index} className="pl-1">{module}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
 
-              {/* Call to action button */}
-              {linkTo && (
-                <div className="mt-6 pt-4 border-t border-gray-100">
-                  <Button asChild className="w-full bg-primary hover:bg-primary/90">
-                    <Link to={linkTo} onClick={onClose}>
-                      {linkText}
-                    </Link>
-                  </Button>
-                </div>
-              )}
+                {/* Pack references */}
+                {packReferences && packReferences.length > 0 && (
+                  <div className="pt-2 pb-6">
+                    <h4 className="text-lg font-semibold text-gray-900 mb-3">Cette formation est incluse dans ces packs</h4>
+                    <div className="space-y-3">
+                      {packReferences.map((pack) => (
+                        <div 
+                          key={pack.id} 
+                          className="bg-blue-50 p-4 rounded-lg transition-all hover:bg-blue-100"
+                        >
+                          <Link 
+                            to={pack.linkTo}
+                            className="flex items-center justify-between text-blue-600 hover:text-blue-800 font-medium"
+                            onClick={onClose}
+                          >
+                            <span>{pack.title}</span>
+                            <span className="text-lg">→</span>
+                          </Link>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Call to action button - now properly accessible */}
+                {linkTo && (
+                  <div className="mt-6 pt-4 border-t border-gray-100">
+                    <Button asChild className="w-full bg-primary hover:bg-primary/90">
+                      <Link to={linkTo} onClick={onClose}>
+                        {linkText}
+                      </Link>
+                    </Button>
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
+          </ScrollArea>
           
-          {/* Scroll indicator */}
+          {/* Scroll indicator with gradient background */}
           {showScrollIndicator && (
             <div className="absolute bottom-0 left-0 right-0 pb-2 pt-10 pointer-events-none bg-gradient-to-t from-white via-white to-transparent flex flex-col items-center justify-end transition-opacity duration-300">
               <ChevronDown className="h-5 w-5 text-gray-500 animate-bounce" />
