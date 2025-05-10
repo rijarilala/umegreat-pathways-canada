@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import MainLayout from "@/components/layout/MainLayout";
@@ -158,7 +159,8 @@ const packs = [
       "Lettre de motivation efficace",
       "Préparation aux entretiens",
       "Transition vers la vie active"
-    ]
+    ],
+    linkTo: "/contact" // Adding the missing linkTo property
   },
   {
     id: 2,
@@ -170,7 +172,8 @@ const packs = [
       "Recrutement et sélection",
       "Évaluation des performances",
       "Bonus: Outils RH pratiques"
-    ]
+    ],
+    linkTo: "/contact" // Adding the missing linkTo property
   }
 ];
 
