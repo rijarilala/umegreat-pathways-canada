@@ -122,7 +122,7 @@ const DetailModal = ({
           <ScrollArea 
             className="flex-grow modal-scroll-content"
             onScrollCapture={handleScroll}
-            style={{ maxHeight: "calc(90vh - (image ? 14rem : 0))" }}
+            style={{ maxHeight: `calc(90vh - ${image ? '14rem' : '0'})` }}
           >
             <div className="p-5 md:p-6">
               {/* Title and description */}
@@ -198,7 +198,7 @@ const DetailModal = ({
                   </div>
                 )}
 
-                {/* Call to action buttons - now with the new CTA options */}
+                {/* Call to action buttons */}
                 <div className="mt-6 pt-4 border-t border-gray-100 space-y-3">
                   {/* Original CTA */}
                   {linkTo && (

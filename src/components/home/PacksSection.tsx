@@ -11,8 +11,10 @@ const packs = [
     modules: [
       "CV percutant",
       "Lettre de motivation efficace",
-      "Préparation aux entretiens",
-      "Transition vers la vie active"
+      "Préparation aux entretiens d'embauche",
+      "Recherche du premier/nouveau emploi",
+      "Transition vers la vie active",
+      "Création et optimisation LinkedIn"
     ],
     linkTo: "/services/formation?tab=packs"
   },
@@ -23,9 +25,10 @@ const packs = [
     image: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&q=80&w=1200",
     modules: [
       "Gestion des ressources humaines",
-      "Recrutement et sélection",
-      "Évaluation des performances",
-      "Bonus: Outils RH pratiques"
+      "Fondamentaux RH",
+      "Stratégies RH",
+      "Mise en œuvre RH",
+      "Assimilation pratique RH"
     ],
     linkTo: "/services/formation?tab=packs"
   }

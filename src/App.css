@@ -1,2 +1,32 @@
 
 /* Any custom styles not covered by Tailwind can go here */
+
+/* Animation pour l'indicateur de défilement */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.animate-bounce {
+  animation: bounce 1s infinite;
+}
+
+/* Style pour les cartes avec effet hover */
+.hover-card {
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.hover-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Style pour les sections de services */
+.service-category {
+  border-left: 3px solid theme('colors.primary.DEFAULT');
+  padding-left: 1rem;
+}

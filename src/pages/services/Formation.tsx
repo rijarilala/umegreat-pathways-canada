@@ -50,7 +50,7 @@ const formations = {
     },
     {
       id: 3,
-      title: "Préparation aux entretiens",
+      title: "Préparation aux entretiens d'embauche",
       description: "Préparez-vous efficacement aux entretiens d'embauche pour mettre toutes les chances de votre côté.",
       image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=1200",
       details: {
@@ -69,7 +69,26 @@ const formations = {
     },
     {
       id: 4,
-      title: "Transition vers la vie active",
+      title: "Recherche du premier ou nouveau emploi",
+      description: "Développez une stratégie efficace pour trouver votre premier emploi ou changer de poste.",
+      image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&q=80&w=1200",
+      details: {
+        objectif: "Acquérir les techniques et outils nécessaires pour mener une recherche d'emploi structurée et efficace",
+        publicCible: "Jeunes diplômés, demandeurs d'emploi, personnes en reconversion",
+        duree: "6 heures",
+        format: "Ateliers pratiques et coaching individuel"
+      },
+      packReferences: [
+        {
+          id: 1,
+          title: "Pack Insertion Pro",
+          linkTo: "/services/formation?tab=packs"
+        }
+      ]
+    },
+    {
+      id: 5,
+      title: "Transition vers la vie active professionnelle",
       description: "Facilitez votre passage des études au monde professionnel avec notre programme de transition.",
       image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&q=80&w=1200",
       details: {
@@ -85,12 +104,31 @@ const formations = {
           linkTo: "/services/formation?tab=packs"
         }
       ]
+    },
+    {
+      id: 6,
+      title: "Création et optimisation de compte LinkedIn",
+      description: "Apprenez à créer un profil LinkedIn attractif pour maximiser votre visibilité professionnelle.",
+      image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=1200",
+      details: {
+        objectif: "Maîtriser les techniques pour créer un profil LinkedIn efficace et étendre son réseau professionnel",
+        publicCible: "Professionnels de tous niveaux, demandeurs d'emploi, entrepreneurs",
+        duree: "4 heures",
+        format: "Atelier pratique avec mise en application directe"
+      },
+      packReferences: [
+        {
+          id: 1,
+          title: "Pack Insertion Pro",
+          linkTo: "/services/formation?tab=packs"
+        }
+      ]
     }
   ],
   rh: [
     {
-      id: 5,
-      title: "Gestion des ressources humaines",
+      id: 7,
+      title: "Gestion des Ressources Humaines",
       description: "Acquérez les fondamentaux de la GRH pour gérer efficacement le capital humain de votre entreprise.",
       image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=1200",
       details: {
@@ -98,44 +136,6 @@ const formations = {
         publicCible: "Responsables RH débutants, managers, entrepreneurs",
         duree: "20 heures",
         format: "Formation théorique et pratique avec études de cas réels"
-      },
-      packReferences: [
-        {
-          id: 2,
-          title: "Pack RH Starter",
-          linkTo: "/services/formation?tab=packs"
-        }
-      ]
-    },
-    {
-      id: 6,
-      title: "Recrutement et sélection",
-      description: "Optimisez votre processus de recrutement pour attirer et sélectionner les meilleurs talents.",
-      image: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&q=80&w=1200",
-      details: {
-        objectif: "Développer une stratégie de recrutement efficace et maîtriser les techniques d'entretien et d'évaluation",
-        publicCible: "Recruteurs, responsables RH, managers impliqués dans le recrutement",
-        duree: "16 heures",
-        format: "Formation pratique avec simulations d'entretiens et études de cas"
-      },
-      packReferences: [
-        {
-          id: 2,
-          title: "Pack RH Starter",
-          linkTo: "/services/formation?tab=packs"
-        }
-      ]
-    },
-    {
-      id: 7,
-      title: "Évaluation des performances",
-      description: "Mettez en place un système d'évaluation des performances juste et motivant pour vos équipes.",
-      image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&q=80&w=1200",
-      details: {
-        objectif: "Concevoir et mettre en œuvre un processus d'évaluation des performances efficace et motivant",
-        publicCible: "Responsables RH, managers d'équipe",
-        duree: "12 heures",
-        format: "Formation pratique avec outils et modèles adaptables à votre organisation"
       },
       packReferences: [
         {
@@ -157,10 +157,12 @@ const packs = [
     modules: [
       "CV percutant",
       "Lettre de motivation efficace",
-      "Préparation aux entretiens",
-      "Transition vers la vie active"
+      "Préparation aux entretiens d'embauche",
+      "Recherche du premier ou nouveau emploi",
+      "Transition vers la vie active professionnelle",
+      "Création et optimisation de compte LinkedIn"
     ],
-    linkTo: "/contact" // Adding the missing linkTo property
+    linkTo: "/contact"
   },
   {
     id: 2,
@@ -168,12 +170,13 @@ const packs = [
     description: "Maîtrisez les fondamentaux de la gestion des ressources humaines et développez vos compétences RH.",
     image: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&q=80&w=1200",
     modules: [
-      "Gestion des ressources humaines",
-      "Recrutement et sélection",
-      "Évaluation des performances",
-      "Bonus: Outils RH pratiques"
+      "Fondamentaux de la GRH",
+      "Stratégies RH",
+      "Mise en œuvre des politiques RH",
+      "Assimilation pratique",
+      "Outils RH modernes"
     ],
-    linkTo: "/contact" // Adding the missing linkTo property
+    linkTo: "/contact"
   }
 ];
 
