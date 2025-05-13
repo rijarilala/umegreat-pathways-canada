@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, Menu, Search, X } from "lucide-react";
+import { ChevronDown, Menu, X } from "lucide-react";
 import GlobalSearchBar from "@/components/shared/GlobalSearchBar";
 import {
   DropdownMenu,
@@ -31,7 +31,6 @@ const serviceCategories = {
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [searchExpanded, setSearchExpanded] = useState(false);
   const location = useLocation();
   const isMobile = useIsMobile();
 
@@ -49,15 +48,10 @@ const Navbar = () => {
   // Fermer le menu mobile lors du changement de route
   useEffect(() => {
     setIsMenuOpen(false);
-    setSearchExpanded(false);
   }, [location.pathname]);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
-  };
-
-  const toggleSearch = () => {
-    setSearchExpanded(!searchExpanded);
   };
 
   // Handle link click to scroll to top
@@ -85,18 +79,16 @@ const Navbar = () => {
 
   return (
     <nav 
-      className={cn(
-        "bg-white/80 backdrop-blur-md border-b sticky top-0 z-50 transition-all duration-300",
-        scrolled ? "shadow-sm" : ""
-      )}
+      className={`bg-white backdrop-blur-sm bg-opacity-95 border-b sticky top-0 z-50 ${
+        scrolled ? "shadow-md" : "shadow-sm"
+      } transition-all duration-300`}
       aria-label="Navigation principale"
     >
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-3 md:px-4">
         <div 
-          className={cn(
-            "flex items-center justify-between transition-all duration-300",
-            scrolled ? "h-14" : "h-16"
-          )}
+          className={`flex items-center justify-between ${
+            scrolled ? "h-10" : "h-12"
+          } transition-all duration-300`}
         >
           {/* Logo */}
           <div className="flex-shrink-0">
@@ -105,20 +97,25 @@ const Navbar = () => {
               className="flex items-center"
               onClick={handleLinkClick}
             >
-              <span className="font-bold text-primary hover:text-primary/90 transition-colors">
+              <span className="font-bold text-lg text-primary hover:text-primary/90 transition-colors">
                 UMEGREAT Pro
               </span>
             </Link>
           </div>
 
-          {/* Desktop Navigation - Centered */}
-          <div className="hidden md:flex md:items-center md:justify-center md:flex-1 mx-4">
-            <div className="flex items-center space-x-1">
+          {/* Search Bar (visible on desktop) */}
+          <div className="hidden md:flex md:mx-3 lg:mx-6">
+            <GlobalSearchBar />
+          </div>
+
+          {/* Desktop Navigation */}
+          <div className="hidden md:block">
+            <div className="ml-6 flex items-center space-x-1.5">
               <NavLink 
                 to="/" 
                 className={({ isActive }) => 
                   cn(
-                    "text-gray-700 hover:text-secondary px-2 py-1.5 text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
+                    "text-gray-700 hover:text-primary px-2 py-1.5 text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
                     isActive && "text-primary font-medium after:scale-x-100"
                   )
                 }
@@ -132,14 +129,14 @@ const Navbar = () => {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <button 
-                    className="text-gray-700 hover:text-secondary px-2 py-1.5 text-sm inline-flex items-center group"
+                    className="text-gray-700 hover:text-primary px-2 py-1.5 text-sm inline-flex items-center group"
                     aria-expanded={isMenuOpen}
                   >
                     Orientation & Insertion Pro
                     <ChevronDown className="ml-1 h-3 w-3 transition-transform group-data-[state=open]:rotate-180" />
                   </button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="center" className="w-56 bg-white/95 animate-fade-in">
+                <DropdownMenuContent align="center" className="w-56 bg-white animate-fade-in">
                   {renderDropdownItems(serviceCategories.orientation)}
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -148,14 +145,14 @@ const Navbar = () => {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <button 
-                    className="text-gray-700 hover:text-secondary px-2 py-1.5 text-sm inline-flex items-center group"
+                    className="text-gray-700 hover:text-primary px-2 py-1.5 text-sm inline-flex items-center group"
                     aria-expanded={isMenuOpen}
                   >
                     Immigration & Études
                     <ChevronDown className="ml-1 h-3 w-3 transition-transform group-data-[state=open]:rotate-180" />
                   </button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="center" className="w-56 bg-white/95 animate-fade-in">
+                <DropdownMenuContent align="center" className="w-56 bg-white animate-fade-in">
                   {renderDropdownItems(serviceCategories.immigration)}
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -164,14 +161,14 @@ const Navbar = () => {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <button 
-                    className="text-gray-700 hover:text-secondary px-2 py-1.5 text-sm inline-flex items-center group"
+                    className="text-gray-700 hover:text-primary px-2 py-1.5 text-sm inline-flex items-center group"
                     aria-expanded={isMenuOpen}
                   >
                     Formations & Développement
                     <ChevronDown className="ml-1 h-3 w-3 transition-transform group-data-[state=open]:rotate-180" />
                   </button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="center" className="w-56 bg-white/95 animate-fade-in">
+                <DropdownMenuContent align="center" className="w-56 bg-white animate-fade-in">
                   {renderDropdownItems(serviceCategories.formation)}
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -180,7 +177,7 @@ const Navbar = () => {
                 to="/services" 
                 className={({ isActive }) => 
                   cn(
-                    "text-gray-700 hover:text-secondary px-2 py-1.5 text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
+                    "text-gray-700 hover:text-primary px-2 py-1.5 text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
                     isActive && "text-primary font-medium after:scale-x-100"
                   )
                 }
@@ -194,7 +191,7 @@ const Navbar = () => {
                 to="/about" 
                 className={({ isActive }) => 
                   cn(
-                    "text-gray-700 hover:text-secondary px-2 py-1.5 text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
+                    "text-gray-700 hover:text-primary px-2 py-1.5 text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
                     isActive && "text-primary font-medium after:scale-x-100"
                   )
                 }
@@ -208,7 +205,7 @@ const Navbar = () => {
                 to="/testimonials" 
                 className={({ isActive }) => 
                   cn(
-                    "text-gray-700 hover:text-secondary px-2 py-1.5 text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
+                    "text-gray-700 hover:text-primary px-2 py-1.5 text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
                     isActive && "text-primary font-medium after:scale-x-100"
                   )
                 }
@@ -222,7 +219,7 @@ const Navbar = () => {
                 to="/faq" 
                 className={({ isActive }) => 
                   cn(
-                    "text-gray-700 hover:text-secondary px-2 py-1.5 text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
+                    "text-gray-700 hover:text-primary px-2 py-1.5 text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
                     isActive && "text-primary font-medium after:scale-x-100"
                   )
                 }
@@ -236,7 +233,7 @@ const Navbar = () => {
                 to="/contact" 
                 className={({ isActive }) => 
                   cn(
-                    "text-gray-700 hover:text-secondary px-2 py-1.5 text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
+                    "text-gray-700 hover:text-primary px-2 py-1.5 text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
                     isActive && "text-primary font-medium after:scale-x-100"
                   )
                 }
@@ -248,100 +245,56 @@ const Navbar = () => {
             </div>
           </div>
 
-          {/* Right side elements */}
-          <div className="flex items-center gap-2">
-            {/* Desktop expanded search */}
-            <div className="hidden md:block">
-              {searchExpanded ? (
-                <div className="relative animate-fade-in">
-                  <GlobalSearchBar />
-                  <button 
-                    onClick={toggleSearch}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-primary"
-                  >
-                    <X className="h-4 w-4" />
-                  </button>
-                </div>
-              ) : (
-                <button 
-                  onClick={toggleSearch} 
-                  className="p-1.5 rounded-full hover:bg-gray-100 text-gray-700 hover:text-primary transition-colors"
-                  aria-label="Ouvrir la recherche"
-                >
-                  <Search className="h-5 w-5" />
-                </button>
-              )}
-            </div>
-            
-            {/* Contact button */}
-            <div className="hidden md:block">
-              <Button 
-                asChild 
-                variant="secondary"
-                size="sm"
-                className="transform transition-all hover:scale-105 duration-200"
+          {/* Contact button */}
+          <div className="hidden md:block">
+            <Button 
+              asChild 
+              className="bg-secondary hover:bg-secondary/90 transform transition-all hover:scale-105 duration-200 text-sm py-1 px-3 h-auto"
+            >
+              <Link 
+                to="/contact"
+                onClick={handleLinkClick}
               >
-                <Link 
-                  to="/contact"
-                  onClick={handleLinkClick}
-                >
-                  Nous contacter
-                </Link>
-              </Button>
-            </div>
+                Nous contacter
+              </Link>
+            </Button>
+          </div>
 
-            {/* Mobile search and menu */}
-            <div className="md:hidden flex items-center gap-2">
-              <button
-                onClick={toggleSearch}
-                className="p-1.5 rounded-full hover:bg-gray-100 text-gray-700 hover:text-primary transition-colors"
-                aria-label={searchExpanded ? "Fermer la recherche" : "Ouvrir la recherche"}
-              >
-                <Search className="h-5 w-5" />
-              </button>
-              
-              <button
-                type="button"
-                className="p-1.5 rounded-full hover:bg-gray-100 text-gray-700 hover:text-primary transition-colors"
-                onClick={toggleMenu}
-                aria-expanded={isMenuOpen}
-                aria-label="Menu principal"
-              >
-                {isMenuOpen ? (
-                  <X className="h-5 w-5 animate-fade-in" />
-                ) : (
-                  <Menu className="h-5 w-5 animate-fade-in" />
-                )}
-              </button>
-            </div>
+          {/* Mobile menu button and search */}
+          <div className="md:hidden flex items-center gap-2">
+            <GlobalSearchBar />
+            <button
+              type="button"
+              className="inline-flex items-center justify-center p-1.5 rounded-md text-gray-700 hover:text-primary focus:outline-none"
+              onClick={toggleMenu}
+              aria-expanded={isMenuOpen}
+              aria-label="Menu principal"
+            >
+              {isMenuOpen ? (
+                <X className="h-5 w-5 animate-fade-in" />
+              ) : (
+                <Menu className="h-5 w-5 animate-fade-in" />
+              )}
+            </button>
           </div>
         </div>
-        
-        {/* Mobile search when expanded */}
-        {searchExpanded && isMobile && (
-          <div className="md:hidden py-2 px-1 animate-fade-in">
-            <GlobalSearchBar />
-          </div>
-        )}
       </div>
 
       {/* Mobile menu with animation */}
       <div 
-        className={cn(
-          "md:hidden bg-white/95 shadow-lg overflow-hidden transition-all duration-300 ease-in-out",
+        className={`md:hidden bg-white shadow-lg overflow-hidden transition-all duration-300 ease-in-out ${
           isMenuOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
-        )}
+        }`}
       >
-        <div className="px-4 pt-2 pb-3 space-y-1">
+        <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
           <NavLink
             to="/"
             className={({ isActive }) =>
-              cn(
-                "block px-3 py-2 rounded-md text-sm",
+              `block px-3 py-2 rounded-md text-sm ${
                 isActive 
                   ? "text-primary font-medium border-l-2 border-primary pl-2" 
-                  : "text-gray-700 hover:text-secondary"
-              )
+                  : "text-gray-700 hover:text-primary"
+              }`
             }
             onClick={() => {
               toggleMenu();
@@ -355,7 +308,7 @@ const Navbar = () => {
           {/* Mobile: Orientation & Insertion Pro */}
           <div className="relative">
             <details className="group [&_summary::-webkit-details-marker]:hidden">
-              <summary className="flex cursor-pointer items-center gap-2 px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-secondary">
+              <summary className="flex cursor-pointer items-center gap-2 px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-primary">
                 <span>Orientation & Insertion Pro</span>
                 <ChevronDown className="h-4 w-4 transition-transform group-open:rotate-180" />
               </summary>
@@ -365,7 +318,7 @@ const Navbar = () => {
                   <Link 
                     key={item.path}
                     to={item.path} 
-                    className="block px-3 py-1.5 text-sm text-gray-700 hover:text-secondary"
+                    className="block px-3 py-1.5 text-sm text-gray-700 hover:text-primary"
                     onClick={() => {
                       toggleMenu();
                       handleLinkClick();
@@ -381,7 +334,7 @@ const Navbar = () => {
           {/* Mobile: Immigration & Études */}
           <div className="relative">
             <details className="group [&_summary::-webkit-details-marker]:hidden">
-              <summary className="flex cursor-pointer items-center gap-2 px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-secondary">
+              <summary className="flex cursor-pointer items-center gap-2 px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-primary">
                 <span>Immigration & Études</span>
                 <ChevronDown className="h-4 w-4 transition-transform group-open:rotate-180" />
               </summary>
@@ -391,7 +344,7 @@ const Navbar = () => {
                   <Link 
                     key={item.path}
                     to={item.path} 
-                    className="block px-3 py-1.5 text-sm text-gray-700 hover:text-secondary"
+                    className="block px-3 py-1.5 text-sm text-gray-700 hover:text-primary"
                     onClick={() => {
                       toggleMenu();
                       handleLinkClick();
@@ -407,7 +360,7 @@ const Navbar = () => {
           {/* Mobile: Formations & Développement */}
           <div className="relative">
             <details className="group [&_summary::-webkit-details-marker]:hidden">
-              <summary className="flex cursor-pointer items-center gap-2 px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-secondary">
+              <summary className="flex cursor-pointer items-center gap-2 px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-primary">
                 <span>Formations & Développement</span>
                 <ChevronDown className="h-4 w-4 transition-transform group-open:rotate-180" />
               </summary>
@@ -417,7 +370,7 @@ const Navbar = () => {
                   <Link 
                     key={item.path}
                     to={item.path} 
-                    className="block px-3 py-1.5 text-sm text-gray-700 hover:text-secondary"
+                    className="block px-3 py-1.5 text-sm text-gray-700 hover:text-primary"
                     onClick={() => {
                       toggleMenu();
                       handleLinkClick();
@@ -433,12 +386,11 @@ const Navbar = () => {
           <NavLink
             to="/services"
             className={({ isActive }) =>
-              cn(
-                "block px-3 py-2 rounded-md text-sm",
+              `block px-3 py-2 rounded-md text-sm ${
                 isActive 
                   ? "text-primary font-medium border-l-2 border-primary pl-2" 
-                  : "text-gray-700 hover:text-secondary"
-              )
+                  : "text-gray-700 hover:text-primary"
+              }`
             }
             onClick={() => {
               toggleMenu();
@@ -452,12 +404,11 @@ const Navbar = () => {
           <NavLink
             to="/about"
             className={({ isActive }) =>
-              cn(
-                "block px-3 py-2 rounded-md text-sm",
+              `block px-3 py-2 rounded-md text-sm ${
                 isActive 
                   ? "text-primary font-medium border-l-2 border-primary pl-2" 
-                  : "text-gray-700 hover:text-secondary"
-              )
+                  : "text-gray-700 hover:text-primary"
+              }`
             }
             onClick={() => {
               toggleMenu();
@@ -471,12 +422,11 @@ const Navbar = () => {
           <NavLink
             to="/testimonials"
             className={({ isActive }) =>
-              cn(
-                "block px-3 py-2 rounded-md text-sm",
+              `block px-3 py-2 rounded-md text-sm ${
                 isActive 
                   ? "text-primary font-medium border-l-2 border-primary pl-2" 
-                  : "text-gray-700 hover:text-secondary"
-              )
+                  : "text-gray-700 hover:text-primary"
+              }`
             }
             onClick={() => {
               toggleMenu();
@@ -490,12 +440,11 @@ const Navbar = () => {
           <NavLink
             to="/faq"
             className={({ isActive }) =>
-              cn(
-                "block px-3 py-2 rounded-md text-sm",
+              `block px-3 py-2 rounded-md text-sm ${
                 isActive 
                   ? "text-primary font-medium border-l-2 border-primary pl-2" 
-                  : "text-gray-700 hover:text-secondary"
-              )
+                  : "text-gray-700 hover:text-primary"
+              }`
             }
             onClick={() => {
               toggleMenu();
@@ -509,12 +458,11 @@ const Navbar = () => {
           <NavLink
             to="/contact"
             className={({ isActive }) =>
-              cn(
-                "block px-3 py-2 rounded-md text-sm",
+              `block px-3 py-2 rounded-md text-sm ${
                 isActive 
                   ? "text-primary font-medium border-l-2 border-primary pl-2" 
-                  : "text-gray-700 hover:text-secondary"
-              )
+                  : "text-gray-700 hover:text-primary"
+              }`
             }
             onClick={() => {
               toggleMenu();
