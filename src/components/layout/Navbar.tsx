@@ -15,16 +15,13 @@ import { cn } from "@/lib/utils";
 
 const serviceCategories = {
   orientation: [
-    { title: "Orientation professionnelle", path: "/services/orientation" },
+    { title: "Conseil & orientation", path: "/services/orientation" },
     { title: "Coaching", path: "/services/coaching" },
     { title: "Test d'éligibilité", path: "/services/test" },
   ],
   immigration: [
-    { title: "Immigration & Accompagnement", path: "/services/immigration" },
+    { title: "S'installer durablement au Canada", path: "/services/immigration" },
     { title: "Études au Canada", path: "/services/etudes" },
-  ],
-  formation: [
-    { title: "Formation", path: "/services/formation" },
   ],
 };
 
@@ -125,14 +122,14 @@ const Navbar = () => {
                 Accueil
               </NavLink>
               
-              {/* Dropdown 1: Orientation & Insertion Pro */}
+              {/* Dropdown 1: Accompagnement */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <button 
                     className="text-gray-700 hover:text-primary px-2 py-1.5 text-sm inline-flex items-center group"
                     aria-expanded={isMenuOpen}
                   >
-                    Orientation & Insertion Pro
+                    Accompagnement
                     <ChevronDown className="ml-1 h-3 w-3 transition-transform group-data-[state=open]:rotate-180" />
                   </button>
                 </DropdownMenuTrigger>
@@ -141,14 +138,14 @@ const Navbar = () => {
                 </DropdownMenuContent>
               </DropdownMenu>
               
-              {/* Dropdown 2: Immigration & Études */}
+              {/* Dropdown 2: Mobilité internationale */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <button 
                     className="text-gray-700 hover:text-primary px-2 py-1.5 text-sm inline-flex items-center group"
                     aria-expanded={isMenuOpen}
                   >
-                    Immigration & Études
+                    Mobilité internationale
                     <ChevronDown className="ml-1 h-3 w-3 transition-transform group-data-[state=open]:rotate-180" />
                   </button>
                 </DropdownMenuTrigger>
@@ -157,21 +154,20 @@ const Navbar = () => {
                 </DropdownMenuContent>
               </DropdownMenu>
               
-              {/* Dropdown 3: Formations & Développement */}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <button 
-                    className="text-gray-700 hover:text-primary px-2 py-1.5 text-sm inline-flex items-center group"
-                    aria-expanded={isMenuOpen}
-                  >
-                    Formations & Développement
-                    <ChevronDown className="ml-1 h-3 w-3 transition-transform group-data-[state=open]:rotate-180" />
-                  </button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="center" className="w-56 bg-white animate-fade-in">
-                  {renderDropdownItems(serviceCategories.formation)}
-                </DropdownMenuContent>
-              </DropdownMenu>
+              {/* Simple link: Formations */}
+              <NavLink 
+                to="/services/formation" 
+                className={({ isActive }) => 
+                  cn(
+                    "text-gray-700 hover:text-primary px-2 py-1.5 text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
+                    isActive && "text-primary font-medium after:scale-x-100"
+                  )
+                }
+                aria-current={location.pathname === "/services/formation" ? "page" : undefined}
+                onClick={handleLinkClick}
+              >
+                Formations
+              </NavLink>
               
               <NavLink 
                 to="/services" 
@@ -191,7 +187,7 @@ const Navbar = () => {
                 to="/about" 
                 className={({ isActive }) => 
                   cn(
-                    "text-gray-700 hover:text-primary px-2 py-1.5 text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
+                    "text-gray-700 hover:text-primary px-2 py-1.5 text-sm relative inline-block after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
                     isActive && "text-primary font-medium after:scale-x-100"
                   )
                 }
@@ -305,11 +301,11 @@ const Navbar = () => {
             Accueil
           </NavLink>
           
-          {/* Mobile: Orientation & Insertion Pro */}
+          {/* Mobile: Accompagnement */}
           <div className="relative">
             <details className="group [&_summary::-webkit-details-marker]:hidden">
               <summary className="flex cursor-pointer items-center gap-2 px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-primary">
-                <span>Orientation & Insertion Pro</span>
+                <span>Accompagnement</span>
                 <ChevronDown className="h-4 w-4 transition-transform group-open:rotate-180" />
               </summary>
 
@@ -331,11 +327,11 @@ const Navbar = () => {
             </details>
           </div>
           
-          {/* Mobile: Immigration & Études */}
+          {/* Mobile: Mobilité internationale */}
           <div className="relative">
             <details className="group [&_summary::-webkit-details-marker]:hidden">
               <summary className="flex cursor-pointer items-center gap-2 px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-primary">
-                <span>Immigration & Études</span>
+                <span>Mobilité internationale</span>
                 <ChevronDown className="h-4 w-4 transition-transform group-open:rotate-180" />
               </summary>
 
@@ -357,31 +353,24 @@ const Navbar = () => {
             </details>
           </div>
           
-          {/* Mobile: Formations & Développement */}
-          <div className="relative">
-            <details className="group [&_summary::-webkit-details-marker]:hidden">
-              <summary className="flex cursor-pointer items-center gap-2 px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-primary">
-                <span>Formations & Développement</span>
-                <ChevronDown className="h-4 w-4 transition-transform group-open:rotate-180" />
-              </summary>
-
-              <nav className="mt-1.5 ml-6 flex flex-col space-y-2 animate-slide-in">
-                {serviceCategories.formation.map((item) => (
-                  <Link 
-                    key={item.path}
-                    to={item.path} 
-                    className="block px-3 py-1.5 text-sm text-gray-700 hover:text-primary"
-                    onClick={() => {
-                      toggleMenu();
-                      handleLinkClick();
-                    }}
-                  >
-                    {item.title}
-                  </Link>
-                ))}
-              </nav>
-            </details>
-          </div>
+          {/* Mobile: Formations (simple link) */}
+          <NavLink
+            to="/services/formation"
+            className={({ isActive }) =>
+              `block px-3 py-2 rounded-md text-sm ${
+                isActive 
+                  ? "text-primary font-medium border-l-2 border-primary pl-2" 
+                  : "text-gray-700 hover:text-primary"
+              }`
+            }
+            onClick={() => {
+              toggleMenu();
+              handleLinkClick();
+            }}
+            aria-current={location.pathname === "/services/formation" ? "page" : undefined}
+          >
+            Formations
+          </NavLink>
           
           <NavLink
             to="/services"
