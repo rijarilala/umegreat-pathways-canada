@@ -8,8 +8,8 @@ const HeroSection = () => {
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
         <img 
-          src="https://images.unsplash.com/photo-1501854140801-50d01698950b?auto=format&fit=crop&q=80&w=1920" 
-          alt="Hero background" 
+          src="/lovable-uploads/27929dc8-d730-4fdb-9a0a-4a6f7e7bf026.png" 
+          alt="Étudiants marchant vers un campus universitaire" 
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-black opacity-60"></div>
