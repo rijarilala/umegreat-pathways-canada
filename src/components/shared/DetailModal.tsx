@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -243,11 +242,16 @@ const DetailModal = ({
             </div>
           </ScrollArea>
           
-          {/* Scroll indicator with gradient background */}
+          {/* Improved scroll indicator with gradient background */}
           {showScrollIndicator && (
-            <div className="absolute bottom-0 left-0 right-0 pb-2 pt-10 pointer-events-none bg-gradient-to-t from-white via-white to-transparent flex flex-col items-center justify-end transition-opacity duration-300">
-              <ChevronDown className="h-5 w-5 text-gray-500 animate-bounce" />
-              <p className="text-sm text-gray-500 font-medium">Faites défiler pour voir plus</p>
+            <div 
+              className="absolute bottom-0 left-0 right-0 pb-3 pt-14 pointer-events-none 
+              flex flex-col items-center justify-end transition-opacity duration-300
+              bg-gradient-to-t from-white via-white/90 to-transparent"
+              aria-hidden="true"
+            >
+              <ChevronDown className="h-5 w-5 text-gray-500 animate-bounce mb-1" />
+              <p className="text-sm text-gray-600 font-medium">Faites défiler pour voir plus</p>
             </div>
           )}
         </div>
