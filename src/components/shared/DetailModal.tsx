@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -42,7 +43,7 @@ const DetailModal = ({
   image,
   packReferences
 }: DetailModalProps) => {
-  const [showScrollIndicator, setShowScrollIndicator] = useState(true);
+  const [showScrollIndicator, setShowScrollIndicator] = useState(false);
   const [hasScrollContent, setHasScrollContent] = useState(false);
 
   // Handle keyboard events (Escape key)
@@ -61,35 +62,50 @@ const DetailModal = ({
     }
   }, [isOpen, onClose]);
 
-  // Check if content is scrollable when modal opens
+  // Improved: Check if content is scrollable when modal opens
   useEffect(() => {
     if (!isOpen) return;
     
     const checkScrollable = () => {
-      const contentDiv = document.querySelector('.modal-scroll-content');
-      if (!contentDiv) return;
+      // Use querySelectorAll to get all scrollable content elements inside this modal
+      const contentDiv = document.querySelector('.detail-modal-content');
+      if (!contentDiv) {
+        console.log("Scroll content element not found");
+        return;
+      }
       
       const hasOverflow = contentDiv.scrollHeight > contentDiv.clientHeight;
+      console.log("Content scrollable:", hasOverflow, "scrollHeight:", contentDiv.scrollHeight, "clientHeight:", contentDiv.clientHeight);
       setHasScrollContent(hasOverflow);
       setShowScrollIndicator(hasOverflow);
     };
     
-    // Check after a short delay to ensure content is rendered
-    setTimeout(checkScrollable, 100);
+    // Check multiple times to ensure content has fully rendered
+    const timeoutId = setTimeout(checkScrollable, 100);
+    const secondCheckId = setTimeout(checkScrollable, 300);
     
     // Also check on window resize
     window.addEventListener('resize', checkScrollable);
     return () => {
       window.removeEventListener('resize', checkScrollable);
+      clearTimeout(timeoutId);
+      clearTimeout(secondCheckId);
     };
   }, [isOpen]);
 
   // Handle scroll event to hide indicator once user has scrolled
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
-    if (e.currentTarget.scrollTop > 30) {
+    const target = e.currentTarget;
+    const scrolledAmount = target.scrollTop;
+    const scrolledToBottom = Math.abs(
+      (target.scrollHeight - target.scrollTop) - target.clientHeight
+    ) < 10;
+    
+    console.log("Scroll detected:", scrolledAmount);
+    
+    // Hide indicator as soon as user scrolls or reaches bottom
+    if (scrolledAmount > 10 || scrolledToBottom) {
       setShowScrollIndicator(false);
-    } else {
-      setShowScrollIndicator(hasScrollContent);
     }
   };
 
@@ -97,8 +113,10 @@ const DetailModal = ({
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className="max-w-[90%] md:max-w-[70%] lg:max-w-[60%] xl:max-w-2xl p-0 rounded-xl border-0 shadow-lg overflow-hidden">
         {/* Adding DialogTitle and DialogDescription for accessibility */}
-        <DialogTitle className="sr-only">{title}</DialogTitle>
-        <DialogDescription className="sr-only">{description || "Détails du service"}</DialogDescription>
+        <VisuallyHidden>
+          <DialogTitle>{title}</DialogTitle>
+          <DialogDescription>{description || "Détails du service"}</DialogDescription>
+        </VisuallyHidden>
         
         <div className="relative flex flex-col max-h-[90vh]">
           {/* Close button - always visible and accessible */}
@@ -116,15 +134,16 @@ const DetailModal = ({
             <div className="w-full h-48 md:h-56 overflow-hidden flex-shrink-0">
               <img 
                 src={image} 
-                alt={title} 
+                alt="" 
                 className="w-full h-full object-cover"
+                aria-hidden="true"
               />
             </div>
           )}
 
           {/* Content container with ScrollArea for proper scrolling */}
           <ScrollArea 
-            className="flex-grow modal-scroll-content"
+            className="flex-grow detail-modal-content"
             onScrollCapture={handleScroll}
             style={{ maxHeight: `calc(90vh - ${image ? '14rem' : '0'})` }}
           >
@@ -242,16 +261,17 @@ const DetailModal = ({
             </div>
           </ScrollArea>
           
-          {/* Improved scroll indicator with gradient background */}
+          {/* Enhanced scroll indicator with gradient background */}
           {showScrollIndicator && (
             <div 
-              className="absolute bottom-0 left-0 right-0 pb-3 pt-14 pointer-events-none 
+              className="absolute bottom-0 left-0 right-0 pb-6 pt-16 pointer-events-none 
               flex flex-col items-center justify-end transition-opacity duration-300
-              bg-gradient-to-t from-white via-white/90 to-transparent"
+              bg-gradient-to-t from-white via-white/90 to-transparent z-10"
               aria-hidden="true"
+              style={{ opacity: showScrollIndicator ? 1 : 0 }}
             >
-              <ChevronDown className="h-5 w-5 text-gray-500 animate-bounce mb-1" />
-              <p className="text-sm text-gray-600 font-medium">Faites défiler pour voir plus</p>
+              <ChevronDown className="h-6 w-6 text-gray-500 animate-bounce mb-2" />
+              <p className="text-sm text-gray-700 font-medium">Faites défiler pour voir plus</p>
             </div>
           )}
         </div>

@@ -47,42 +47,51 @@ const ResponsiveModal = ({
     }
   }, [isOpen, onClose]);
 
-  // Check if content is scrollable when modal opens
+  // Improved: Check if content is scrollable when modal opens
   useEffect(() => {
     if (!isOpen) return;
     
     const checkScrollable = () => {
       const contentDiv = document.querySelector('.modal-scroll-content');
-      if (!contentDiv) return;
+      if (!contentDiv) {
+        console.log("Modal scroll content element not found");
+        return;
+      }
       
       const hasOverflow = contentDiv.scrollHeight > contentDiv.clientHeight;
+      console.log("Modal content scrollable:", hasOverflow, "scrollHeight:", contentDiv.scrollHeight, "clientHeight:", contentDiv.clientHeight);
       setHasScrollContent(hasOverflow);
       setShowScrollIndicator(hasOverflow);
     };
     
-    // Check after rendering to ensure content is calculated
+    // Check multiple times to ensure content has fully rendered
     const timeoutId = setTimeout(checkScrollable, 100);
+    const secondCheckId = setTimeout(checkScrollable, 300);
+    const finalCheckId = setTimeout(checkScrollable, 500);
     
     // Also check on window resize
     window.addEventListener('resize', checkScrollable);
     return () => {
       window.removeEventListener('resize', checkScrollable);
       clearTimeout(timeoutId);
+      clearTimeout(secondCheckId);
+      clearTimeout(finalCheckId);
     };
   }, [isOpen]);
 
   // Handle scroll event to hide indicator
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const target = e.currentTarget;
+    const scrolledAmount = target.scrollTop;
     const scrolledToBottom = Math.abs(
       (target.scrollHeight - target.scrollTop) - target.clientHeight
     ) < 10;
     
-    // Hide indicator if user has scrolled down or reached bottom
-    if (target.scrollTop > 30 || scrolledToBottom) {
+    console.log("Modal scroll detected:", scrolledAmount);
+    
+    // Hide indicator as soon as user scrolls or reaches bottom
+    if (scrolledAmount > 10 || scrolledToBottom) {
       setShowScrollIndicator(false);
-    } else {
-      setShowScrollIndicator(hasScrollContent);
     }
   };
 
@@ -95,9 +104,11 @@ const ResponsiveModal = ({
           maxWidth
         )}
       >
-        {/* Hidden but accessible title and description for screen readers */}
-        <DialogTitle className="sr-only">{title}</DialogTitle>
-        <DialogDescription className="sr-only">{description || "Contenu modal"}</DialogDescription>
+        {/* Accessible but visually hidden title and description */}
+        <VisuallyHidden>
+          <DialogTitle>{title}</DialogTitle>
+          <DialogDescription>{description || "Contenu modal"}</DialogDescription>
+        </VisuallyHidden>
         
         <div className="relative flex flex-col max-h-[90vh]">
           {/* Close button */}
@@ -129,6 +140,7 @@ const ResponsiveModal = ({
             className="flex-grow modal-scroll-content"
             onScrollCapture={handleScroll}
             style={{ maxHeight: `calc(90vh - ${headerImage ? '14rem' : '0'})` }}
+            data-testid="modal-scroll-area"
           >
             <div className="p-5 md:p-6">
               {/* Visible title for sighted users */}
@@ -146,16 +158,17 @@ const ResponsiveModal = ({
             </div>
           </ScrollArea>
           
-          {/* Scroll indicator with gradient background */}
+          {/* Enhanced scroll indicator with gradient background */}
           {showScrollIndicator && (
             <div 
-              className="absolute bottom-0 left-0 right-0 pb-3 pt-16 pointer-events-none 
+              className="absolute bottom-0 left-0 right-0 pb-6 pt-16 pointer-events-none 
               flex flex-col items-center justify-end transition-opacity duration-300
-              bg-gradient-to-t from-white via-white/90 to-transparent"
+              bg-gradient-to-t from-white via-white/90 to-transparent z-10"
               aria-hidden="true"
+              style={{ opacity: showScrollIndicator ? 1 : 0 }}
             >
-              <ChevronDown className="h-5 w-5 text-gray-500 animate-bounce mb-1" />
-              <p className="text-sm text-gray-600 font-medium">Faites défiler pour voir plus</p>
+              <ChevronDown className="h-6 w-6 text-gray-500 animate-bounce mb-2" />
+              <p className="text-sm text-gray-700 font-medium">Faites défiler pour voir plus</p>
             </div>
           )}
         </div>

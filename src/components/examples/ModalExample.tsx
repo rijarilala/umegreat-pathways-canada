@@ -11,14 +11,14 @@ const ModalExample = () => {
 
   // Sample content with enough text to trigger scrolling
   const generateLongContent = () => {
-    return Array(10).fill(0).map((_, index) => (
+    return Array(12).fill(0).map((_, index) => (
       <div key={index} className="mb-6">
         <h4 className="text-lg font-semibold mb-2">Section {index + 1}</h4>
         <p className="text-gray-600">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod 
           metus vel risus commodo, a venenatis nunc tincidunt. Vivamus sed
           bibendum arcu, id condimentum nibh. Proin non felis at mauris pulvinar
-          cursus eget ac tortor.
+          cursus eget ac tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         </p>
       </div>
     ));
@@ -32,7 +32,7 @@ const ModalExample = () => {
         isOpen={isModalOpen}
         onClose={closeModal}
         title="Exemple de Modal avec Indicateur de Défilement"
-        description="Cette modal démontre l'indicateur de défilement qui disparaît lors du scroll"
+        description="Cette modal démontre l'indicateur de défilement qui apparaît quand le contenu est trop long et disparaît lors du scroll"
         headerImage="/placeholder.svg"
       >
         {generateLongContent()}
