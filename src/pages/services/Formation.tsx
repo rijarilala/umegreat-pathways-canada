@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useLocation } from "react-router-dom";
 import MainLayout from "@/components/layout/MainLayout";
 import ServiceBanner from "@/components/shared/ServiceBanner";
 import SectionTitle from "@/components/shared/SectionTitle";
@@ -183,6 +183,39 @@ const packs = [
 const Formation = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [activeTab, setActiveTab] = useState("categories");
+  const location = useLocation();
+  
+  // Effet pour gérer le hash dans l'URL
+  useEffect(() => {
+    const hash = location.hash;
+    
+    // Si un hash correspondant à une formation est présent
+    if (hash && hash.startsWith('#formation-')) {
+      const formationId = hash.replace('#formation-', '');
+      
+      // S'assurer qu'on est sur l'onglet catégories
+      if (activeTab !== "categories") {
+        setActiveTab("categories");
+        setSearchParams({});
+      }
+      
+      // Trouver et scroller vers la formation correspondante après un court délai
+      setTimeout(() => {
+        const formationElement = document.getElementById(`formation-${formationId}`);
+        if (formationElement) {
+          formationElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          
+          // Ajouter temporairement un effet de surbrillance
+          formationElement.classList.add('bg-primary-50', 'transition-all', 'duration-500');
+          
+          // Retirer l'effet après un moment
+          setTimeout(() => {
+            formationElement.classList.remove('bg-primary-50');
+          }, 2000);
+        }
+      }, 300);
+    }
+  }, [location.hash, activeTab, setSearchParams]);
   
   useEffect(() => {
     const tabParam = searchParams.get("tab");
@@ -227,14 +260,15 @@ const Formation = () => {
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                   {formations.insertion.map((formation) => (
-                    <ServiceCard 
-                      key={formation.id}
-                      title={formation.title}
-                      description={formation.description}
-                      image={formation.image}
-                      details={formation.details}
-                      packReferences={formation.packReferences}
-                    />
+                    <div id={`formation-${formation.id}`} key={formation.id} className="transition-colors duration-300">
+                      <ServiceCard 
+                        title={formation.title}
+                        description={formation.description}
+                        image={formation.image}
+                        details={formation.details}
+                        packReferences={formation.packReferences}
+                      />
+                    </div>
                   ))}
                 </div>
               </div>
@@ -247,14 +281,16 @@ const Formation = () => {
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                   {formations.rh.map((formation) => (
-                    <ServiceCard 
-                      key={formation.id}
-                      title={formation.title}
-                      description={formation.description}
-                      image={formation.image}
-                      details={formation.details}
-                      packReferences={formation.packReferences}
-                    />
+                    <div id={`formation-${formation.id}`} key={formation.id} className="transition-colors duration-300">
+                      <ServiceCard 
+                        key={formation.id}
+                        title={formation.title}
+                        description={formation.description}
+                        image={formation.image}
+                        details={formation.details}
+                        packReferences={formation.packReferences}
+                      />
+                    </div>
                   ))}
                 </div>
               </div>

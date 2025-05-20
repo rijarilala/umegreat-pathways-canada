@@ -32,9 +32,14 @@ const SearchBar = () => {
     };
   }, [setIsOpen]);
 
-  // Fonction pour gérer les clics sur les résultats
-  const handleResultClick = (url: string) => {
-    navigate(url);
+  // Fonction améliorée pour gérer les clics sur les résultats
+  const handleResultClick = (url: string, category?: string, itemId?: string | number) => {
+    // Si c'est une formation et qu'on a un ID, on ajoute un hash à l'URL
+    if (category === 'formation' && itemId) {
+      navigate(`${url}#formation-${itemId}`);
+    } else {
+      navigate(url);
+    }
     clearSearch();
   };
 
@@ -83,7 +88,7 @@ const SearchBar = () => {
                     <div
                       key={result.id}
                       className="px-4 py-2 text-sm cursor-pointer hover:bg-gray-100"
-                      onClick={() => result.url && handleResultClick(result.url)}
+                      onClick={() => result.url && handleResultClick(result.url, result.category, result.id)}
                     >
                       <div className="font-medium">{result.title}</div>
                       <div className="text-xs text-gray-500 truncate">
@@ -104,7 +109,7 @@ const SearchBar = () => {
                     <div
                       key={result.id}
                       className="px-4 py-2 text-sm cursor-pointer hover:bg-gray-100"
-                      onClick={() => result.url && handleResultClick(result.url)}
+                      onClick={() => result.url && handleResultClick(result.url, result.category, result.id)}
                     >
                       <div className="font-medium">{result.title}</div>
                       <div className="text-xs text-gray-500 truncate">
@@ -125,7 +130,7 @@ const SearchBar = () => {
                     <div
                       key={result.id}
                       className="px-4 py-2 text-sm cursor-pointer hover:bg-gray-100"
-                      onClick={() => result.url && handleResultClick(result.url)}
+                      onClick={() => result.url && handleResultClick(result.url, result.category, result.id)}
                     >
                       <div className="font-medium">{result.title}</div>
                       <div className="text-xs text-gray-500 truncate">
@@ -146,7 +151,7 @@ const SearchBar = () => {
                     <div
                       key={result.id}
                       className="px-4 py-2 text-sm cursor-pointer hover:bg-gray-100"
-                      onClick={() => result.url && handleResultClick(result.url)}
+                      onClick={() => result.url && handleResultClick(result.url, result.category, result.id)}
                     >
                       <div className="font-medium">{result.title}</div>
                       <div className="text-xs text-gray-500 truncate">

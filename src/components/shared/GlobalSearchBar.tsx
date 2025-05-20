@@ -57,9 +57,14 @@ export const GlobalSearchBar = () => {
     };
   }, [isOpen, setIsOpen]);
 
-  // Navigate to the selected result
-  const handleResultClick = (url: string) => {
-    navigate(url);
+  // Navigate to the selected result with enhanced functionality for formations
+  const handleResultClick = (url: string, category?: string, itemId?: string | number) => {
+    // Si c'est une formation et qu'on a un ID, on ajoute un hash à l'URL
+    if (category === 'formation' && itemId) {
+      navigate(`${url}#formation-${itemId}`);
+    } else {
+      navigate(url);
+    }
     clearSearch();
     setIsOpen(false);
   };
@@ -141,7 +146,7 @@ export const GlobalSearchBar = () => {
                         {categoryResults.map((result) => (
                           <button
                             key={result.id}
-                            onClick={() => result.url && handleResultClick(result.url)}
+                            onClick={() => result.url && handleResultClick(result.url, result.category, result.id)}
                             className="w-full text-left px-4 py-3 hover:bg-gray-50 rounded-md transition-colors"
                           >
                             <div className="font-medium text-primary">{result.title}</div>
