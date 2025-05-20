@@ -1,4 +1,6 @@
 
+import { useEffect, useRef } from "react";
+import { useSearchParams } from "react-router-dom";
 import MainLayout from "@/components/layout/MainLayout";
 import ServiceBanner from "@/components/shared/ServiceBanner";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -108,6 +110,51 @@ const faqCategories = [
 ];
 
 const Faq = () => {
+  const [searchParams] = useSearchParams();
+  const activeTabRef = useRef<string>("general");
+  const activeQuestionRef = useRef<HTMLButtonElement | null>(null);
+  
+  // Handle params from the search results
+  useEffect(() => {
+    const tabParam = searchParams.get("tab");
+    const questionParam = searchParams.get("question");
+    
+    if (tabParam) {
+      // Check if the tab exists in our categories
+      const tabExists = faqCategories.some(category => category.id === tabParam);
+      if (tabExists) {
+        activeTabRef.current = tabParam;
+        
+        // If we have a question index, we'll need to open that accordion item
+        if (questionParam !== null) {
+          const questionIndex = parseInt(questionParam);
+          
+          // Allow time for the tab to render
+          setTimeout(() => {
+            // Find the specific question element
+            const accordionId = `accordion-${tabParam}-${questionIndex}`;
+            const accordionTrigger = document.getElementById(accordionId);
+            
+            if (accordionTrigger) {
+              // Scroll to the question
+              accordionTrigger.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              
+              // Highlight the question temporarily
+              accordionTrigger.classList.add('bg-primary-100', 'transition-colors', 'duration-1000');
+              setTimeout(() => {
+                accordionTrigger.classList.remove('bg-primary-100');
+              }, 2000);
+              
+              // Open the accordion (trigger a click event)
+              (accordionTrigger as HTMLButtonElement).click();
+              activeQuestionRef.current = accordionTrigger as HTMLButtonElement;
+            }
+          }, 300);
+        }
+      }
+    }
+  }, [searchParams]);
+
   return (
     <MainLayout>
       <ServiceBanner 
@@ -118,7 +165,7 @@ const Faq = () => {
       
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <Tabs defaultValue="general" className="max-w-4xl mx-auto">
+          <Tabs defaultValue={activeTabRef.current} className="max-w-4xl mx-auto">
             <TabsList className="mb-8 flex flex-wrap gap-2 justify-center">
               {faqCategories.map((category) => (
                 <TabsTrigger key={category.id} value={category.id} className="data-[state=active]:bg-primary data-[state=active]:text-white">
@@ -132,7 +179,12 @@ const Faq = () => {
                 <Accordion type="single" collapsible className="w-full">
                   {category.questions.map((faq, index) => (
                     <AccordionItem key={index} value={`item-${index}`}>
-                      <AccordionTrigger className="text-left font-medium">{faq.question}</AccordionTrigger>
+                      <AccordionTrigger 
+                        id={`accordion-${category.id}-${index}`}
+                        className="text-left font-medium"
+                      >
+                        {faq.question}
+                      </AccordionTrigger>
                       <AccordionContent className="text-gray-600">{faq.answer}</AccordionContent>
                     </AccordionItem>
                   ))}

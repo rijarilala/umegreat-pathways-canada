@@ -1,4 +1,3 @@
-
 import type { SearchResult } from "@/contexts/SearchContext";
 
 // Données des services et formations pour la recherche
@@ -54,41 +53,62 @@ const searchDatabase: SearchResult[] = [
     url: "/services/recrutement"
   },
   
-  // Formations
+  // Formations - Updated with correct formationId values
   {
-    id: "cv",
+    id: "1",
     title: "Rédiger un CV efficace",
     category: "formation",
     description: "Apprenez à créer un CV qui attire l'attention des recruteurs",
-    url: "/services/formation#cv"
+    url: "/services/formation",
+    formationId: 1
   },
   {
-    id: "lettre",
+    id: "2",
     title: "Lettres de motivation",
     category: "formation",
     description: "Maîtrisez l'art d'écrire des lettres de motivation convaincantes",
-    url: "/services/formation#lettre"
+    url: "/services/formation",
+    formationId: 2
   },
   {
-    id: "entretien",
+    id: "3",
     title: "Préparation aux entretiens",
     category: "formation",
     description: "Préparez-vous efficacement pour réussir vos entretiens d'embauche",
-    url: "/services/formation#entretien"
+    url: "/services/formation",
+    formationId: 3
   },
   {
-    id: "transition",
-    title: "Transition vers la vie active",
+    id: "4",
+    title: "Recherche d'emploi",
+    category: "formation",
+    description: "Stratégies pour trouver votre premier emploi ou changer de poste",
+    url: "/services/formation",
+    formationId: 4
+  },
+  {
+    id: "5",
+    title: "Transition professionnelle",
     category: "formation",
     description: "Facilitez votre passage des études au monde professionnel",
-    url: "/services/formation#transition"
+    url: "/services/formation",
+    formationId: 5
   },
   {
-    id: "rh",
-    title: "Gestion des ressources humaines",
+    id: "6",
+    title: "LinkedIn Pro",
     category: "formation",
-    description: "Développez vos compétences en management et gestion RH",
-    url: "/services/formation#rh"
+    description: "Optimisez votre profil LinkedIn pour maximiser votre visibilité professionnelle",
+    url: "/services/formation",
+    formationId: 6
+  },
+  {
+    id: "7",
+    title: "Gestion des Ressources Humaines",
+    category: "formation",
+    description: "Acquérez les fondamentaux de la GRH pour votre entreprise",
+    url: "/services/formation",
+    formationId: 7
   },
   
   // Pages
@@ -121,41 +141,51 @@ const searchDatabase: SearchResult[] = [
     url: "/testimonials"
   },
 
-  // FAQ
+  // FAQ - Updated with category and question index
   {
     id: "faq-orientation",
     title: "Comment choisir ma voie professionnelle ?",
     category: "faq",
     description: "Conseils pour trouver votre orientation idéale",
-    url: "/faq#orientation"
+    url: "/faq",
+    faqCategory: "orientation",
+    questionIndex: 0
   },
   {
     id: "faq-canada",
     title: "Quelles sont les conditions d'immigration au Canada ?",
     category: "faq",
     description: "Informations sur le processus d'immigration canadien",
-    url: "/faq#immigration"
+    url: "/faq",
+    faqCategory: "immigration",
+    questionIndex: 0
   },
   {
     id: "faq-formation",
-    title: "Combien de temps durent vos formations ?",
+    title: "Comment choisir la formation qui me convient ?",
     category: "faq",
-    description: "Détails sur la durée des différents programmes de formation",
-    url: "/faq#durees"
+    description: "Guide pour sélectionner la formation adaptée à vos besoins",
+    url: "/faq",
+    faqCategory: "formation",
+    questionIndex: 0
   },
   {
     id: "faq-coaching",
     title: "En quoi consiste un coaching professionnel ?",
     category: "faq",
     description: "Explications sur notre approche du coaching professionnel",
-    url: "/faq#coaching"
+    url: "/faq",
+    faqCategory: "coaching",
+    questionIndex: 0
   },
   {
     id: "faq-tarifs",
-    title: "Quels sont vos tarifs ?",
+    title: "Quels sont les avantages des packs de formation ?",
     category: "faq",
-    description: "Informations sur nos grilles tarifaires",
-    url: "/faq#tarifs"
+    description: "Informations sur nos packs de formation",
+    url: "/faq",
+    faqCategory: "formation",
+    questionIndex: 1
   }
 ];
 

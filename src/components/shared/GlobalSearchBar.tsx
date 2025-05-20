@@ -57,14 +57,24 @@ export const GlobalSearchBar = () => {
     };
   }, [isOpen, setIsOpen]);
 
-  // Navigate to the selected result with enhanced functionality for formations
-  const handleResultClick = (url: string, category?: string, itemId?: string | number) => {
-    // Si c'est une formation et qu'on a un ID, on ajoute un hash à l'URL
-    if (category === 'formation' && itemId) {
-      navigate(`${url}#formation-${itemId}`);
-    } else {
-      navigate(url);
+  // Navigate to the selected result with enhanced functionality
+  const handleResultClick = (result: typeof results[0]) => {
+    if (!result.url) return;
+    
+    // Handle different result types
+    if (result.category === 'formation' && result.formationId) {
+      // For formations: navigate to formation page with parameter to open the modal
+      navigate(`${result.url}?modal=${result.formationId}`);
+    } 
+    else if (result.category === 'faq' && result.faqCategory && result.questionIndex !== undefined) {
+      // For FAQ: navigate to FAQ page with parameters for tab and question
+      navigate(`${result.url}?tab=${result.faqCategory}&question=${result.questionIndex}`);
+    } 
+    else {
+      // For other results: simple navigation
+      navigate(result.url);
     }
+    
     clearSearch();
     setIsOpen(false);
   };
@@ -146,7 +156,7 @@ export const GlobalSearchBar = () => {
                         {categoryResults.map((result) => (
                           <button
                             key={result.id}
-                            onClick={() => result.url && handleResultClick(result.url, result.category, result.id)}
+                            onClick={() => handleResultClick(result)}
                             className="w-full text-left px-4 py-3 hover:bg-gray-50 rounded-md transition-colors"
                           >
                             <div className="font-medium text-primary">{result.title}</div>

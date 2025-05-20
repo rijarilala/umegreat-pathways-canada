@@ -9,6 +9,9 @@ export interface SearchResult {
   category: string;
   description: string;
   url?: string;
+  formationId?: number;       // Added for formations
+  faqCategory?: string;       // Added for FAQ
+  questionIndex?: number;     // Added for FAQ
 }
 
 interface SearchContextType {

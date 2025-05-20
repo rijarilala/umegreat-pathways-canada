@@ -184,6 +184,55 @@ const Formation = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [activeTab, setActiveTab] = useState("categories");
   const location = useLocation();
+  const [modalFormationId, setModalFormationId] = useState<number | null>(null);
+  
+  useEffect(() => {
+    // Handle tab parameter
+    const tabParam = searchParams.get("tab");
+    if (tabParam === "packs") {
+      setActiveTab("packs");
+    }
+    
+    // Handle modal parameter (from search results)
+    const modalParam = searchParams.get("modal");
+    if (modalParam) {
+      const formationId = parseInt(modalParam);
+      if (!isNaN(formationId)) {
+        setModalFormationId(formationId);
+        
+        // Ensure we're on the categories tab
+        if (activeTab !== "categories") {
+          setActiveTab("categories");
+        }
+        
+        // Find the formation element and trigger its modal
+        setTimeout(() => {
+          const formationElement = document.getElementById(`formation-${formationId}`);
+          if (formationElement) {
+            // Scroll to the formation
+            formationElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            // Highlight temporarily
+            formationElement.classList.add('bg-primary-50', 'transition-colors', 'duration-500');
+            setTimeout(() => {
+              formationElement.classList.remove('bg-primary-50');
+            }, 2000);
+            
+            // Find and click the details button to open the modal
+            const detailsButton = formationElement.querySelector('.service-details-button') as HTMLButtonElement;
+            if (detailsButton) {
+              detailsButton.click();
+            }
+            
+            // Clean up the URL by removing the modal parameter
+            const newParams = new URLSearchParams(searchParams);
+            newParams.delete('modal');
+            setSearchParams(newParams);
+          }
+        }, 300);
+      }
+    }
+  }, [searchParams, activeTab, setSearchParams]);
   
   // Effet pour gérer le hash dans l'URL
   useEffect(() => {
@@ -216,13 +265,6 @@ const Formation = () => {
       }, 300);
     }
   }, [location.hash, activeTab, setSearchParams]);
-  
-  useEffect(() => {
-    const tabParam = searchParams.get("tab");
-    if (tabParam === "packs") {
-      setActiveTab("packs");
-    }
-  }, [searchParams]);
   
   const handleTabChange = (value: string) => {
     setActiveTab(value);
