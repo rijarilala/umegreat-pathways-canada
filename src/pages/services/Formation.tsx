@@ -7,6 +7,7 @@ import SectionTitle from "@/components/shared/SectionTitle";
 import ServiceCard from "@/components/shared/ServiceCard";
 import PackCard from "@/components/shared/PackCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { FileText, PenTool, Users, Building, GraduationCap, Briefcase } from "lucide-react";
 
 const formations = {
   insertion: [
@@ -15,6 +16,7 @@ const formations = {
       title: "CV impactant",
       description: "Apprenez à créer un CV qui attire l'attention des recruteurs et met en valeur votre profil professionnel.",
       image: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&q=80&w=1200",
+      icon: "file-text",
       details: {
         objectif: "Maîtriser les techniques de rédaction d'un CV efficace et adapté à votre secteur d'activité",
         publicCible: "Demandeurs d'emploi, personnes en reconversion professionnelle, jeunes diplômés",
@@ -34,6 +36,7 @@ const formations = {
       title: "Lettre de motivation convaincante",
       description: "Rédigez des lettres de motivation personnalisées et convaincantes qui complètent parfaitement votre CV.",
       image: "https://images.unsplash.com/photo-1471107340929-a87cd0f5b5f3?auto=format&fit=crop&q=80&w=1200",
+      icon: "pen-tool",
       details: {
         objectif: "Apprendre à structurer et rédiger des lettres de motivation percutantes et personnalisées",
         publicCible: "Demandeurs d'emploi, personnes en reconversion professionnelle, jeunes diplômés",
@@ -53,6 +56,7 @@ const formations = {
       title: "Préparation aux entretiens d'embauche",
       description: "Préparez-vous efficacement aux entretiens d'embauche pour mettre toutes les chances de votre côté.",
       image: "https://images.unsplash.com/photo-1573497019236-17f8177b81e8?auto=format&fit=crop&q=80&w=1200",
+      icon: "users",
       details: {
         objectif: "Maîtriser les techniques d'entretien et développer votre confiance pour réussir vos entretiens d'embauche",
         publicCible: "Demandeurs d'emploi, personnes en reconversion professionnelle, jeunes diplômés",
@@ -72,6 +76,7 @@ const formations = {
       title: "Recherche du premier ou nouveau emploi",
       description: "Développez une stratégie efficace pour trouver votre premier emploi ou changer de poste.",
       image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=1200",
+      icon: "briefcase",
       details: {
         objectif: "Acquérir les techniques et outils nécessaires pour mener une recherche d'emploi structurée et efficace",
         publicCible: "Jeunes diplômés, demandeurs d'emploi, personnes en reconversion",
@@ -91,6 +96,7 @@ const formations = {
       title: "Transition vers la vie active professionnelle",
       description: "Facilitez votre passage des études au monde professionnel avec notre programme de transition.",
       image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=1200",
+      icon: "graduation-cap",
       details: {
         objectif: "Acquérir les compétences et les réflexes professionnels nécessaires pour s'intégrer rapidement en entreprise",
         publicCible: "Jeunes diplômés, étudiants en fin de cursus",
@@ -110,6 +116,7 @@ const formations = {
       title: "Création et optimisation de compte LinkedIn",
       description: "Apprenez à créer un profil LinkedIn attractif pour maximiser votre visibilité professionnelle.",
       image: "https://images.unsplash.com/photo-1611944212129-29977ae1398c?auto=format&fit=crop&q=80&w=1200",
+      icon: "linkedin",
       details: {
         objectif: "Maîtriser les techniques pour créer un profil LinkedIn efficace et étendre son réseau professionnel",
         publicCible: "Professionnels de tous niveaux, demandeurs d'emploi, entrepreneurs",
@@ -131,6 +138,7 @@ const formations = {
       title: "Gestion des Ressources Humaines",
       description: "Acquérez les fondamentaux de la GRH pour gérer efficacement le capital humain de votre entreprise.",
       image: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80&w=1200",
+      icon: "building",
       details: {
         objectif: "Maîtriser les bases de la gestion des ressources humaines et les outils essentiels du métier",
         publicCible: "Responsables RH débutants, managers, entrepreneurs",
@@ -155,8 +163,8 @@ const packs = [
     description: "Tout ce qu'il vous faut pour réussir votre insertion professionnelle et décrocher l'emploi de vos rêves.",
     image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=1200",
     modules: [
-      "CV percutant",
-      "Lettre de motivation efficace",
+      "CV impactant",
+      "Lettre de motivation convaincante",
       "Préparation aux entretiens d'embauche",
       "Recherche du premier ou nouveau emploi",
       "Transition vers la vie active professionnelle",
@@ -179,6 +187,43 @@ const packs = [
     linkTo: "/contact"
   }
 ];
+
+// Map of icon names to components for formations
+const FormationIcon = ({ iconName, className = "h-6 w-6" }: { iconName: string, className?: string }) => {
+  switch (iconName) {
+    case 'file-text':
+      return <FileText className={className} />;
+    case 'pen-tool':
+      return <PenTool className={className} />;
+    case 'users':
+      return <Users className={className} />;
+    case 'briefcase':
+      return <Briefcase className={className} />;
+    case 'graduation-cap':
+      return <GraduationCap className={className} />;
+    case 'building':
+      return <Building className={className} />;
+    case 'linkedin':
+      return (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className={className}
+        >
+          <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+          <rect x="2" y="9" width="4" height="12" />
+          <circle cx="4" cy="4" r="2" />
+        </svg>
+      );
+    default:
+      return null;
+  }
+};
 
 const Formation = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -297,20 +342,30 @@ const Formation = () => {
               {/* Catégorie Insertion professionnelle avec bordure et fond améliorés */}
               <div className="bg-blue-50/50 p-8 rounded-xl border border-blue-100">
                 <SectionTitle 
-                  title="Insertion professionnelle" 
+                  title={<h2 className="text-2xl font-bold text-orange-500 flex items-center gap-2">
+                    <GraduationCap className="h-7 w-7" />
+                    Insertion professionnelle
+                  </h2>} 
                   subtitle="Des formations pour vous aider à intégrer le marché du travail avec succès"
                 />
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
                   {formations.insertion.map((formation) => (
                     <div id={`formation-${formation.id}`} key={formation.id} className="transition-colors duration-300">
-                      <ServiceCard 
-                        title={formation.title}
-                        description={formation.description}
-                        image={formation.image}
-                        details={formation.details}
-                        packReferences={formation.packReferences}
-                      />
+                      <div className="relative">
+                        {/* Icon overlay */}
+                        <div className="absolute top-4 right-4 bg-white p-2 rounded-full shadow-md">
+                          <FormationIcon iconName={formation.icon} className="h-6 w-6 text-blue-600" />
+                        </div>
+                        
+                        <ServiceCard 
+                          title={formation.title}
+                          description={formation.description}
+                          image={formation.image}
+                          details={formation.details}
+                          packReferences={formation.packReferences}
+                        />
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -319,21 +374,31 @@ const Formation = () => {
               {/* Catégorie RH avec bordure et fond améliorés */}
               <div className="bg-green-50/50 p-8 rounded-xl border border-green-100">
                 <SectionTitle 
-                  title="Compétences RH" 
+                  title={<h2 className="text-2xl font-bold text-orange-500 flex items-center gap-2">
+                    <Briefcase className="h-7 w-7" />
+                    Compétences RH
+                  </h2>} 
                   subtitle="Développez vos compétences en gestion des ressources humaines"
                 />
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
                   {formations.rh.map((formation) => (
                     <div id={`formation-${formation.id}`} key={formation.id} className="transition-colors duration-300">
-                      <ServiceCard 
-                        key={formation.id}
-                        title={formation.title}
-                        description={formation.description}
-                        image={formation.image}
-                        details={formation.details}
-                        packReferences={formation.packReferences}
-                      />
+                      <div className="relative">
+                        {/* Icon overlay */}
+                        <div className="absolute top-4 right-4 bg-white p-2 rounded-full shadow-md">
+                          <FormationIcon iconName={formation.icon} className="h-6 w-6 text-green-600" />
+                        </div>
+                        
+                        <ServiceCard 
+                          key={formation.id}
+                          title={formation.title}
+                          description={formation.description}
+                          image={formation.image}
+                          details={formation.details}
+                          packReferences={formation.packReferences}
+                        />
+                      </div>
                     </div>
                   ))}
                 </div>
