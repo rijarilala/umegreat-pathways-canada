@@ -1,7 +1,6 @@
 
 import { useState, useEffect } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { Button } from "@/components/ui/button";
 import { ChevronDown, Menu, X } from "lucide-react";
 import GlobalSearchBar from "@/components/shared/GlobalSearchBar";
 import {
@@ -241,20 +240,7 @@ const Navbar = () => {
             </div>
           </div>
 
-          {/* Contact button */}
-          <div className="hidden md:block">
-            <Button 
-              asChild 
-              className="bg-secondary hover:bg-secondary/90 transform transition-all hover:scale-105 duration-200 text-sm py-1 px-3 h-auto"
-            >
-              <Link 
-                to="/contact"
-                onClick={handleLinkClick}
-              >
-                Nous contacter
-              </Link>
-            </Button>
-          </div>
+          {/* Contact button - Removed */}
 
           {/* Mobile menu button and search */}
           <div className="md:hidden flex items-center gap-2">
@@ -462,16 +448,7 @@ const Navbar = () => {
             Contact
           </NavLink>
           
-          <Link
-            to="/contact"
-            className="block px-3 py-2 rounded-md text-sm font-medium bg-secondary text-white hover:bg-secondary/90 text-center mt-4 transform transition-all hover:scale-105 duration-200"
-            onClick={() => {
-              toggleMenu();
-              handleLinkClick();
-            }}
-          >
-            Nous contacter
-          </Link>
+          {/* Removed the contact button from mobile menu too */}
         </div>
       </div>
     </nav>

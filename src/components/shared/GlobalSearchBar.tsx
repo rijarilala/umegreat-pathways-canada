@@ -98,16 +98,16 @@ export const GlobalSearchBar = () => {
 
   return (
     <>
-      {/* Search trigger button */}
+      {/* Search trigger button - Reduced size */}
       <button
         onClick={() => setIsOpen(true)}
-        className="flex items-center gap-2 text-sm text-gray-500 px-3 py-2 rounded-md border border-gray-300 bg-white hover:bg-gray-50"
+        className="flex items-center gap-1 text-xs text-gray-500 px-2 py-1.5 rounded-md border border-gray-300 bg-white hover:bg-gray-50"
         aria-label="Rechercher"
       >
-        <Search className="w-4 h-4" />
+        <Search className="w-3.5 h-3.5" />
         <span className="hidden md:inline">Rechercher</span>
-        <kbd className="hidden md:inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground ml-auto">
-          <span className="text-xs">⌘</span>K
+        <kbd className="hidden md:inline-flex h-4 select-none items-center gap-1 rounded border bg-muted px-1 font-mono text-[9px] font-medium text-muted-foreground ml-auto">
+          <span className="text-[9px]">⌘</span>K
         </kbd>
       </button>
 
