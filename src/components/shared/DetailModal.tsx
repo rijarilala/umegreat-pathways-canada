@@ -186,14 +186,14 @@ const DetailModal = ({
                   
                   {/* New CTAs avec boutons réajustés */}
                   <div className="grid grid-cols-12 gap-3">
-                    <Button variant="outline" className="col-span-4 flex items-center justify-center gap-1" asChild>
+                    <Button variant="outline" className="col-span-3 flex items-center justify-center gap-1" asChild>
                       <Link to="/services/formation" onClick={onClose}>
                         <ArrowLeft className="h-3 w-3" />
                         <span className="text-sm">Retour</span>
                       </Link>
                     </Button>
                     
-                    <Button variant="secondary" className="col-span-8 flex items-center justify-center gap-2" asChild>
+                    <Button variant="secondary" className="col-span-9 flex items-center justify-center gap-2" asChild>
                       <Link to="/contact" onClick={onClose}>
                         <Info className="h-4 w-4" />
                         <span>Demandez plus d'infos</span>

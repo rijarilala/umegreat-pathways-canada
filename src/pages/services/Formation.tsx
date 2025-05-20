@@ -12,9 +12,9 @@ const formations = {
   insertion: [
     {
       id: 1,
-      title: "CV percutant",
+      title: "CV impactant",
       description: "Apprenez à créer un CV qui attire l'attention des recruteurs et met en valeur votre profil professionnel.",
-      image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?auto=format&fit=crop&q=80&w=1200",
+      image: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&q=80&w=1200",
       details: {
         objectif: "Maîtriser les techniques de rédaction d'un CV efficace et adapté à votre secteur d'activité",
         publicCible: "Demandeurs d'emploi, personnes en reconversion professionnelle, jeunes diplômés",
@@ -31,9 +31,9 @@ const formations = {
     },
     {
       id: 2,
-      title: "Lettre de motivation efficace",
+      title: "Lettre de motivation convaincante",
       description: "Rédigez des lettres de motivation personnalisées et convaincantes qui complètent parfaitement votre CV.",
-      image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&q=80&w=1200",
+      image: "https://images.unsplash.com/photo-1471107340929-a87cd0f5b5f3?auto=format&fit=crop&q=80&w=1200",
       details: {
         objectif: "Apprendre à structurer et rédiger des lettres de motivation percutantes et personnalisées",
         publicCible: "Demandeurs d'emploi, personnes en reconversion professionnelle, jeunes diplômés",
@@ -52,7 +52,7 @@ const formations = {
       id: 3,
       title: "Préparation aux entretiens d'embauche",
       description: "Préparez-vous efficacement aux entretiens d'embauche pour mettre toutes les chances de votre côté.",
-      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=1200",
+      image: "https://images.unsplash.com/photo-1573497019236-17f8177b81e8?auto=format&fit=crop&q=80&w=1200",
       details: {
         objectif: "Maîtriser les techniques d'entretien et développer votre confiance pour réussir vos entretiens d'embauche",
         publicCible: "Demandeurs d'emploi, personnes en reconversion professionnelle, jeunes diplômés",
@@ -71,7 +71,7 @@ const formations = {
       id: 4,
       title: "Recherche du premier ou nouveau emploi",
       description: "Développez une stratégie efficace pour trouver votre premier emploi ou changer de poste.",
-      image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&q=80&w=1200",
+      image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=1200",
       details: {
         objectif: "Acquérir les techniques et outils nécessaires pour mener une recherche d'emploi structurée et efficace",
         publicCible: "Jeunes diplômés, demandeurs d'emploi, personnes en reconversion",
@@ -90,7 +90,7 @@ const formations = {
       id: 5,
       title: "Transition vers la vie active professionnelle",
       description: "Facilitez votre passage des études au monde professionnel avec notre programme de transition.",
-      image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&q=80&w=1200",
+      image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=1200",
       details: {
         objectif: "Acquérir les compétences et les réflexes professionnels nécessaires pour s'intégrer rapidement en entreprise",
         publicCible: "Jeunes diplômés, étudiants en fin de cursus",
@@ -109,7 +109,7 @@ const formations = {
       id: 6,
       title: "Création et optimisation de compte LinkedIn",
       description: "Apprenez à créer un profil LinkedIn attractif pour maximiser votre visibilité professionnelle.",
-      image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=1200",
+      image: "https://images.unsplash.com/photo-1611944212129-29977ae1398c?auto=format&fit=crop&q=80&w=1200",
       details: {
         objectif: "Maîtriser les techniques pour créer un profil LinkedIn efficace et étendre son réseau professionnel",
         publicCible: "Professionnels de tous niveaux, demandeurs d'emploi, entrepreneurs",
@@ -130,7 +130,7 @@ const formations = {
       id: 7,
       title: "Gestion des Ressources Humaines",
       description: "Acquérez les fondamentaux de la GRH pour gérer efficacement le capital humain de votre entreprise.",
-      image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=1200",
+      image: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80&w=1200",
       details: {
         objectif: "Maîtriser les bases de la gestion des ressources humaines et les outils essentiels du métier",
         publicCible: "Responsables RH débutants, managers, entrepreneurs",
