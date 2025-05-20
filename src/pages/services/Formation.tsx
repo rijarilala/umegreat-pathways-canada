@@ -294,13 +294,14 @@ const Formation = () => {
             </div>
             
             <TabsContent value="categories" className="space-y-16">
-              <div>
+              {/* Catégorie Insertion professionnelle avec bordure et fond améliorés */}
+              <div className="bg-blue-50/50 p-8 rounded-xl border border-blue-100">
                 <SectionTitle 
                   title="Insertion professionnelle" 
                   subtitle="Des formations pour vous aider à intégrer le marché du travail avec succès"
                 />
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
                   {formations.insertion.map((formation) => (
                     <div id={`formation-${formation.id}`} key={formation.id} className="transition-colors duration-300">
                       <ServiceCard 
@@ -315,13 +316,14 @@ const Formation = () => {
                 </div>
               </div>
               
-              <div>
+              {/* Catégorie RH avec bordure et fond améliorés */}
+              <div className="bg-green-50/50 p-8 rounded-xl border border-green-100">
                 <SectionTitle 
                   title="Compétences RH" 
                   subtitle="Développez vos compétences en gestion des ressources humaines"
                 />
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
                   {formations.rh.map((formation) => (
                     <div id={`formation-${formation.id}`} key={formation.id} className="transition-colors duration-300">
                       <ServiceCard 

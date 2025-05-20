@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -6,11 +7,13 @@ import { Link } from "react-router-dom";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { VisuallyHidden } from "@/components/ui/visually-hidden";
+
 interface PackReference {
   id: number;
   title: string;
   linkTo: string;
 }
+
 interface DetailModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -28,6 +31,7 @@ interface DetailModalProps {
   image?: string;
   packReferences?: PackReference[];
 }
+
 const DetailModal = ({
   isOpen,
   onClose,
@@ -98,6 +102,7 @@ const DetailModal = ({
       setShowScrollIndicator(false);
     }
   };
+
   return <Dialog open={isOpen} onOpenChange={open => !open && onClose()}>
       <DialogContent className="max-w-[90%] md:max-w-[70%] lg:max-w-[60%] xl:max-w-2xl p-0 rounded-xl border-0 shadow-lg overflow-hidden">
         {/* Adding DialogTitle and DialogDescription for accessibility */}
@@ -170,25 +175,25 @@ const DetailModal = ({
                     </div>
                   </div>}
 
-                {/* Call to action buttons */}
-                <div className="mt-6 pt-4 border-t border-gray-100 space-y-3">
+                {/* Call to action buttons - MODIFIÉ ICI */}
+                <div className="mt-6 pt-4 border-t border-gray-100">
                   {/* Original CTA */}
-                  {linkTo && <Button asChild className="w-full bg-primary hover:bg-primary/90">
+                  {linkTo && <Button asChild className="w-full bg-primary hover:bg-primary/90 mb-3">
                       <Link to={linkTo} onClick={onClose}>
                         {linkText}
                       </Link>
                     </Button>}
                   
-                  {/* New CTAs */}
-                  <div className="grid grid-cols-2 gap-3">
-                    <Button variant="outline" className="w-full flex items-center justify-center gap-2" asChild>
+                  {/* New CTAs avec boutons réajustés */}
+                  <div className="grid grid-cols-12 gap-3">
+                    <Button variant="outline" className="col-span-4 flex items-center justify-center gap-1" asChild>
                       <Link to="/services/formation" onClick={onClose}>
-                        <ArrowLeft className="h-4 w-4" />
-                        <span>Retour</span>
+                        <ArrowLeft className="h-3 w-3" />
+                        <span className="text-sm">Retour</span>
                       </Link>
                     </Button>
                     
-                    <Button variant="secondary" className="w-full flex items-center justify-center gap-2" asChild>
+                    <Button variant="secondary" className="col-span-8 flex items-center justify-center gap-2" asChild>
                       <Link to="/contact" onClick={onClose}>
                         <Info className="h-4 w-4" />
                         <span>Demandez plus d'infos</span>
@@ -213,4 +218,5 @@ const DetailModal = ({
       </DialogContent>
     </Dialog>;
 };
+
 export default DetailModal;
