@@ -1,27 +1,22 @@
 
-import { cn } from "@/lib/utils";
+import React, { ReactNode } from "react";
 
 interface SectionTitleProps {
-  title: string;
+  title: ReactNode;
   subtitle?: string;
   centered?: boolean;
   className?: string;
 }
 
-const SectionTitle = ({ 
-  title, 
-  subtitle, 
-  centered = false,
-  className 
-}: SectionTitleProps) => {
+const SectionTitle = ({ title, subtitle, centered = false, className = "" }: SectionTitleProps) => {
   return (
-    <div className={cn(
-      "mb-10", 
-      centered && "text-center",
-      className
-    )}>
-      <h2 className="text-3xl font-bold mb-2 text-gray-900">{title}</h2>
-      {subtitle && <p className="text-lg text-gray-600">{subtitle}</p>}
+    <div className={`mb-8 ${centered ? 'text-center' : ''} ${className}`}>
+      {typeof title === 'string' ? (
+        <h2 className="text-2xl md:text-3xl font-bold mb-2">{title}</h2>
+      ) : (
+        title
+      )}
+      {subtitle && <p className="text-gray-600 text-lg">{subtitle}</p>}
     </div>
   );
 };

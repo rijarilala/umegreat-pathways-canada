@@ -342,10 +342,12 @@ const Formation = () => {
               {/* Catégorie Insertion professionnelle avec bordure et fond améliorés */}
               <div className="bg-blue-50/50 p-8 rounded-xl border border-blue-100">
                 <SectionTitle 
-                  title={<h2 className="text-2xl font-bold text-orange-500 flex items-center gap-2">
-                    <GraduationCap className="h-7 w-7" />
-                    Insertion professionnelle
-                  </h2>} 
+                  title={
+                    <h2 className="text-2xl font-bold text-orange-500 flex items-center gap-2">
+                      <GraduationCap className="h-7 w-7" />
+                      Insertion professionnelle
+                    </h2>
+                  } 
                   subtitle="Des formations pour vous aider à intégrer le marché du travail avec succès"
                 />
                 
@@ -374,10 +376,12 @@ const Formation = () => {
               {/* Catégorie RH avec bordure et fond améliorés */}
               <div className="bg-green-50/50 p-8 rounded-xl border border-green-100">
                 <SectionTitle 
-                  title={<h2 className="text-2xl font-bold text-orange-500 flex items-center gap-2">
-                    <Briefcase className="h-7 w-7" />
-                    Compétences RH
-                  </h2>} 
+                  title={
+                    <h2 className="text-2xl font-bold text-orange-500 flex items-center gap-2">
+                      <Briefcase className="h-7 w-7" />
+                      Compétences RH
+                    </h2>
+                  }
                   subtitle="Développez vos compétences en gestion des ressources humaines"
                 />
                 
