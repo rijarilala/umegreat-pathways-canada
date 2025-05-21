@@ -416,7 +416,7 @@ const Navbar = () => {
           
           {/* Add search bar to mobile menu */}
           <div className="px-3 py-2">
-            <GlobalSearchBar isMobile={true} />
+            <GlobalSearchBar />
           </div>
         </div>
       </div>
