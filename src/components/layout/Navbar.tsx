@@ -80,10 +80,10 @@ const Navbar = () => {
       } transition-all duration-300`}
       aria-label="Navigation principale"
     >
-      <div className="container mx-auto px-3 md:px-4">
+      <div className="container mx-auto px-2 md:px-3">
         <div 
           className={`flex items-center justify-between ${
-            scrolled ? "h-10 md:h-12" : "h-12 md:h-14"
+            scrolled ? "h-8 md:h-10" : "h-10 md:h-12"
           } transition-all duration-300`}
         >
           {/* Logo */}
@@ -93,25 +93,25 @@ const Navbar = () => {
               className="flex items-center"
               onClick={handleLinkClick}
             >
-              <span className="font-bold text-sm md:text-lg text-primary hover:text-primary/90 transition-colors">
+              <span className="font-bold text-sm md:text-base text-primary hover:text-primary/90 transition-colors">
                 UMEGREAT Pro
               </span>
             </Link>
           </div>
 
           {/* Search Bar (visible on desktop) */}
-          <div className="flex items-center md:mx-2 lg:mx-4">
+          <div className="flex items-center mx-1 lg:mx-2">
             <GlobalSearchBar />
           </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:block">
-            <div className="ml-2 lg:ml-6 flex items-center space-x-0.5 lg:space-x-1.5">
+            <div className="ml-1 lg:ml-3 flex items-center space-x-0 lg:space-x-0.5">
               <NavLink 
                 to="/" 
                 className={({ isActive }) => 
                   cn(
-                    "text-gray-700 hover:text-primary px-1 md:px-2 py-1.5 text-xs md:text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
+                    "text-gray-700 hover:text-primary px-1 md:px-1.5 py-1 text-xs md:text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
                     isActive && "text-primary font-medium after:scale-x-100"
                   )
                 }
@@ -125,14 +125,14 @@ const Navbar = () => {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <button 
-                    className="text-gray-700 hover:text-primary px-1 md:px-2 py-1.5 text-xs md:text-sm inline-flex items-center group"
+                    className="text-gray-700 hover:text-primary px-1 md:px-1.5 py-1 text-xs md:text-sm inline-flex items-center group"
                     aria-expanded={isMenuOpen}
                   >
                     Accompagnement
-                    <ChevronDown className="ml-1 h-3 w-3 transition-transform group-data-[state=open]:rotate-180" />
+                    <ChevronDown className="ml-0.5 h-3 w-3 transition-transform group-data-[state=open]:rotate-180" />
                   </button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="center" className="w-48 md:w-56 bg-white animate-fade-in">
+                <DropdownMenuContent align="center" className="w-44 md:w-52 bg-white animate-fade-in">
                   {renderDropdownItems(serviceCategories.orientation)}
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -141,14 +141,14 @@ const Navbar = () => {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <button 
-                    className="text-gray-700 hover:text-primary px-1 md:px-2 py-1.5 text-xs md:text-sm inline-flex items-center group"
+                    className="text-gray-700 hover:text-primary px-1 md:px-1.5 py-1 text-xs md:text-sm inline-flex items-center group"
                     aria-expanded={isMenuOpen}
                   >
                     Mobilité
-                    <ChevronDown className="ml-1 h-3 w-3 transition-transform group-data-[state=open]:rotate-180" />
+                    <ChevronDown className="ml-0.5 h-3 w-3 transition-transform group-data-[state=open]:rotate-180" />
                   </button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="center" className="w-48 md:w-56 bg-white animate-fade-in">
+                <DropdownMenuContent align="center" className="w-44 md:w-52 bg-white animate-fade-in">
                   {renderDropdownItems(serviceCategories.immigration)}
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -158,7 +158,7 @@ const Navbar = () => {
                 to="/services/formation" 
                 className={({ isActive }) => 
                   cn(
-                    "text-gray-700 hover:text-primary px-1 md:px-2 py-1.5 text-xs md:text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
+                    "text-gray-700 hover:text-primary px-1 md:px-1.5 py-1 text-xs md:text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
                     isActive && "text-primary font-medium after:scale-x-100"
                   )
                 }
@@ -172,7 +172,7 @@ const Navbar = () => {
                 to="/about" 
                 className={({ isActive }) => 
                   cn(
-                    "text-gray-700 hover:text-primary px-1 md:px-2 py-1.5 text-xs md:text-sm relative inline-block after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
+                    "text-gray-700 hover:text-primary px-1 md:px-1.5 py-1 text-xs md:text-sm relative inline-block after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
                     isActive && "text-primary font-medium after:scale-x-100"
                   )
                 }
@@ -186,7 +186,7 @@ const Navbar = () => {
                 to="/testimonials" 
                 className={({ isActive }) => 
                   cn(
-                    "text-gray-700 hover:text-primary px-1 md:px-2 py-1.5 text-xs md:text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
+                    "text-gray-700 hover:text-primary px-1 md:px-1.5 py-1 text-xs md:text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
                     isActive && "text-primary font-medium after:scale-x-100"
                   )
                 }
@@ -200,7 +200,7 @@ const Navbar = () => {
                 to="/faq" 
                 className={({ isActive }) => 
                   cn(
-                    "text-gray-700 hover:text-primary px-1 md:px-2 py-1.5 text-xs md:text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
+                    "text-gray-700 hover:text-primary px-1 md:px-1.5 py-1 text-xs md:text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
                     isActive && "text-primary font-medium after:scale-x-100"
                   )
                 }
@@ -214,7 +214,7 @@ const Navbar = () => {
                 to="/contact" 
                 className={({ isActive }) => 
                   cn(
-                    "text-gray-700 hover:text-primary px-1 md:px-2 py-1.5 text-xs md:text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
+                    "text-gray-700 hover:text-primary px-1 md:px-1.5 py-1 text-xs md:text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
                     isActive && "text-primary font-medium after:scale-x-100"
                   )
                 }
@@ -227,10 +227,10 @@ const Navbar = () => {
           </div>
 
           {/* Mobile menu button and search */}
-          <div className="md:hidden flex items-center gap-2">
+          <div className="md:hidden flex items-center gap-1">
             <button
               type="button"
-              className="inline-flex items-center justify-center p-1.5 rounded-md text-gray-700 hover:text-primary focus:outline-none"
+              className="inline-flex items-center justify-center p-1 rounded-md text-gray-700 hover:text-primary focus:outline-none"
               onClick={toggleMenu}
               aria-expanded={isMenuOpen}
               aria-label="Menu principal"
@@ -300,7 +300,7 @@ const Navbar = () => {
           <div className="relative">
             <details className="group [&_summary::-webkit-details-marker]:hidden">
               <summary className="flex cursor-pointer items-center gap-2 px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-primary">
-                <span>Mobilité internationale</span>
+                <span>Mobilité</span>
                 <ChevronDown className="h-4 w-4 transition-transform group-open:rotate-180" />
               </summary>
 
@@ -416,7 +416,7 @@ const Navbar = () => {
           
           {/* Add search bar to mobile menu */}
           <div className="px-3 py-2">
-            <GlobalSearchBar isMobile={true} />
+            <GlobalSearchBar />
           </div>
         </div>
       </div>
