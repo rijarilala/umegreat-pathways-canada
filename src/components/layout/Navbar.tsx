@@ -123,60 +123,63 @@ const Navbar = () => {
             </Link>
           </div>
 
-          {/* Vertical separator between logo and search */}
+          {/* Vertical separator between logo and nav */}
           <Separator orientation="vertical" className="h-6 mx-2 bg-gray-200 hidden sm:block" />
 
-          {/* Search Bar with improved positioning */}
-          <div className="flex items-center mx-2">
-            <GlobalSearchBar />
+          {/* Desktop Navigation with improved styling */}
+          <div className="hidden md:flex items-center ml-4 space-x-4">
+            <NavbarLink to="/">Accueil</NavbarLink>
+            
+            {/* Search bar intégré directement ici avec moins d'espacement */}
+            <div className="hidden lg:flex items-center">
+              <GlobalSearchBar />
+            </div>
+
+            {/* Dropdowns and other links */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button 
+                  className="relative text-gray-700 hover:text-primary px-2 py-1 text-sm font-medium inline-flex items-center transition-all duration-200 group"
+                  aria-expanded={isMenuOpen}
+                >
+                  Accompagnement
+                  <ChevronDown className="ml-0.5 h-3.5 w-3.5 transition-transform duration-300 group-data-[state=open]:rotate-180" />
+                  <span className="absolute bottom-0 left-0 w-full h-[2px] bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="center" className="w-52 mt-1 bg-white/95 backdrop-blur-sm animate-fade-in rounded-lg border border-gray-200 p-1 shadow-lg">
+                {renderDropdownItems(serviceCategories.orientation)}
+              </DropdownMenuContent>
+            </DropdownMenu>
+            
+            {/* Dropdown 2: Mobilité internationale with improved styling */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button 
+                  className="relative text-gray-700 hover:text-primary px-2 py-1 text-sm font-medium inline-flex items-center transition-all duration-200 group"
+                  aria-expanded={isMenuOpen}
+                >
+                  Mobilité
+                  <ChevronDown className="ml-0.5 h-3.5 w-3.5 transition-transform duration-300 group-data-[state=open]:rotate-180" />
+                  <span className="absolute bottom-0 left-0 w-full h-[2px] bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="center" className="w-52 mt-1 bg-white/95 backdrop-blur-sm animate-fade-in rounded-lg border border-gray-200 p-1 shadow-lg">
+                {renderDropdownItems(serviceCategories.immigration)}
+              </DropdownMenuContent>
+            </DropdownMenu>
+            
+            {/* Standard navigation links with the custom component */}
+            <NavbarLink to="/services/formation">Formations</NavbarLink>
+            <NavbarLink to="/about">À propos</NavbarLink>
+            <NavbarLink to="/testimonials">Témoignages</NavbarLink>
+            <NavbarLink to="/faq">FAQ</NavbarLink>
+            <NavbarLink to="/contact">Contact</NavbarLink>
           </div>
 
-          {/* Desktop Navigation with improved styling */}
-          <div className="hidden md:block ml-auto">
-            <div className="flex items-center space-x-1">
-              <NavbarLink to="/">Accueil</NavbarLink>
-              
-              {/* Dropdown 1: Accompagnement with improved styling */}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <button 
-                    className="relative text-gray-700 hover:text-primary px-2 py-1 text-sm font-medium inline-flex items-center transition-all duration-200 group"
-                    aria-expanded={isMenuOpen}
-                  >
-                    Accompagnement
-                    <ChevronDown className="ml-0.5 h-3.5 w-3.5 transition-transform duration-300 group-data-[state=open]:rotate-180" />
-                    <span className="absolute bottom-0 left-0 w-full h-[2px] bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
-                  </button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="center" className="w-52 mt-1 bg-white/95 backdrop-blur-sm animate-fade-in rounded-lg border border-gray-200 p-1 shadow-lg">
-                  {renderDropdownItems(serviceCategories.orientation)}
-                </DropdownMenuContent>
-              </DropdownMenu>
-              
-              {/* Dropdown 2: Mobilité internationale with improved styling */}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <button 
-                    className="relative text-gray-700 hover:text-primary px-2 py-1 text-sm font-medium inline-flex items-center transition-all duration-200 group"
-                    aria-expanded={isMenuOpen}
-                  >
-                    Mobilité
-                    <ChevronDown className="ml-0.5 h-3.5 w-3.5 transition-transform duration-300 group-data-[state=open]:rotate-180" />
-                    <span className="absolute bottom-0 left-0 w-full h-[2px] bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
-                  </button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="center" className="w-52 mt-1 bg-white/95 backdrop-blur-sm animate-fade-in rounded-lg border border-gray-200 p-1 shadow-lg">
-                  {renderDropdownItems(serviceCategories.immigration)}
-                </DropdownMenuContent>
-              </DropdownMenu>
-              
-              {/* Standard navigation links with the custom component */}
-              <NavbarLink to="/services/formation">Formations</NavbarLink>
-              <NavbarLink to="/about">À propos</NavbarLink>
-              <NavbarLink to="/testimonials">Témoignages</NavbarLink>
-              <NavbarLink to="/faq">FAQ</NavbarLink>
-              <NavbarLink to="/contact">Contact</NavbarLink>
-            </div>
+          {/* Mobile menu search button */}
+          <div className="md:hidden lg:hidden flex items-center">
+            <GlobalSearchBar />
           </div>
 
           {/* Mobile menu button with improved interactions */}
