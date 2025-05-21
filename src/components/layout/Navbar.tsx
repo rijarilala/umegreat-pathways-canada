@@ -168,19 +168,7 @@ const Navbar = () => {
                 Formations
               </NavLink>
               
-              <NavLink 
-                to="/services" 
-                className={({ isActive }) => 
-                  cn(
-                    "text-gray-700 hover:text-primary px-2 py-1.5 text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
-                    isActive && "text-primary font-medium after:scale-x-100"
-                  )
-                }
-                aria-current={location.pathname === "/services" ? "page" : undefined}
-                onClick={handleLinkClick}
-              >
-                Explorer
-              </NavLink>
+              {/* Removed "Explorer" link */}
               
               <NavLink 
                 to="/about" 
@@ -239,8 +227,6 @@ const Navbar = () => {
               </NavLink>
             </div>
           </div>
-
-          {/* Contact button - Removed */}
 
           {/* Mobile menu button and search */}
           <div className="md:hidden flex items-center gap-2">
@@ -358,23 +344,7 @@ const Navbar = () => {
             Formations
           </NavLink>
           
-          <NavLink
-            to="/services"
-            className={({ isActive }) =>
-              `block px-3 py-2 rounded-md text-sm ${
-                isActive 
-                  ? "text-primary font-medium border-l-2 border-primary pl-2" 
-                  : "text-gray-700 hover:text-primary"
-              }`
-            }
-            onClick={() => {
-              toggleMenu();
-              handleLinkClick();
-            }}
-            aria-current={location.pathname === "/services" ? "page" : undefined}
-          >
-            Explorer
-          </NavLink>
+          {/* Removed "Explorer" from mobile menu */}
           
           <NavLink
             to="/about"

@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from "react";
 import { Search, X, Loader2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -98,17 +97,13 @@ export const GlobalSearchBar = () => {
 
   return (
     <>
-      {/* Search trigger button - Reduced size */}
+      {/* Search trigger - Just an icon button */}
       <button
         onClick={() => setIsOpen(true)}
-        className="flex items-center gap-1 text-xs text-gray-500 px-2 py-1.5 rounded-md border border-gray-300 bg-white hover:bg-gray-50"
-        aria-label="Rechercher"
+        className="flex items-center justify-center p-2 text-gray-500 hover:text-primary rounded-md hover:bg-gray-100 transition-colors"
+        aria-label="Rechercher (Ctrl+K)"
       >
-        <Search className="w-3.5 h-3.5" />
-        <span className="hidden md:inline">Rechercher</span>
-        <kbd className="hidden md:inline-flex h-4 select-none items-center gap-1 rounded border bg-muted px-1 font-mono text-[9px] font-medium text-muted-foreground ml-auto">
-          <span className="text-[9px]">⌘</span>K
-        </kbd>
+        <Search className="w-4 h-4" />
       </button>
 
       {/* Search modal dialog */}
@@ -143,7 +138,7 @@ export const GlobalSearchBar = () => {
               )}
             </div>
 
-            {/* Results section */}
+            {/* Results section - Keeping functionality intact */}
             {(query.length >= 2 || results.length > 0) && (
               <div className="max-h-[60vh] overflow-y-auto p-2">
                 {Object.keys(groupedResults).length > 0 ? (
