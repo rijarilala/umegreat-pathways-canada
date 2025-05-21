@@ -87,7 +87,7 @@ const Navbar = () => {
           } transition-all duration-300`}
         >
           {/* Logo */}
-          <div className="flex-shrink-0">
+          <div className="flex-shrink-0 mr-0">
             <Link 
               to="/" 
               className="flex items-center"
@@ -99,19 +99,19 @@ const Navbar = () => {
             </Link>
           </div>
 
-          {/* Search Bar (visible on desktop) */}
-          <div className="flex items-center mx-1 lg:mx-2">
+          {/* Search Bar - REDUCED MARGINS */}
+          <div className="flex items-center mx-0.5">
             <GlobalSearchBar />
           </div>
 
-          {/* Desktop Navigation */}
+          {/* Desktop Navigation - REDUCED LEFT MARGIN */}
           <div className="hidden md:block">
-            <div className="ml-1 lg:ml-3 flex items-center space-x-0 lg:space-x-0.5">
+            <div className="ml-0 flex items-center space-x-0">
               <NavLink 
                 to="/" 
                 className={({ isActive }) => 
                   cn(
-                    "text-gray-700 hover:text-primary px-1 md:px-1.5 py-1 text-xs md:text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
+                    "text-gray-700 hover:text-primary px-1 md:px-1 py-1 text-xs md:text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
                     isActive && "text-primary font-medium after:scale-x-100"
                   )
                 }
@@ -121,11 +121,11 @@ const Navbar = () => {
                 Accueil
               </NavLink>
               
-              {/* Dropdown 1: Accompagnement */}
+              {/* Dropdown 1: Accompagnement - REDUCED PADDING */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <button 
-                    className="text-gray-700 hover:text-primary px-1 md:px-1.5 py-1 text-xs md:text-sm inline-flex items-center group"
+                    className="text-gray-700 hover:text-primary px-1 md:px-1 py-1 text-xs md:text-sm inline-flex items-center group"
                     aria-expanded={isMenuOpen}
                   >
                     Accompagnement
@@ -137,11 +137,11 @@ const Navbar = () => {
                 </DropdownMenuContent>
               </DropdownMenu>
               
-              {/* Dropdown 2: Mobilité internationale */}
+              {/* Dropdown 2: Mobilité internationale - REDUCED PADDING */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <button 
-                    className="text-gray-700 hover:text-primary px-1 md:px-1.5 py-1 text-xs md:text-sm inline-flex items-center group"
+                    className="text-gray-700 hover:text-primary px-1 md:px-1 py-1 text-xs md:text-sm inline-flex items-center group"
                     aria-expanded={isMenuOpen}
                   >
                     Mobilité
@@ -153,12 +153,12 @@ const Navbar = () => {
                 </DropdownMenuContent>
               </DropdownMenu>
               
-              {/* Simple link: Formations */}
+              {/* Simple link: Formations - REDUCED PADDING */}
               <NavLink 
                 to="/services/formation" 
                 className={({ isActive }) => 
                   cn(
-                    "text-gray-700 hover:text-primary px-1 md:px-1.5 py-1 text-xs md:text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
+                    "text-gray-700 hover:text-primary px-1 md:px-1 py-1 text-xs md:text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
                     isActive && "text-primary font-medium after:scale-x-100"
                   )
                 }
@@ -172,7 +172,7 @@ const Navbar = () => {
                 to="/about" 
                 className={({ isActive }) => 
                   cn(
-                    "text-gray-700 hover:text-primary px-1 md:px-1.5 py-1 text-xs md:text-sm relative inline-block after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
+                    "text-gray-700 hover:text-primary px-1 md:px-1 py-1 text-xs md:text-sm relative inline-block after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
                     isActive && "text-primary font-medium after:scale-x-100"
                   )
                 }
@@ -186,7 +186,7 @@ const Navbar = () => {
                 to="/testimonials" 
                 className={({ isActive }) => 
                   cn(
-                    "text-gray-700 hover:text-primary px-1 md:px-1.5 py-1 text-xs md:text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
+                    "text-gray-700 hover:text-primary px-1 md:px-1 py-1 text-xs md:text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
                     isActive && "text-primary font-medium after:scale-x-100"
                   )
                 }
@@ -200,7 +200,7 @@ const Navbar = () => {
                 to="/faq" 
                 className={({ isActive }) => 
                   cn(
-                    "text-gray-700 hover:text-primary px-1 md:px-1.5 py-1 text-xs md:text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
+                    "text-gray-700 hover:text-primary px-1 md:px-1 py-1 text-xs md:text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
                     isActive && "text-primary font-medium after:scale-x-100"
                   )
                 }
@@ -214,7 +214,7 @@ const Navbar = () => {
                 to="/contact" 
                 className={({ isActive }) => 
                   cn(
-                    "text-gray-700 hover:text-primary px-1 md:px-1.5 py-1 text-xs md:text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
+                    "text-gray-700 hover:text-primary px-1 md:px-1 py-1 text-xs md:text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
                     isActive && "text-primary font-medium after:scale-x-100"
                   )
                 }

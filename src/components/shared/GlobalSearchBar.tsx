@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useRef } from "react";
 import { Search, X, Loader2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -97,13 +98,13 @@ export const GlobalSearchBar = () => {
 
   return (
     <>
-      {/* Search trigger - Just an icon button */}
+      {/* Search trigger - REDUCED PADDING */}
       <button
         onClick={() => setIsOpen(true)}
-        className="flex items-center justify-center p-2 text-gray-500 hover:text-primary rounded-md hover:bg-gray-100 transition-colors"
+        className="flex items-center justify-center p-1 text-gray-500 hover:text-primary rounded-md hover:bg-gray-100 transition-colors"
         aria-label="Rechercher (Ctrl+K)"
       >
-        <Search className="w-4 h-4" />
+        <Search className="w-3.5 h-3.5" />
       </button>
 
       {/* Search modal dialog */}
