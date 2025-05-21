@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { ChevronDown, Menu, X } from "lucide-react";
@@ -122,8 +123,16 @@ const Navbar = () => {
             </Link>
           </div>
 
+          {/* Vertical separator between logo and search */}
+          <Separator orientation="vertical" className="h-6 mx-2 bg-gray-200 hidden sm:block" />
+
+          {/* Search Bar with improved positioning */}
+          <div className="flex items-center mx-2">
+            <GlobalSearchBar />
+          </div>
+
           {/* Desktop Navigation with improved styling */}
-          <div className="hidden md:block">
+          <div className="hidden md:block ml-auto">
             <div className="flex items-center space-x-1">
               <NavbarLink to="/">Accueil</NavbarLink>
               
@@ -170,13 +179,8 @@ const Navbar = () => {
             </div>
           </div>
 
-          {/* Search Bar moved to the right */}
-          <div className="flex items-center ml-auto">
-            <GlobalSearchBar />
-          </div>
-
           {/* Mobile menu button with improved interactions */}
-          <div className="md:hidden flex items-center ml-3">
+          <div className="md:hidden flex items-center ml-auto">
             <button
               type="button"
               className="inline-flex items-center justify-center p-1.5 rounded-md text-gray-700 hover:text-primary hover:bg-gray-100/70 transition-all duration-200 focus:outline-none"
