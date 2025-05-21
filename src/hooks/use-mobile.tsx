@@ -28,10 +28,18 @@ export function useIsMobile() {
     }
   }, [])
 
-  return {
+  // For backward compatibility, ensure the hook can be used as a boolean
+  const result = {
     isMobile: !!isMobile, 
     windowWidth,
     isTablet: windowWidth !== undefined && windowWidth >= MOBILE_BREAKPOINT && windowWidth < 1024,
     isDesktop: windowWidth !== undefined && windowWidth >= 1024
   }
+
+  // Add the ability to be used as a boolean directly
+  Object.defineProperty(result, 'valueOf', {
+    value: function() { return this.isMobile; }
+  })
+
+  return result as typeof result & { valueOf(): boolean }
 }
