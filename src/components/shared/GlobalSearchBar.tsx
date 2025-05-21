@@ -98,15 +98,13 @@ export const GlobalSearchBar = () => {
 
   return (
     <>
-      {/* Search trigger - Modern styling */}
+      {/* Search trigger - REDUCED PADDING */}
       <button
         onClick={() => setIsOpen(true)}
-        className="flex items-center justify-center p-1.5 rounded-md bg-gray-100/60 hover:bg-gray-200/90 transition-all gap-2 text-gray-600 hover:text-primary"
+        className="flex items-center justify-center p-1 text-gray-500 hover:text-primary rounded-md hover:bg-gray-100 transition-colors"
         aria-label="Rechercher (Ctrl+K)"
-        title="Rechercher (Ctrl+K)"
       >
         <Search className="w-3.5 h-3.5" />
-        <span className="text-xs hidden sm:inline">Rechercher</span>
       </button>
 
       {/* Search modal dialog */}
