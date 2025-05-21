@@ -34,7 +34,7 @@ const Navbar = () => {
   useEffect(() => {
     const handleScroll = () => {
       const offset = window.scrollY;
-      setScrolled(offset > 50);
+      setScrolled(offset > 20);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -72,47 +72,53 @@ const Navbar = () => {
       </DropdownMenuItem>
     ));
   };
+  
+  // The active link style for desktop nav
+  const activeLinkStyle = "text-primary font-medium after:scale-x-100";
+  
+  // Base link style for desktop nav
+  const linkBaseStyle = "text-gray-700 hover:text-primary px-2 py-2 text-sm relative inline-flex items-center after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-[2px] after:-bottom-[2px] after:left-0 after:bg-primary/90 after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left";
 
   return (
     <nav 
-      className={`bg-white backdrop-blur-sm bg-opacity-95 border-b sticky top-0 z-50 ${
-        scrolled ? "shadow-md" : "shadow-sm"
-      } transition-all duration-300`}
+      className={`bg-white backdrop-blur-md bg-opacity-90 sticky top-0 z-50 transition-all duration-300 ${
+        scrolled ? "shadow-md border-b-0" : "border-b border-gray-100"
+      }`}
       aria-label="Navigation principale"
     >
-      <div className="container mx-auto px-2 md:px-3">
+      <div className="container mx-auto px-3">
         <div 
           className={`flex items-center justify-between ${
-            scrolled ? "h-8 md:h-10" : "h-10 md:h-12"
+            scrolled ? "h-14" : "h-16"
           } transition-all duration-300`}
         >
           {/* Logo */}
-          <div className="flex-shrink-0 mr-0">
+          <div className="flex-shrink-0 flex items-center">
             <Link 
               to="/" 
-              className="flex items-center"
+              className="flex items-center gap-1 group"
               onClick={handleLinkClick}
             >
-              <span className="font-bold text-sm md:text-base text-primary hover:text-primary/90 transition-colors">
+              <span className="font-bold text-base md:text-lg text-primary group-hover:text-primary/90 transition-colors">
                 UMEGREAT Pro
               </span>
             </Link>
           </div>
 
-          {/* Search Bar - REDUCED MARGINS */}
-          <div className="flex items-center mx-0.5">
+          {/* Search Bar - Positioned in center for balance */}
+          <div className="hidden sm:flex items-center absolute left-1/2 transform -translate-x-1/2">
             <GlobalSearchBar />
           </div>
 
-          {/* Desktop Navigation - REDUCED LEFT MARGIN */}
+          {/* Desktop Navigation */}
           <div className="hidden md:block">
-            <div className="ml-0 flex items-center space-x-0">
+            <div className="flex items-center gap-1">
               <NavLink 
                 to="/" 
                 className={({ isActive }) => 
                   cn(
-                    "text-gray-700 hover:text-primary px-1 md:px-1 py-1 text-xs md:text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
-                    isActive && "text-primary font-medium after:scale-x-100"
+                    linkBaseStyle,
+                    isActive && activeLinkStyle
                   )
                 }
                 aria-current={location.pathname === "/" ? "page" : undefined}
@@ -121,45 +127,45 @@ const Navbar = () => {
                 Accueil
               </NavLink>
               
-              {/* Dropdown 1: Accompagnement - REDUCED PADDING */}
+              {/* Dropdown 1: Accompagnement */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <button 
-                    className="text-gray-700 hover:text-primary px-1 md:px-1 py-1 text-xs md:text-sm inline-flex items-center group"
+                    className={`${linkBaseStyle} group`}
                     aria-expanded={isMenuOpen}
                   >
                     Accompagnement
                     <ChevronDown className="ml-0.5 h-3 w-3 transition-transform group-data-[state=open]:rotate-180" />
                   </button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="center" className="w-44 md:w-52 bg-white animate-fade-in">
+                <DropdownMenuContent align="center" className="w-52 bg-white rounded-md shadow-md animate-fade-in mt-2 border border-gray-100">
                   {renderDropdownItems(serviceCategories.orientation)}
                 </DropdownMenuContent>
               </DropdownMenu>
               
-              {/* Dropdown 2: Mobilité internationale - REDUCED PADDING */}
+              {/* Dropdown 2: Mobilité internationale */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <button 
-                    className="text-gray-700 hover:text-primary px-1 md:px-1 py-1 text-xs md:text-sm inline-flex items-center group"
+                    className={`${linkBaseStyle} group`}
                     aria-expanded={isMenuOpen}
                   >
                     Mobilité
                     <ChevronDown className="ml-0.5 h-3 w-3 transition-transform group-data-[state=open]:rotate-180" />
                   </button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="center" className="w-44 md:w-52 bg-white animate-fade-in">
+                <DropdownMenuContent align="center" className="w-52 bg-white rounded-md shadow-md animate-fade-in mt-2 border border-gray-100">
                   {renderDropdownItems(serviceCategories.immigration)}
                 </DropdownMenuContent>
               </DropdownMenu>
               
-              {/* Simple link: Formations - REDUCED PADDING */}
+              {/* Simple link: Formations */}
               <NavLink 
                 to="/services/formation" 
                 className={({ isActive }) => 
                   cn(
-                    "text-gray-700 hover:text-primary px-1 md:px-1 py-1 text-xs md:text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
-                    isActive && "text-primary font-medium after:scale-x-100"
+                    linkBaseStyle,
+                    isActive && activeLinkStyle
                   )
                 }
                 aria-current={location.pathname === "/services/formation" ? "page" : undefined}
@@ -172,8 +178,8 @@ const Navbar = () => {
                 to="/about" 
                 className={({ isActive }) => 
                   cn(
-                    "text-gray-700 hover:text-primary px-1 md:px-1 py-1 text-xs md:text-sm relative inline-block after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
-                    isActive && "text-primary font-medium after:scale-x-100"
+                    linkBaseStyle,
+                    isActive && activeLinkStyle
                   )
                 }
                 aria-current={location.pathname === "/about" ? "page" : undefined}
@@ -186,8 +192,8 @@ const Navbar = () => {
                 to="/testimonials" 
                 className={({ isActive }) => 
                   cn(
-                    "text-gray-700 hover:text-primary px-1 md:px-1 py-1 text-xs md:text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
-                    isActive && "text-primary font-medium after:scale-x-100"
+                    linkBaseStyle,
+                    isActive && activeLinkStyle
                   )
                 }
                 aria-current={location.pathname === "/testimonials" ? "page" : undefined}
@@ -200,8 +206,8 @@ const Navbar = () => {
                 to="/faq" 
                 className={({ isActive }) => 
                   cn(
-                    "text-gray-700 hover:text-primary px-1 md:px-1 py-1 text-xs md:text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
-                    isActive && "text-primary font-medium after:scale-x-100"
+                    linkBaseStyle,
+                    isActive && activeLinkStyle
                   )
                 }
                 aria-current={location.pathname === "/faq" ? "page" : undefined}
@@ -214,8 +220,8 @@ const Navbar = () => {
                 to="/contact" 
                 className={({ isActive }) => 
                   cn(
-                    "text-gray-700 hover:text-primary px-1 md:px-1 py-1 text-xs md:text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
-                    isActive && "text-primary font-medium after:scale-x-100"
+                    linkBaseStyle,
+                    isActive && activeLinkStyle
                   )
                 }
                 aria-current={location.pathname === "/contact" ? "page" : undefined}
@@ -227,10 +233,13 @@ const Navbar = () => {
           </div>
 
           {/* Mobile menu button and search */}
-          <div className="md:hidden flex items-center gap-1">
+          <div className="flex items-center gap-2 md:hidden">
+            <div className="sm:hidden">
+              <GlobalSearchBar />
+            </div>
             <button
               type="button"
-              className="inline-flex items-center justify-center p-1 rounded-md text-gray-700 hover:text-primary focus:outline-none"
+              className="inline-flex items-center justify-center p-1.5 rounded-md text-gray-600 hover:text-primary hover:bg-gray-100 focus:outline-none transition-all"
               onClick={toggleMenu}
               aria-expanded={isMenuOpen}
               aria-label="Menu principal"
@@ -247,18 +256,18 @@ const Navbar = () => {
 
       {/* Mobile menu with animation */}
       <div 
-        className={`md:hidden bg-white shadow-lg overflow-hidden transition-all duration-300 ease-in-out ${
-          isMenuOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
+        className={`md:hidden bg-white overflow-hidden transition-all duration-300 ease-in-out border-t ${
+          isMenuOpen ? "max-h-[500px] opacity-100 shadow-lg" : "max-h-0 opacity-0 border-t-0"
         }`}
       >
-        <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+        <div className="px-3 pt-2 pb-3 space-y-1">
           <NavLink
             to="/"
             className={({ isActive }) =>
               `block px-3 py-2 rounded-md text-sm ${
                 isActive 
-                  ? "text-primary font-medium border-l-2 border-primary pl-2" 
-                  : "text-gray-700 hover:text-primary"
+                  ? "text-primary font-medium bg-blue-50/60 border-l-2 border-primary pl-2" 
+                  : "text-gray-700 hover:text-primary hover:bg-gray-50"
               }`
             }
             onClick={() => {
@@ -273,17 +282,17 @@ const Navbar = () => {
           {/* Mobile: Accompagnement */}
           <div className="relative">
             <details className="group [&_summary::-webkit-details-marker]:hidden">
-              <summary className="flex cursor-pointer items-center gap-2 px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-primary">
+              <summary className="flex cursor-pointer items-center gap-2 px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-primary hover:bg-gray-50">
                 <span>Accompagnement</span>
                 <ChevronDown className="h-4 w-4 transition-transform group-open:rotate-180" />
               </summary>
 
-              <nav className="mt-1.5 ml-6 flex flex-col space-y-2 animate-slide-in">
+              <nav className="mt-1.5 ml-6 flex flex-col space-y-1 animate-slide-in">
                 {serviceCategories.orientation.map((item) => (
                   <Link 
                     key={item.path}
                     to={item.path} 
-                    className="block px-3 py-1.5 text-sm text-gray-700 hover:text-primary"
+                    className="block px-3 py-1.5 text-sm text-gray-700 hover:text-primary hover:bg-gray-50 rounded-md"
                     onClick={() => {
                       toggleMenu();
                       handleLinkClick();
@@ -299,17 +308,17 @@ const Navbar = () => {
           {/* Mobile: Mobilité internationale */}
           <div className="relative">
             <details className="group [&_summary::-webkit-details-marker]:hidden">
-              <summary className="flex cursor-pointer items-center gap-2 px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-primary">
+              <summary className="flex cursor-pointer items-center gap-2 px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-primary hover:bg-gray-50">
                 <span>Mobilité</span>
                 <ChevronDown className="h-4 w-4 transition-transform group-open:rotate-180" />
               </summary>
 
-              <nav className="mt-1.5 ml-6 flex flex-col space-y-2 animate-slide-in">
+              <nav className="mt-1.5 ml-6 flex flex-col space-y-1 animate-slide-in">
                 {serviceCategories.immigration.map((item) => (
                   <Link 
                     key={item.path}
                     to={item.path} 
-                    className="block px-3 py-1.5 text-sm text-gray-700 hover:text-primary"
+                    className="block px-3 py-1.5 text-sm text-gray-700 hover:text-primary hover:bg-gray-50 rounded-md"
                     onClick={() => {
                       toggleMenu();
                       handleLinkClick();
@@ -322,102 +331,33 @@ const Navbar = () => {
             </details>
           </div>
           
-          {/* Mobile: Formations (simple link) */}
-          <NavLink
-            to="/services/formation"
-            className={({ isActive }) =>
-              `block px-3 py-2 rounded-md text-sm ${
-                isActive 
-                  ? "text-primary font-medium border-l-2 border-primary pl-2" 
-                  : "text-gray-700 hover:text-primary"
-              }`
-            }
-            onClick={() => {
-              toggleMenu();
-              handleLinkClick();
-            }}
-            aria-current={location.pathname === "/services/formation" ? "page" : undefined}
-          >
-            Formations
-          </NavLink>
-          
-          {/* Mobile links */}
-          <NavLink
-            to="/about"
-            className={({ isActive }) =>
-              `block px-3 py-2 rounded-md text-sm ${
-                isActive 
-                  ? "text-primary font-medium border-l-2 border-primary pl-2" 
-                  : "text-gray-700 hover:text-primary"
-              }`
-            }
-            onClick={() => {
-              toggleMenu();
-              handleLinkClick();
-            }}
-            aria-current={location.pathname === "/about" ? "page" : undefined}
-          >
-            À propos
-          </NavLink>
-          
-          <NavLink
-            to="/testimonials"
-            className={({ isActive }) =>
-              `block px-3 py-2 rounded-md text-sm ${
-                isActive 
-                  ? "text-primary font-medium border-l-2 border-primary pl-2" 
-                  : "text-gray-700 hover:text-primary"
-              }`
-            }
-            onClick={() => {
-              toggleMenu();
-              handleLinkClick();
-            }}
-            aria-current={location.pathname === "/testimonials" ? "page" : undefined}
-          >
-            Témoignages
-          </NavLink>
-          
-          <NavLink
-            to="/faq"
-            className={({ isActive }) =>
-              `block px-3 py-2 rounded-md text-sm ${
-                isActive 
-                  ? "text-primary font-medium border-l-2 border-primary pl-2" 
-                  : "text-gray-700 hover:text-primary"
-              }`
-            }
-            onClick={() => {
-              toggleMenu();
-              handleLinkClick();
-            }}
-            aria-current={location.pathname === "/faq" ? "page" : undefined}
-          >
-            FAQ
-          </NavLink>
-          
-          <NavLink
-            to="/contact"
-            className={({ isActive }) =>
-              `block px-3 py-2 rounded-md text-sm ${
-                isActive 
-                  ? "text-primary font-medium border-l-2 border-primary pl-2" 
-                  : "text-gray-700 hover:text-primary"
-              }`
-            }
-            onClick={() => {
-              toggleMenu();
-              handleLinkClick();
-            }}
-            aria-current={location.pathname === "/contact" ? "page" : undefined}
-          >
-            Contact
-          </NavLink>
-          
-          {/* Add search bar to mobile menu */}
-          <div className="px-3 py-2">
-            <GlobalSearchBar />
-          </div>
+          {/* Mobile: Regular links */}
+          {[
+            { title: "Formations", path: "/services/formation" },
+            { title: "À propos", path: "/about" },
+            { title: "Témoignages", path: "/testimonials" },
+            { title: "FAQ", path: "/faq" },
+            { title: "Contact", path: "/contact" }
+          ].map((item) => (
+            <NavLink
+              key={item.path}
+              to={item.path}
+              className={({ isActive }) =>
+                `block px-3 py-2 rounded-md text-sm ${
+                  isActive 
+                    ? "text-primary font-medium bg-blue-50/60 border-l-2 border-primary pl-2" 
+                    : "text-gray-700 hover:text-primary hover:bg-gray-50"
+                }`
+              }
+              onClick={() => {
+                toggleMenu();
+                handleLinkClick();
+              }}
+              aria-current={location.pathname === item.path ? "page" : undefined}
+            >
+              {item.title}
+            </NavLink>
+          ))}
         </div>
       </div>
     </nav>
