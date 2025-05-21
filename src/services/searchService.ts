@@ -1,3 +1,4 @@
+
 import type { SearchResult } from "@/contexts/SearchContext";
 
 // Données des services et formations pour la recherche
@@ -56,7 +57,7 @@ const searchDatabase: SearchResult[] = [
   // Formations - Updated with correct formationId values
   {
     id: "1",
-    title: "Rédiger un CV efficace",
+    title: "CV impactant",
     category: "formation",
     description: "Apprenez à créer un CV qui attire l'attention des recruteurs",
     url: "/services/formation",
