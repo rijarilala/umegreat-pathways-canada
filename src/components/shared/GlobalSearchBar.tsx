@@ -98,26 +98,27 @@ export const GlobalSearchBar = () => {
 
   return (
     <>
-      {/* Search trigger - REDUCED PADDING */}
+      {/* Search trigger with improved styling */}
       <button
         onClick={() => setIsOpen(true)}
-        className="flex items-center justify-center p-1 text-gray-500 hover:text-primary rounded-md hover:bg-gray-100 transition-colors"
+        className="group flex items-center justify-center p-1.5 text-gray-600 hover:text-primary rounded-md hover:bg-gray-100/70 transition-all duration-200"
         aria-label="Rechercher (Ctrl+K)"
+        title="Rechercher (Ctrl+K)"
       >
-        <Search className="w-3.5 h-3.5" />
+        <Search className="w-4 h-4 transition-transform duration-200 group-hover:scale-110" />
       </button>
 
       {/* Search modal dialog */}
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="p-0 gap-0 max-w-2xl w-[90vw] rounded-lg">
+        <DialogContent className="p-0 gap-0 max-w-2xl w-[90vw] rounded-xl overflow-hidden border shadow-lg">
           <div className="relative" ref={searchRef}>
             {/* Search input */}
-            <div className="relative">
+            <div className="relative border-b">
               <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
                 {isLoading ? (
-                  <Loader2 className="w-5 h-5 text-gray-400 animate-spin" />
+                  <Loader2 className="w-5 h-5 text-primary animate-spin" />
                 ) : (
-                  <Search className="w-5 h-5 text-gray-400" />
+                  <Search className="w-5 h-5 text-gray-500" />
                 )}
               </div>
               <input
@@ -126,37 +127,39 @@ export const GlobalSearchBar = () => {
                 value={query}
                 onChange={(e) => updateQuery(e.target.value)}
                 placeholder="Rechercher dans tout le site..."
-                className="w-full p-4 pl-12 pr-10 text-base text-gray-900 border-b border-gray-200 focus:outline-none"
+                className="w-full p-4 pl-12 pr-10 text-base text-gray-900 bg-white/95 backdrop-blur-sm focus:outline-none focus:ring-0 transition-colors duration-200"
                 autoFocus
               />
               {query && (
                 <button
                   onClick={clearSearch}
-                  className="absolute inset-y-0 right-0 flex items-center pr-4"
+                  className="absolute inset-y-0 right-0 flex items-center pr-4 group"
                 >
-                  <X className="w-5 h-5 text-gray-400 hover:text-gray-700" />
+                  <X className="w-5 h-5 text-gray-500 hover:text-gray-700 transition-colors duration-200 group-hover:rotate-90" />
                 </button>
               )}
             </div>
 
-            {/* Results section - Keeping functionality intact */}
+            {/* Results section with enhanced styling */}
             {(query.length >= 2 || results.length > 0) && (
-              <div className="max-h-[60vh] overflow-y-auto p-2">
+              <div className="max-h-[60vh] overflow-y-auto p-3 bg-white/95 backdrop-blur-sm">
                 {Object.keys(groupedResults).length > 0 ? (
                   Object.entries(groupedResults).map(([category, categoryResults]) => (
                     <div key={category} className="mb-4">
                       <div className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md">
                         {categoryLabels[category] || category}
                       </div>
-                      <div className="mt-1">
+                      <div className="mt-1.5 space-y-0.5">
                         {categoryResults.map((result) => (
                           <button
                             key={result.id}
                             onClick={() => handleResultClick(result)}
-                            className="w-full text-left px-4 py-3 hover:bg-gray-50 rounded-md transition-colors"
+                            className="w-full text-left px-4 py-3 hover:bg-gray-50 rounded-md transition-colors duration-200 group"
                           >
-                            <div className="font-medium text-primary">{result.title}</div>
-                            <div className="text-sm text-gray-500 line-clamp-1">
+                            <div className="font-medium text-primary group-hover:translate-x-0.5 transition-transform duration-200">
+                              {result.title}
+                            </div>
+                            <div className="text-sm text-gray-500 line-clamp-1 transition-colors duration-200 group-hover:text-gray-700">
                               {result.description}
                             </div>
                           </button>

@@ -65,6 +65,11 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				navbar: {
+					bg: 'rgba(255, 255, 255, 0.95)',
+					scrolled: 'rgba(255, 255, 255, 0.98)',
+					border: '#E2E8F0'
 				}
 			},
 			borderRadius: {
@@ -118,6 +123,10 @@ export default {
 						opacity: '1',
 						transform: 'translateX(0)'
 					}
+				},
+				'nav-indicator': {
+					'0%': { width: '0%' },
+					'100%': { width: '100%' }
 				}
 			},
 			animation: {
@@ -125,7 +134,16 @@ export default {
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'fade-in': 'fade-in 0.3s ease-out',
 				'fade-out': 'fade-out 0.3s ease-out',
-				'slide-in': 'slide-in 0.3s ease-out'
+				'slide-in': 'slide-in 0.3s ease-out',
+				'nav-indicator': 'nav-indicator 0.3s ease-out forwards'
+			},
+			boxShadow: {
+				'navbar': '0 2px 8px rgba(0, 0, 0, 0.05)',
+				'navbar-scrolled': '0 4px 12px rgba(0, 0, 0, 0.08)'
+			},
+			backdropFilter: {
+				'blur-sm': 'blur(4px)',
+				'blur-md': 'blur(8px)'
 			}
 		}
 	},
