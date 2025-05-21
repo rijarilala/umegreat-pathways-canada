@@ -83,7 +83,7 @@ const Navbar = () => {
       <div className="container mx-auto px-3 md:px-4">
         <div 
           className={`flex items-center justify-between ${
-            scrolled ? "h-10" : "h-12"
+            scrolled ? "h-10 md:h-12" : "h-12 md:h-14"
           } transition-all duration-300`}
         >
           {/* Logo */}
@@ -93,25 +93,25 @@ const Navbar = () => {
               className="flex items-center"
               onClick={handleLinkClick}
             >
-              <span className="font-bold text-lg text-primary hover:text-primary/90 transition-colors">
+              <span className="font-bold text-sm md:text-lg text-primary hover:text-primary/90 transition-colors">
                 UMEGREAT Pro
               </span>
             </Link>
           </div>
 
           {/* Search Bar (visible on desktop) */}
-          <div className="hidden md:flex md:mx-3 lg:mx-6">
+          <div className="flex items-center md:mx-2 lg:mx-4">
             <GlobalSearchBar />
           </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:block">
-            <div className="ml-6 flex items-center space-x-1.5">
+            <div className="ml-2 lg:ml-6 flex items-center space-x-0.5 lg:space-x-1.5">
               <NavLink 
                 to="/" 
                 className={({ isActive }) => 
                   cn(
-                    "text-gray-700 hover:text-primary px-2 py-1.5 text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
+                    "text-gray-700 hover:text-primary px-1 md:px-2 py-1.5 text-xs md:text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
                     isActive && "text-primary font-medium after:scale-x-100"
                   )
                 }
@@ -125,14 +125,14 @@ const Navbar = () => {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <button 
-                    className="text-gray-700 hover:text-primary px-2 py-1.5 text-sm inline-flex items-center group"
+                    className="text-gray-700 hover:text-primary px-1 md:px-2 py-1.5 text-xs md:text-sm inline-flex items-center group"
                     aria-expanded={isMenuOpen}
                   >
                     Accompagnement
                     <ChevronDown className="ml-1 h-3 w-3 transition-transform group-data-[state=open]:rotate-180" />
                   </button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="center" className="w-56 bg-white animate-fade-in">
+                <DropdownMenuContent align="center" className="w-48 md:w-56 bg-white animate-fade-in">
                   {renderDropdownItems(serviceCategories.orientation)}
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -141,14 +141,14 @@ const Navbar = () => {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <button 
-                    className="text-gray-700 hover:text-primary px-2 py-1.5 text-sm inline-flex items-center group"
+                    className="text-gray-700 hover:text-primary px-1 md:px-2 py-1.5 text-xs md:text-sm inline-flex items-center group"
                     aria-expanded={isMenuOpen}
                   >
-                    Mobilité internationale
+                    Mobilité
                     <ChevronDown className="ml-1 h-3 w-3 transition-transform group-data-[state=open]:rotate-180" />
                   </button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="center" className="w-56 bg-white animate-fade-in">
+                <DropdownMenuContent align="center" className="w-48 md:w-56 bg-white animate-fade-in">
                   {renderDropdownItems(serviceCategories.immigration)}
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -158,7 +158,7 @@ const Navbar = () => {
                 to="/services/formation" 
                 className={({ isActive }) => 
                   cn(
-                    "text-gray-700 hover:text-primary px-2 py-1.5 text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
+                    "text-gray-700 hover:text-primary px-1 md:px-2 py-1.5 text-xs md:text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
                     isActive && "text-primary font-medium after:scale-x-100"
                   )
                 }
@@ -168,13 +168,11 @@ const Navbar = () => {
                 Formations
               </NavLink>
               
-              {/* Removed "Explorer" link */}
-              
               <NavLink 
                 to="/about" 
                 className={({ isActive }) => 
                   cn(
-                    "text-gray-700 hover:text-primary px-2 py-1.5 text-sm relative inline-block after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
+                    "text-gray-700 hover:text-primary px-1 md:px-2 py-1.5 text-xs md:text-sm relative inline-block after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
                     isActive && "text-primary font-medium after:scale-x-100"
                   )
                 }
@@ -188,7 +186,7 @@ const Navbar = () => {
                 to="/testimonials" 
                 className={({ isActive }) => 
                   cn(
-                    "text-gray-700 hover:text-primary px-2 py-1.5 text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
+                    "text-gray-700 hover:text-primary px-1 md:px-2 py-1.5 text-xs md:text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
                     isActive && "text-primary font-medium after:scale-x-100"
                   )
                 }
@@ -202,7 +200,7 @@ const Navbar = () => {
                 to="/faq" 
                 className={({ isActive }) => 
                   cn(
-                    "text-gray-700 hover:text-primary px-2 py-1.5 text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
+                    "text-gray-700 hover:text-primary px-1 md:px-2 py-1.5 text-xs md:text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
                     isActive && "text-primary font-medium after:scale-x-100"
                   )
                 }
@@ -216,7 +214,7 @@ const Navbar = () => {
                 to="/contact" 
                 className={({ isActive }) => 
                   cn(
-                    "text-gray-700 hover:text-primary px-2 py-1.5 text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
+                    "text-gray-700 hover:text-primary px-1 md:px-2 py-1.5 text-xs md:text-sm relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left",
                     isActive && "text-primary font-medium after:scale-x-100"
                   )
                 }
@@ -230,7 +228,6 @@ const Navbar = () => {
 
           {/* Mobile menu button and search */}
           <div className="md:hidden flex items-center gap-2">
-            <GlobalSearchBar />
             <button
               type="button"
               className="inline-flex items-center justify-center p-1.5 rounded-md text-gray-700 hover:text-primary focus:outline-none"
@@ -344,8 +341,7 @@ const Navbar = () => {
             Formations
           </NavLink>
           
-          {/* Removed "Explorer" from mobile menu */}
-          
+          {/* Mobile links */}
           <NavLink
             to="/about"
             className={({ isActive }) =>
@@ -418,7 +414,10 @@ const Navbar = () => {
             Contact
           </NavLink>
           
-          {/* Removed the contact button from mobile menu too */}
+          {/* Add search bar to mobile menu */}
+          <div className="px-3 py-2">
+            <GlobalSearchBar isMobile={true} />
+          </div>
         </div>
       </div>
     </nav>
