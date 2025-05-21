@@ -7,7 +7,7 @@ const packs = [
     id: 1,
     title: "Pack Insertion Pro",
     description: "Tout ce qu'il vous faut pour réussir votre insertion professionnelle et décrocher l'emploi de vos rêves.",
-    image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=1200",
+    image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&q=80&w=1200",
     modules: [
       "CV impactant",
       "Lettre de motivation convaincante",
@@ -22,7 +22,7 @@ const packs = [
     id: 2,
     title: "Pack RH Starter",
     description: "Maîtrisez les fondamentaux de la gestion des ressources humaines et développez vos compétences RH.",
-    image: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&q=80&w=1200",
+    image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=1200",
     modules: [
       "Gestion des ressources humaines",
       "Fondamentaux RH",

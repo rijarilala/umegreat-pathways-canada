@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import MainLayout from "@/components/layout/MainLayout";
 import ServiceBanner from "@/components/shared/ServiceBanner";
@@ -13,7 +12,7 @@ const Orientation = () => {
       <ServiceBanner 
         title="Orientation Professionnelle" 
         description="Découvrez votre voie professionnelle idéale avec nos services d'orientation personnalisés"
-        backgroundImage="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&q=80&w=1920"
+        backgroundImage="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=1920"
       />
       
       <section className="py-16">
@@ -49,7 +48,7 @@ const Orientation = () => {
                 <div className="absolute -top-6 -left-6 w-32 h-32 bg-primary/10 rounded-full"></div>
                 <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-secondary/10 rounded-full"></div>
                 <img 
-                  src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=1200" 
+                  src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=1200" 
                   alt="Orientation professionnelle" 
                   className="rounded-lg shadow-xl relative z-10"
                 />
