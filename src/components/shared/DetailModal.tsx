@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -7,13 +6,11 @@ import { Link } from "react-router-dom";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { VisuallyHidden } from "@/components/ui/visually-hidden";
-
 interface PackReference {
   id: number;
   title: string;
   linkTo: string;
 }
-
 interface DetailModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -31,7 +28,6 @@ interface DetailModalProps {
   image?: string;
   packReferences?: PackReference[];
 }
-
 const DetailModal = ({
   isOpen,
   onClose,
@@ -102,7 +98,6 @@ const DetailModal = ({
       setShowScrollIndicator(false);
     }
   };
-
   return <Dialog open={isOpen} onOpenChange={open => !open && onClose()}>
       <DialogContent className="max-w-[90%] md:max-w-[70%] lg:max-w-[60%] xl:max-w-2xl p-0 rounded-xl border-0 shadow-lg overflow-hidden">
         {/* Adding DialogTitle and DialogDescription for accessibility */}
@@ -126,29 +121,29 @@ const DetailModal = ({
             <div className="p-5 md:p-6">
               {/* Title and description */}
               <div className="mb-6">
-                <h3 className="text-2xl font-bold mb-3 pr-8">{title}</h3>
+                <h3 className="text-2xl font-bold mb-3 pr-8 px-[146px] text-left">{title}</h3>
                 {description && <p className="text-gray-600 text-lg">{description}</p>}
               </div>
 
               {/* Details content */}
               <div className="space-y-6">
                 {details?.objectif && <div>
-                    <h4 className="text-lg font-semibold text-gray-900 mb-2">Objectif</h4>
+                    <h4 className="text-lg font-semibold text-gray-900 mb-2 px-[240px] text-center">Objectif</h4>
                     <p className="text-gray-600">{details.objectif}</p>
                   </div>}
                 
                 {details?.publicCible && <div>
-                    <h4 className="text-lg font-semibold text-gray-900 mb-2">Public cible</h4>
+                    <h4 className="text-lg font-semibold text-gray-900 mb-2 text-center">Public cible</h4>
                     <p className="text-gray-600">{details.publicCible}</p>
                   </div>}
                 
                 {details?.duree && <div>
-                    <h4 className="text-lg font-semibold text-gray-900 mb-2">Durée</h4>
+                    <h4 className="text-lg font-semibold text-gray-900 mb-2 text-center">Durée</h4>
                     <p className="text-gray-600">{details.duree}</p>
                   </div>}
                 
                 {details?.format && <div>
-                    <h4 className="text-lg font-semibold text-gray-900 mb-2">Format</h4>
+                    <h4 className="text-lg font-semibold text-gray-900 mb-2 text-center">Format</h4>
                     <p className="text-gray-600">{details.format}</p>
                   </div>}
                 
@@ -214,5 +209,4 @@ const DetailModal = ({
       </DialogContent>
     </Dialog>;
 };
-
 export default DetailModal;
