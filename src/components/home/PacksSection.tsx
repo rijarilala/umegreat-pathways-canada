@@ -1,3 +1,4 @@
+
 import SectionTitle from "../shared/SectionTitle";
 import PackCard from "../shared/PackCard";
 
@@ -8,7 +9,7 @@ const packs = [
     description: "Tout ce qu'il vous faut pour réussir votre insertion professionnelle et décrocher l'emploi de vos rêves.",
     image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=1200",
     modules: [
-      "Créer un CV impactant",
+      "CV impactant",
       "Lettre de motivation convaincante",
       "Préparation aux entretiens d'embauche",
       "Recherche du premier/nouveau emploi",

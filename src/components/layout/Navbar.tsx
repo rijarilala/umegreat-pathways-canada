@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { ChevronDown, Menu, X, Home, Users, GraduationCap, Globe, Phone, HelpCircle, MessageCircle, BookOpen } from "lucide-react";
+import { ChevronDown, Menu, X } from "lucide-react";
 import GlobalSearchBar from "@/components/shared/GlobalSearchBar";
 import {
   DropdownMenu,
@@ -26,65 +26,10 @@ const serviceCategories = {
   ],
 };
 
-// Mobile menu items with Material Design icons
-const mobileMenuItems = [
-  {
-    title: "Accueil",
-    path: "/",
-    icon: Home,
-    color: "text-blue-600",
-  },
-  {
-    title: "Accompagnement",
-    path: null,
-    icon: Users,
-    color: "text-green-600",
-    submenu: serviceCategories.orientation,
-  },
-  {
-    title: "Mobilité",
-    path: null,
-    icon: Globe,
-    color: "text-purple-600",
-    submenu: serviceCategories.immigration,
-  },
-  {
-    title: "Formations",
-    path: "/services/formation",
-    icon: GraduationCap,
-    color: "text-orange-600",
-  },
-  {
-    title: "À propos",
-    path: "/about",
-    icon: BookOpen,
-    color: "text-teal-600",
-  },
-  {
-    title: "Témoignages",
-    path: "/testimonials",
-    icon: MessageCircle,
-    color: "text-pink-600",
-  },
-  {
-    title: "FAQ",
-    path: "/faq",
-    icon: HelpCircle,
-    color: "text-indigo-600",
-  },
-  {
-    title: "Contact",
-    path: "/contact",
-    icon: Phone,
-    color: "text-red-600",
-  },
-];
-
 const Navbar = () => {
   // State for mobile menu and scroll status
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [expandedSubmenu, setExpandedSubmenu] = useState<string | null>(null);
   const location = useLocation();
   const { isMobile } = useIsMobile();
 
@@ -92,7 +37,7 @@ const Navbar = () => {
   useEffect(() => {
     const handleScroll = () => {
       const offset = window.scrollY;
-      setScrolled(offset > 20);
+      setScrolled(offset > 20); // Reduced threshold for earlier effect
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -102,23 +47,15 @@ const Navbar = () => {
   // Close mobile menu on route change
   useEffect(() => {
     setIsMenuOpen(false);
-    setExpandedSubmenu(null);
   }, [location.pathname]);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
-    setExpandedSubmenu(null);
-  };
-
-  const toggleSubmenu = (title: string) => {
-    setExpandedSubmenu(expandedSubmenu === title ? null : title);
   };
 
   // Handle link click to scroll to top
   const handleLinkClick = () => {
     window.scrollTo(0, 0);
-    setIsMenuOpen(false);
-    setExpandedSubmenu(null);
   };
 
   // Common dropdown menu items renderer with improved hover effects
@@ -155,13 +92,6 @@ const Navbar = () => {
       <span className="absolute bottom-0 left-0 w-full h-[2px] bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
     </NavLink>
   );
-
-  // Check if current path matches item
-  const isActiveItem = (item) => {
-    if (item.path) return location.pathname === item.path;
-    if (item.submenu) return item.submenu.some(subItem => location.pathname === subItem.path);
-    return false;
-  };
 
   return (
     <nav 
@@ -256,134 +186,191 @@ const Navbar = () => {
           <div className="md:hidden flex items-center ml-auto">
             <button
               type="button"
-              className="inline-flex items-center justify-center p-2 rounded-xl text-gray-700 hover:text-primary hover:bg-gray-100/70 transition-all duration-200 focus:outline-none shadow-sm border border-gray-200/50"
+              className="inline-flex items-center justify-center p-1.5 rounded-md text-gray-700 hover:text-primary hover:bg-gray-100/70 transition-all duration-200 focus:outline-none"
               onClick={toggleMenu}
               aria-expanded={isMenuOpen}
               aria-label="Menu principal"
             >
               {isMenuOpen ? (
-                <X className="h-6 w-6 animate-fade-in" />
+                <X className="h-5 w-5 animate-fade-in" />
               ) : (
-                <Menu className="h-6 w-6 animate-fade-in" />
+                <Menu className="h-5 w-5 animate-fade-in" />
               )}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Modern Mobile Sidebar */}
+      {/* Mobile menu with improved animation and styling */}
       <div 
         className={cn(
-          "md:hidden fixed inset-0 z-50 transition-all duration-300 ease-in-out",
+          "md:hidden bg-white/95 backdrop-blur-sm overflow-hidden transition-all duration-300 ease-in-out border-t",
           isMenuOpen 
-            ? "visible opacity-100" 
-            : "invisible opacity-0"
+            ? "max-h-[500px] opacity-100 shadow-lg border-gray-200" 
+            : "max-h-0 opacity-0 border-transparent"
         )}
       >
-        {/* Backdrop */}
-        <div 
-          className={cn(
-            "absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300",
-            isMenuOpen ? "opacity-100" : "opacity-0"
-          )}
-          onClick={toggleMenu}
-        />
-        
-        {/* Sidebar */}
-        <div 
-          className={cn(
-            "absolute right-0 top-0 h-full w-80 max-w-[85vw] bg-white shadow-2xl transition-transform duration-300 ease-out",
-            isMenuOpen ? "translate-x-0" : "translate-x-full"
-          )}
-        >
-          {/* Sidebar Header */}
-          <div className="flex items-center justify-between p-6 border-b border-gray-100">
-            <span className="font-bold text-lg text-primary">UMEGREAT Pro</span>
-            <button
-              onClick={toggleMenu}
-              className="p-2 rounded-xl hover:bg-gray-100 transition-colors duration-200"
-              aria-label="Fermer le menu"
-            >
-              <X className="h-5 w-5" />
-            </button>
-          </div>
+        <div className="px-3 pt-2 pb-3 space-y-1">
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              cn(
+                "block px-3 py-2 rounded-md text-sm transition-all duration-200",
+                isActive 
+                  ? "text-primary font-medium border-l-2 border-primary pl-2.5 bg-blue-50/50" 
+                  : "text-gray-700 hover:text-primary hover:bg-gray-50"
+              )
+            }
+            onClick={() => {
+              toggleMenu();
+              handleLinkClick();
+            }}
+          >
+            Accueil
+          </NavLink>
+          
+          {/* Mobile: Accompagnement with improved styling */}
+          <div className="relative">
+            <details className="group [&_summary::-webkit-details-marker]:hidden">
+              <summary className="flex cursor-pointer items-center gap-2 px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-primary hover:bg-gray-50 transition-all duration-200">
+                <span>Accompagnement</span>
+                <ChevronDown className="h-4 w-4 transition-transform duration-300 group-open:rotate-180" />
+              </summary>
 
-          {/* Sidebar Content */}
-          <div className="flex flex-col h-full overflow-y-auto pb-20">
-            <nav className="flex-1 px-4 py-6 space-y-2">
-              {mobileMenuItems.map((item) => (
-                <div key={item.title}>
-                  {item.path ? (
-                    <NavLink
-                      to={item.path}
-                      onClick={handleLinkClick}
-                      className={({ isActive }) =>
-                        cn(
-                          "flex items-center gap-4 px-4 py-3 rounded-xl text-gray-700 hover:bg-gray-50 transition-all duration-200 group",
-                          isActive && "bg-blue-50 text-primary border-l-4 border-primary"
-                        )
-                      }
-                    >
-                      <item.icon className={cn("h-5 w-5 transition-colors duration-200", item.color, isActiveItem(item) && "text-primary")} />
-                      <span className="font-medium text-sm">{item.title}</span>
-                    </NavLink>
-                  ) : (
-                    <div>
-                      <button
-                        onClick={() => toggleSubmenu(item.title)}
-                        className={cn(
-                          "w-full flex items-center gap-4 px-4 py-3 rounded-xl text-gray-700 hover:bg-gray-50 transition-all duration-200",
-                          isActiveItem(item) && "bg-blue-50 text-primary border-l-4 border-primary"
-                        )}
-                      >
-                        <item.icon className={cn("h-5 w-5 transition-colors duration-200", item.color, isActiveItem(item) && "text-primary")} />
-                        <span className="font-medium text-sm flex-1 text-left">{item.title}</span>
-                        <ChevronDown 
-                          className={cn(
-                            "h-4 w-4 transition-transform duration-200",
-                            expandedSubmenu === item.title && "rotate-180"
-                          )} 
-                        />
-                      </button>
-                      
-                      {/* Submenu */}
-                      <div 
-                        className={cn(
-                          "overflow-hidden transition-all duration-300 ease-in-out",
-                          expandedSubmenu === item.title 
-                            ? "max-h-96 opacity-100 mt-2" 
-                            : "max-h-0 opacity-0"
-                        )}
-                      >
-                        <div className="ml-6 space-y-1">
-                          {item.submenu?.map((subItem) => (
-                            <Link
-                              key={subItem.path}
-                              to={subItem.path}
-                              onClick={handleLinkClick}
-                              className={cn(
-                                "block px-4 py-2 rounded-lg text-sm text-gray-600 hover:text-primary hover:bg-gray-50 transition-all duration-200",
-                                location.pathname === subItem.path && "text-primary bg-blue-50 font-medium"
-                              )}
-                            >
-                              {subItem.title}
-                            </Link>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </nav>
-
-            {/* Sidebar Footer */}
-            <div className="p-4 border-t border-gray-100 bg-gray-50">
-              <p className="text-xs text-gray-500 text-center">
-                © 2024 UMEGREAT Pro
-              </p>
-            </div>
+              <nav className="mt-1 ml-6 flex flex-col space-y-1 animate-slide-in">
+                {serviceCategories.orientation.map((item) => (
+                  <Link 
+                    key={item.path}
+                    to={item.path} 
+                    className="block px-3 py-1.5 text-sm text-gray-700 hover:text-primary hover:bg-gray-50 rounded-md transition-all duration-200"
+                    onClick={() => {
+                      toggleMenu();
+                      handleLinkClick();
+                    }}
+                  >
+                    {item.title}
+                  </Link>
+                ))}
+              </nav>
+            </details>
           </div>
+          
+          {/* Mobile: Mobilité internationale with improved styling */}
+          <div className="relative">
+            <details className="group [&_summary::-webkit-details-marker]:hidden">
+              <summary className="flex cursor-pointer items-center gap-2 px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-primary hover:bg-gray-50 transition-all duration-200">
+                <span>Mobilité</span>
+                <ChevronDown className="h-4 w-4 transition-transform duration-300 group-open:rotate-180" />
+              </summary>
+
+              <nav className="mt-1 ml-6 flex flex-col space-y-1 animate-slide-in">
+                {serviceCategories.immigration.map((item) => (
+                  <Link 
+                    key={item.path}
+                    to={item.path} 
+                    className="block px-3 py-1.5 text-sm text-gray-700 hover:text-primary hover:bg-gray-50 rounded-md transition-all duration-200"
+                    onClick={() => {
+                      toggleMenu();
+                      handleLinkClick();
+                    }}
+                  >
+                    {item.title}
+                  </Link>
+                ))}
+              </nav>
+            </details>
+          </div>
+          
+          {/* Standard mobile links with improved styling */}
+          <NavLink
+            to="/services/formation"
+            className={({ isActive }) =>
+              cn(
+                "block px-3 py-2 rounded-md text-sm transition-all duration-200",
+                isActive 
+                  ? "text-primary font-medium border-l-2 border-primary pl-2.5 bg-blue-50/50" 
+                  : "text-gray-700 hover:text-primary hover:bg-gray-50"
+              )
+            }
+            onClick={() => {
+              toggleMenu();
+              handleLinkClick();
+            }}
+          >
+            Formations
+          </NavLink>
+          
+          <NavLink
+            to="/about"
+            className={({ isActive }) =>
+              cn(
+                "block px-3 py-2 rounded-md text-sm transition-all duration-200",
+                isActive 
+                  ? "text-primary font-medium border-l-2 border-primary pl-2.5 bg-blue-50/50" 
+                  : "text-gray-700 hover:text-primary hover:bg-gray-50"
+              )
+            }
+            onClick={() => {
+              toggleMenu();
+              handleLinkClick();
+            }}
+          >
+            À propos
+          </NavLink>
+          
+          <NavLink
+            to="/testimonials"
+            className={({ isActive }) =>
+              cn(
+                "block px-3 py-2 rounded-md text-sm transition-all duration-200",
+                isActive 
+                  ? "text-primary font-medium border-l-2 border-primary pl-2.5 bg-blue-50/50" 
+                  : "text-gray-700 hover:text-primary hover:bg-gray-50"
+              )
+            }
+            onClick={() => {
+              toggleMenu();
+              handleLinkClick();
+            }}
+          >
+            Témoignages
+          </NavLink>
+          
+          <NavLink
+            to="/faq"
+            className={({ isActive }) =>
+              cn(
+                "block px-3 py-2 rounded-md text-sm transition-all duration-200",
+                isActive 
+                  ? "text-primary font-medium border-l-2 border-primary pl-2.5 bg-blue-50/50" 
+                  : "text-gray-700 hover:text-primary hover:bg-gray-50"
+              )
+            }
+            onClick={() => {
+              toggleMenu();
+              handleLinkClick();
+            }}
+          >
+            FAQ
+          </NavLink>
+          
+          <NavLink
+            to="/contact"
+            className={({ isActive }) =>
+              cn(
+                "block px-3 py-2 rounded-md text-sm transition-all duration-200",
+                isActive 
+                  ? "text-primary font-medium border-l-2 border-primary pl-2.5 bg-blue-50/50" 
+                  : "text-gray-700 hover:text-primary hover:bg-gray-50"
+              )
+            }
+            onClick={() => {
+              toggleMenu();
+              handleLinkClick();
+            }}
+          >
+            Contact
+          </NavLink>
         </div>
       </div>
     </nav>
