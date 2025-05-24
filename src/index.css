@@ -85,4 +85,16 @@
   .btn-outline {
     @apply border border-primary text-primary px-5 py-2 rounded-md hover:bg-primary hover:text-white transition-colors;
   }
+
+  /* Modal styles for proper z-index management */
+  .modal {
+    max-height: 90vh;
+    overflow-y: auto;
+    z-index: 2000; /* Assure-toi que c'est plus élevé que le footer */
+  }
+
+  /* Footer styles for proper z-index */
+  .footer-bar {
+    z-index: 1000; /* Doit être inférieur à la modale */
+  }
 }
