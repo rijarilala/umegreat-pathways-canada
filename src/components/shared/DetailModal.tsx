@@ -148,7 +148,7 @@ const DetailModal = ({
                   </div>}
                 
                 {details?.modules && details.modules.length > 0 && <div>
-                    <h4 className="text-lg font-semibold text-gray-900 mb-2">Modules inclus</h4>
+                    <h4 className="text-lg font-semibold text-gray-900 mb-2 text-center">Résultats attendus</h4>
                     <ul className="list-disc list-inside text-gray-600 space-y-2 pl-2">
                       {details.modules.map((module, index) => <li key={index} className="pl-1">{module}</li>)}
                     </ul>
