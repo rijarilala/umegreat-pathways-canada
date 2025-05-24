@@ -73,10 +73,8 @@ const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
   const location = useLocation();
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
 
-  // Fermer le menu lors du changement de route
-  useEffect(() => {
-    onClose();
-  }, [location.pathname, onClose]);
+  // Ne pas fermer automatiquement lors du changement de route
+  // La fermeture se fera uniquement via onClose depuis le parent
 
   const toggleExpanded = (title: string) => {
     setExpandedItems(prev => 
@@ -87,8 +85,17 @@ const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
   };
 
   const handleLinkClick = () => {
+    // Petit délai pour permettre la navigation avant la fermeture
+    setTimeout(() => {
+      onClose();
+      window.scrollTo(0, 0);
+    }, 150);
+  };
+
+  const handleCloseClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     onClose();
-    window.scrollTo(0, 0);
   };
 
   const isActiveLink = (path: string) => {
@@ -104,6 +111,14 @@ const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
       <SheetContent 
         side="left" 
         className="w-[300px] p-0 bg-white border-r border-gray-200"
+        onPointerDownOutside={(e) => {
+          e.preventDefault();
+          onClose();
+        }}
+        onEscapeKeyDown={(e) => {
+          e.preventDefault();
+          onClose();
+        }}
       >
         <SheetHeader className="p-4 border-b border-gray-100">
           <div className="flex items-center justify-between">
@@ -111,7 +126,7 @@ const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
               UMEGREAT Pro
             </SheetTitle>
             <button
-              onClick={onClose}
+              onClick={handleCloseClick}
               className="p-2 rounded-full hover:bg-gray-100 transition-colors duration-200"
               aria-label="Fermer le menu"
             >

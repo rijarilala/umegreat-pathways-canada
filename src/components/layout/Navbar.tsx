@@ -45,13 +45,23 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mobile menu on route change
+  // Close mobile menu on route change but not immediately
   useEffect(() => {
-    setIsMobileMenuOpen(false);
+    const timer = setTimeout(() => {
+      setIsMobileMenuOpen(false);
+    }, 100);
+    
+    return () => clearTimeout(timer);
   }, [location.pathname]);
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
+  const toggleMobileMenu = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsMobileMenuOpen(prev => !prev);
+  };
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
   };
 
   // Handle link click to scroll to top
@@ -199,7 +209,7 @@ const Navbar = () => {
       {/* Mobile Navigation Component */}
       <MobileNavigation 
         isOpen={isMobileMenuOpen} 
-        onClose={() => setIsMobileMenuOpen(false)} 
+        onClose={closeMobileMenu} 
       />
     </>
   );
