@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -101,7 +100,7 @@ const DetailModal = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={open => !open && onClose()}>
-      <DialogContent className="max-w-[95vw] sm:max-w-[85vw] md:max-w-[75vw] lg:max-w-[65vw] xl:max-w-3xl p-0 rounded-xl border-0 shadow-lg overflow-hidden max-h-[95vh] sm:max-h-[90vh]">
+      <DialogContent className="max-w-[95vw] sm:max-w-[85vw] md:max-w-[75vw] lg:max-w-[65vw] xl:max-w-3xl p-0 rounded-xl border-0 shadow-lg overflow-hidden max-h-[95vh] sm:max-h-[90vh] modal">
         <VisuallyHidden>
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>{description || "Détails du service"}</DialogDescription>
@@ -120,10 +119,10 @@ const DetailModal = ({
             className="flex-grow detail-modal-content" 
             onScrollCapture={handleScroll} 
             style={{
-              maxHeight: `calc(95vh - ${image ? '8rem' : '0'} - 2rem)`
+              maxHeight: `calc(95vh - ${image ? '8rem' : '0'} - 6rem)`
             }}
           >
-            <div className="p-4 sm:p-5 md:p-6">
+            <div className="p-4 sm:p-5 md:p-6 pb-6">
               {/* Title and description */}
               <div className="mb-4 sm:mb-6">
                 <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-2 sm:mb-3 pr-8 text-left text-orange-500">
@@ -210,42 +209,16 @@ const DetailModal = ({
                   </div>
                 )}
 
-                {/* Call to action buttons */}
-                <div className="mt-4 sm:mt-6 pt-4 border-t border-gray-100">
-                  {/* Original CTA */}
-                  {linkTo && (
+                {/* Original CTA - keep for backward compatibility */}
+                {linkTo && (
+                  <div className="mt-4 sm:mt-6 pt-4 border-t border-gray-100">
                     <Button asChild className="w-full bg-primary hover:bg-primary/90 mb-3 text-sm sm:text-base">
                       <Link to={linkTo} onClick={onClose}>
                         {linkText}
                       </Link>
                     </Button>
-                  )}
-                  
-                  {/* New CTAs with responsive buttons */}
-                  <div className="grid grid-cols-12 gap-2 sm:gap-3">
-                    <Button 
-                      variant="outline" 
-                      className="col-span-2 flex items-center justify-center p-2" 
-                      asChild
-                    >
-                      <Link to="/services/formation" onClick={onClose}>
-                        <ArrowLeft className="h-3 w-3 sm:h-4 sm:w-4" />
-                      </Link>
-                    </Button>
-                    
-                    <Button 
-                      variant="secondary" 
-                      className="col-span-10 flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm" 
-                      asChild
-                    >
-                      <Link to="/contact" onClick={onClose}>
-                        <Info className="h-3 w-3 sm:h-4 sm:w-4" />
-                        <span className="hidden xs:inline">Demandez plus d'infos</span>
-                        <span className="xs:hidden">Plus d'infos</span>
-                      </Link>
-                    </Button>
                   </div>
-                </div>
+                )}
               </div>
             </div>
           </ScrollArea>
@@ -253,9 +226,9 @@ const DetailModal = ({
           {/* Enhanced scroll indicator with gradient background */}
           {showScrollIndicator && (
             <div 
-              className="absolute bottom-0 left-0 right-0 pb-4 sm:pb-6 pt-12 sm:pt-16 pointer-events-none 
+              className="absolute bottom-16 left-0 right-0 pb-4 sm:pb-6 pt-12 sm:pt-16 pointer-events-none 
               flex flex-col items-center justify-end transition-opacity duration-300
-              bg-gradient-to-t from-white via-white/90 to-transparent z-10" 
+              bg-gradient-to-t from-white via-white/90 to-transparent z-20" 
               aria-hidden="true" 
               style={{
                 opacity: showScrollIndicator ? 1 : 0
@@ -267,6 +240,33 @@ const DetailModal = ({
               </p>
             </div>
           )}
+
+          {/* Fixed footer with CTA buttons */}
+          <div className="absolute bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 z-30">
+            <div className="grid grid-cols-12 gap-2 sm:gap-3">
+              <Button 
+                variant="outline" 
+                className="col-span-2 flex items-center justify-center p-2" 
+                asChild
+              >
+                <Link to="/services/formation" onClick={onClose}>
+                  <ArrowLeft className="h-3 w-3 sm:h-4 sm:w-4" />
+                </Link>
+              </Button>
+              
+              <Button 
+                variant="secondary" 
+                className="col-span-10 flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm" 
+                asChild
+              >
+                <Link to="/contact" onClick={onClose}>
+                  <Info className="h-3 w-3 sm:h-4 sm:w-4" />
+                  <span className="hidden xs:inline">Demandez plus d'infos</span>
+                  <span className="xs:hidden">Plus d'infos</span>
+                </Link>
+              </Button>
+            </div>
+          </div>
         </div>
       </DialogContent>
     </Dialog>
