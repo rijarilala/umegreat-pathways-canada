@@ -121,7 +121,7 @@ const DetailModal = ({
             <div className="p-5 md:p-6">
               {/* Title and description */}
               <div className="mb-6">
-                <h3 className="text-2xl font-bold mb-3 pr-8 px-[146px] text-left">{title}</h3>
+                <h3 className="text-2xl font-bold mb-3 pr-8 px-[146px] text-left text-orange-500">{title}</h3>
                 {description && <p className="text-gray-600 text-lg">{description}</p>}
               </div>
 
