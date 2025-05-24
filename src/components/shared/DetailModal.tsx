@@ -100,7 +100,7 @@ const DetailModal = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={open => !open && onClose()}>
-      <DialogContent className="max-w-[95vw] sm:max-w-[85vw] md:max-w-[75vw] lg:max-w-[65vw] xl:max-w-3xl p-0 rounded-xl border-0 shadow-lg overflow-hidden max-h-[95vh] sm:max-h-[90vh] modal">
+      <DialogContent className="max-w-[90vw] sm:max-w-[80vw] md:max-w-[70vw] lg:max-w-[60vw] xl:max-w-2xl p-0 rounded-xl border-0 shadow-lg overflow-hidden max-h-[95vh] sm:max-h-[90vh] modal">
         <VisuallyHidden>
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>{description || "Détails du service"}</DialogDescription>
@@ -228,7 +228,7 @@ const DetailModal = ({
             <div 
               className="absolute bottom-16 left-0 right-0 pb-4 sm:pb-6 pt-12 sm:pt-16 pointer-events-none 
               flex flex-col items-center justify-end transition-opacity duration-300
-              bg-gradient-to-t from-white via-white/90 to-transparent z-20" 
+              bg-gradient-to-t from-white via-white/90 to-transparent z-10" 
               aria-hidden="true" 
               style={{
                 opacity: showScrollIndicator ? 1 : 0
