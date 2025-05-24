@@ -20,7 +20,12 @@ const formations = {
         objectif: "Maîtriser les techniques de rédaction d'un CV efficace et adapté à votre secteur d'activité. À l'issue de la formation, vous saurez : structurer votre CV pour mettre en avant vos compétences clés, adapter votre CV à différents types de postes, utiliser des mots-clés pertinents pour attirer l'attention sur les plateformes de recrutement",
         publicCible: "Demandeurs d'emploi, personnes en reconversion professionnelle, jeunes diplômés",
         duree: "4 heures, en présentiel ou en distanciel (selon les sessions)",
-        format: "Atelier interactif en groupe restreint ou coaching individuel. Outils utilisés : exemples de CV, modèles personnalisables, retours personnalisés. Résultats attendus : CV optimisé et prêt à être envoyé aux recruteurs, confiance renforcée dans la présentation de son parcours, techniques pour adapter son CV à différentes offres d'emploi"
+        format: "Atelier interactif en groupe restreint ou coaching individuel. Outils utilisés : exemples de CV, modèles personnalisables, retours personnalisés",
+        modules: [
+          "CV optimisé et prêt à être envoyé aux recruteurs",
+          "Confiance renforcée dans la présentation de son parcours",
+          "Techniques pour adapter son CV à différentes offres d'emploi"
+        ]
       },
       packReferences: [
         {
