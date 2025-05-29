@@ -1,5 +1,5 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -35,7 +35,7 @@
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -53,36 +53,140 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', 'Poppins', sans-serif;
+    letter-spacing: -0.01em;
   }
   
   h1, h2, h3, h4, h5, h6 {
     @apply font-semibold;
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: -0.02em;
   }
   
   .hover-card {
-    @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+    @apply transition-all duration-500 hover:shadow-2xl hover:-translate-y-2;
   }
   
   .section-padding {
-    @apply py-12 md:py-16 lg:py-20;
+    @apply py-16 md:py-20 lg:py-24;
   }
   
   .container-padding {
     @apply px-4 md:px-6 lg:px-8;
   }
+
+  /* Modern glassmorphism effects */
+  .glass {
+    @apply backdrop-blur-lg bg-white/80 border border-white/20;
+  }
+
+  .glass-dark {
+    @apply backdrop-blur-lg bg-gray-900/80 border border-gray-700/20;
+  }
+
+  /* Enhanced gradients */
+  .gradient-primary {
+    background: linear-gradient(135deg, #1EAEDB 0%, #0891B2 100%);
+  }
+
+  .gradient-secondary {
+    background: linear-gradient(135deg, #F97316 0%, #EA580C 100%);
+  }
+
+  .gradient-accent {
+    background: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%);
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Modern animations */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes shimmer {
+    from {
+      background-position: -200% 0;
+    }
+    to {
+      background-position: 200% 0;
+    }
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.5s ease-out;
+  }
+
+  .animate-shimmer {
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+  }
 }
 
 @layer components {
   .btn-primary {
-    @apply bg-primary text-white px-5 py-2 rounded-md hover:bg-primary/90 transition-colors;
+    @apply bg-gradient-to-r from-primary to-primary/90 text-white px-6 py-3 rounded-lg hover:shadow-lg hover:scale-105 transition-all duration-300 font-medium;
   }
   
   .btn-secondary {
-    @apply bg-secondary text-white px-5 py-2 rounded-md hover:bg-secondary/90 transition-colors;
+    @apply bg-gradient-to-r from-secondary to-secondary/90 text-white px-6 py-3 rounded-lg hover:shadow-lg hover:scale-105 transition-all duration-300 font-medium;
   }
   
   .btn-outline {
-    @apply border border-primary text-primary px-5 py-2 rounded-md hover:bg-primary hover:text-white transition-colors;
+    @apply border-2 border-primary text-primary px-6 py-3 rounded-lg hover:bg-primary hover:text-white hover:shadow-lg transition-all duration-300 font-medium;
+  }
+
+  .card-modern {
+    @apply bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 hover:border-primary/20 overflow-hidden;
+  }
+
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent;
+  }
+
+  .section-modern {
+    @apply py-20 px-4 relative overflow-hidden;
+  }
+
+  .section-modern::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 pointer-events-none;
+  }
+}
+
+/* Enhanced focus states for accessibility */
+@layer utilities {
+  .focus-ring {
+    @apply focus:outline-none focus:ring-4 focus:ring-primary/20 focus:border-primary;
+  }
+
+  .focus-ring-secondary {
+    @apply focus:outline-none focus:ring-4 focus:ring-secondary/20 focus:border-secondary;
   }
 }

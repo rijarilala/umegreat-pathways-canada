@@ -1,5 +1,7 @@
+
 import SectionTitle from "../shared/SectionTitle";
 import PackCard from "../shared/PackCard";
+import { Sparkles, Star } from "lucide-react";
 
 const packs = [
   {
@@ -35,25 +37,60 @@ const packs = [
 
 const PacksSection = () => {
   return (
-    <section className="py-16 bg-gray-50">
-      <div className="container mx-auto px-4">
-        <SectionTitle 
-          title="Nos packs de formation" 
-          subtitle="Des programmes complets pour atteindre vos objectifs professionnels"
-          centered
-        />
+    <section className="py-20 bg-gradient-to-br from-slate-50 via-white to-blue-50 relative overflow-hidden">
+      {/* Background decorative elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-secondary/5 rounded-full blur-3xl" />
+      </div>
+      
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-semibold mb-6">
+            <Star className="h-4 w-4" />
+            Formations Premium
+            <Sparkles className="h-4 w-4" />
+          </div>
+          
+          <SectionTitle 
+            title={
+              <span className="bg-gradient-to-r from-gray-900 via-primary to-secondary bg-clip-text text-transparent">
+                Nos packs de formation
+              </span>
+            }
+            subtitle="Des programmes complets conçus par des experts pour accélérer votre réussite professionnelle"
+            centered
+            variant="modern"
+          />
+        </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10">
-          {packs.map((pack) => (
-            <PackCard 
-              key={pack.id}
-              title={pack.title}
-              description={pack.description}
-              image={pack.image}
-              modules={pack.modules}
-              linkTo={pack.linkTo}
-            />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mt-16 max-w-6xl mx-auto">
+          {packs.map((pack, index) => (
+            <div 
+              key={pack.id} 
+              className="transform transition-all duration-500 hover:scale-[1.02]"
+              style={{
+                animationDelay: `${index * 200}ms`
+              }}
+            >
+              <PackCard 
+                title={pack.title}
+                description={pack.description}
+                image={pack.image}
+                modules={pack.modules}
+                linkTo={pack.linkTo}
+              />
+            </div>
           ))}
+        </div>
+
+        {/* Call to action */}
+        <div className="text-center mt-16">
+          <div className="inline-flex items-center gap-2 text-gray-600 text-sm">
+            <Sparkles className="h-4 w-4 text-primary" />
+            Plus de 95% de satisfaction client
+            <Star className="h-4 w-4 text-secondary" />
+          </div>
         </div>
       </div>
     </section>
