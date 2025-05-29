@@ -110,7 +110,8 @@ const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
     <Sheet open={isOpen} onOpenChange={onClose}>
       <SheetContent 
         side="left" 
-        className="w-[300px] p-0 bg-white border-r border-gray-200"
+        className="w-[300px] p-0 bg-white border-r border-gray-200 flex flex-col max-h-screen"
+        hideCloseButton={true}
         onPointerDownOutside={(e) => {
           e.preventDefault();
           onClose();
@@ -120,7 +121,7 @@ const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
           onClose();
         }}
       >
-        <SheetHeader className="p-4 border-b border-gray-100">
+        <SheetHeader className="p-4 border-b border-gray-100 flex-shrink-0">
           <div className="flex items-center justify-between">
             <SheetTitle className="text-lg font-bold text-primary">
               UMEGREAT Pro
@@ -135,136 +136,139 @@ const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
           </div>
         </SheetHeader>
 
-        <nav className="flex-1 py-4">
-          <div className="space-y-2 px-3">
-            {navigationItems.map((item) => {
-              const Icon = item.icon;
-              const isExpanded = expandedItems.includes(item.title);
-              const isActive = item.path ? isActiveLink(item.path) : hasActiveSubItem(item.subItems);
+        {/* Container avec scroll pour la navigation */}
+        <div className="flex-1 overflow-y-auto min-h-0">
+          <nav className="py-4">
+            <div className="space-y-2 px-3">
+              {navigationItems.map((item) => {
+                const Icon = item.icon;
+                const isExpanded = expandedItems.includes(item.title);
+                const isActive = item.path ? isActiveLink(item.path) : hasActiveSubItem(item.subItems);
 
-              return (
-                <div key={item.title} className="space-y-1">
-                  {item.path ? (
-                    // Lien direct
-                    <Link
-                      to={item.path}
-                      onClick={handleLinkClick}
-                      className={cn(
-                        "flex items-center gap-3 px-3 py-3 rounded-lg transition-all duration-300 group",
-                        isActive
-                          ? "bg-primary text-white shadow-md transform scale-[1.02]"
-                          : "text-gray-700 hover:bg-primary/5 hover:text-primary active:scale-95"
-                      )}
-                    >
-                      <Icon 
+                return (
+                  <div key={item.title} className="space-y-1">
+                    {item.path ? (
+                      // Lien direct
+                      <Link
+                        to={item.path}
+                        onClick={handleLinkClick}
                         className={cn(
-                          "h-5 w-5 transition-transform duration-200 group-hover:scale-110",
-                          isActive ? "text-white" : "text-primary"
-                        )} 
-                      />
-                      <div className="flex-1 min-w-0">
-                        <div className="font-medium text-sm truncate">{item.title}</div>
-                        <div className={cn(
-                          "text-xs opacity-75 truncate",
-                          isActive ? "text-white/90" : "text-gray-500"
-                        )}>
-                          {item.description}
-                        </div>
-                      </div>
-                      {isActive && (
-                        <div className="w-2 h-2 bg-white rounded-full animate-pulse" />
-                      )}
-                    </Link>
-                  ) : (
-                    // Menu avec sous-éléments
-                    <>
-                      <button
-                        onClick={() => toggleExpanded(item.title)}
-                        className={cn(
-                          "w-full flex items-center gap-3 px-3 py-3 rounded-lg transition-all duration-300 group",
-                          isActive || isExpanded
-                            ? "bg-primary/10 text-primary"
+                          "flex items-center gap-3 px-3 py-3 rounded-lg transition-all duration-300 group",
+                          isActive
+                            ? "bg-primary text-white shadow-md transform scale-[1.02]"
                             : "text-gray-700 hover:bg-primary/5 hover:text-primary active:scale-95"
                         )}
                       >
                         <Icon 
                           className={cn(
                             "h-5 w-5 transition-transform duration-200 group-hover:scale-110",
-                            isActive || isExpanded ? "text-primary" : "text-primary"
+                            isActive ? "text-white" : "text-primary"
                           )} 
                         />
-                        <div className="flex-1 min-w-0 text-left">
+                        <div className="flex-1 min-w-0">
                           <div className="font-medium text-sm truncate">{item.title}</div>
-                          <div className="text-xs text-gray-500 opacity-75 truncate">
+                          <div className={cn(
+                            "text-xs opacity-75 truncate",
+                            isActive ? "text-white/90" : "text-gray-500"
+                          )}>
                             {item.description}
                           </div>
                         </div>
-                        <div 
+                        {isActive && (
+                          <div className="w-2 h-2 bg-white rounded-full animate-pulse" />
+                        )}
+                      </Link>
+                    ) : (
+                      // Menu avec sous-éléments
+                      <>
+                        <button
+                          onClick={() => toggleExpanded(item.title)}
                           className={cn(
-                            "w-6 h-6 rounded-full border-2 border-primary/30 flex items-center justify-center transition-all duration-300",
-                            isExpanded && "rotate-180 bg-primary/10"
+                            "w-full flex items-center gap-3 px-3 py-3 rounded-lg transition-all duration-300 group",
+                            isActive || isExpanded
+                              ? "bg-primary/10 text-primary"
+                              : "text-gray-700 hover:bg-primary/5 hover:text-primary active:scale-95"
                           )}
                         >
+                          <Icon 
+                            className={cn(
+                              "h-5 w-5 transition-transform duration-200 group-hover:scale-110",
+                              isActive || isExpanded ? "text-primary" : "text-primary"
+                            )} 
+                          />
+                          <div className="flex-1 min-w-0 text-left">
+                            <div className="font-medium text-sm truncate">{item.title}</div>
+                            <div className="text-xs text-gray-500 opacity-75 truncate">
+                              {item.description}
+                            </div>
+                          </div>
                           <div 
                             className={cn(
-                              "w-2 h-2 border-r-2 border-b-2 border-primary transform rotate-45 transition-transform duration-300",
-                              isExpanded && "-rotate-135"
+                              "w-6 h-6 rounded-full border-2 border-primary/30 flex items-center justify-center transition-all duration-300",
+                              isExpanded && "rotate-180 bg-primary/10"
                             )}
-                          />
-                        </div>
-                      </button>
+                          >
+                            <div 
+                              className={cn(
+                                "w-2 h-2 border-r-2 border-b-2 border-primary transform rotate-45 transition-transform duration-300",
+                                isExpanded && "-rotate-135"
+                              )}
+                            />
+                          </div>
+                        </button>
 
-                      {/* Sous-éléments avec animation */}
-                      <div 
-                        className={cn(
-                          "overflow-hidden transition-all duration-300 ease-in-out",
-                          isExpanded ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-                        )}
-                      >
-                        <div className="ml-6 space-y-1 py-2">
-                          {item.subItems?.map((subItem) => {
-                            const SubIcon = subItem.icon;
-                            const isSubActive = isActiveLink(subItem.path);
+                        {/* Sous-éléments avec animation */}
+                        <div 
+                          className={cn(
+                            "overflow-hidden transition-all duration-300 ease-in-out",
+                            isExpanded ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+                          )}
+                        >
+                          <div className="ml-6 space-y-1 py-2">
+                            {item.subItems?.map((subItem) => {
+                              const SubIcon = subItem.icon;
+                              const isSubActive = isActiveLink(subItem.path);
 
-                            return (
-                              <Link
-                                key={subItem.path}
-                                to={subItem.path}
-                                onClick={handleLinkClick}
-                                className={cn(
-                                  "flex items-center gap-3 px-3 py-2 rounded-md transition-all duration-200 group",
-                                  isSubActive
-                                    ? "bg-primary text-white shadow-sm"
-                                    : "text-gray-600 hover:bg-primary/5 hover:text-primary active:scale-95"
-                                )}
-                              >
-                                <SubIcon 
+                              return (
+                                <Link
+                                  key={subItem.path}
+                                  to={subItem.path}
+                                  onClick={handleLinkClick}
                                   className={cn(
-                                    "h-4 w-4 transition-transform duration-200 group-hover:scale-110",
-                                    isSubActive ? "text-white" : "text-primary"
-                                  )} 
-                                />
-                                <span className="text-sm font-medium truncate">
-                                  {subItem.title}
-                                </span>
-                                {isSubActive && (
-                                  <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse ml-auto" />
-                                )}
-                              </Link>
-                            );
-                          })}
+                                    "flex items-center gap-3 px-3 py-2 rounded-md transition-all duration-200 group",
+                                    isSubActive
+                                      ? "bg-primary text-white shadow-sm"
+                                      : "text-gray-600 hover:bg-primary/5 hover:text-primary active:scale-95"
+                                  )}
+                                >
+                                  <SubIcon 
+                                    className={cn(
+                                      "h-4 w-4 transition-transform duration-200 group-hover:scale-110",
+                                      isSubActive ? "text-white" : "text-primary"
+                                    )} 
+                                  />
+                                  <span className="text-sm font-medium truncate">
+                                    {subItem.title}
+                                  </span>
+                                  {isSubActive && (
+                                    <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse ml-auto" />
+                                  )}
+                                </Link>
+                              );
+                            })}
+                          </div>
                         </div>
-                      </div>
-                    </>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </nav>
+                      </>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </nav>
+        </div>
 
         {/* Footer du menu mobile */}
-        <div className="border-t border-gray-100 p-4">
+        <div className="border-t border-gray-100 p-4 flex-shrink-0">
           <div className="text-center">
             <p className="text-xs text-gray-500 mb-1">© 2024 UMEGREAT Pro</p>
             <p className="text-xs text-gray-400">Votre partenaire mobilité</p>
