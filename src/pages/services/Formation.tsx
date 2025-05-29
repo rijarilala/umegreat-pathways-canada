@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useSearchParams, useLocation } from "react-router-dom";
 import MainLayout from "@/components/layout/MainLayout";
@@ -13,15 +12,20 @@ const formations = {
   insertion: [
     {
       id: 1,
-      title: "CV impactant",
-      description: "Apprenez à créer un CV qui attire l'attention des recruteurs et met en valeur votre profil professionnel.",
+      title: "Créer un CV impactant",
+      description: "Donnez un coup de boost à votre carrière ! Apprenez à rédiger un CV qui attire l'attention des recruteurs et valorise votre parcours professionnel.",
       image: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&q=80&w=1200",
       icon: "file-text",
       details: {
-        objectif: "Maîtriser les techniques de rédaction d'un CV efficace et adapté à votre secteur d'activité",
+        objectif: "Maîtriser les techniques de rédaction d'un CV efficace et adapté à votre secteur d'activité. À l'issue de la formation, vous saurez : structurer votre CV pour mettre en avant vos compétences clés, adapter votre CV à différents types de postes, utiliser des mots-clés pertinents pour attirer l'attention sur les plateformes de recrutement",
         publicCible: "Demandeurs d'emploi, personnes en reconversion professionnelle, jeunes diplômés",
-        duree: "4 heures",
-        format: "Atelier interactif en groupe restreint ou coaching individuel"
+        duree: "4 heures, en présentiel ou en distanciel (selon les sessions)",
+        format: "Atelier interactif en groupe restreint ou coaching individuel. Outils utilisés : exemples de CV, modèles personnalisables, retours personnalisés",
+        modules: [
+          "CV optimisé et prêt à être envoyé aux recruteurs",
+          "Confiance renforcée dans la présentation de son parcours",
+          "Techniques pour adapter son CV à différentes offres d'emploi"
+        ]
       },
       packReferences: [
         {
@@ -163,7 +167,7 @@ const packs = [
     description: "Tout ce qu'il vous faut pour réussir votre insertion professionnelle et décrocher l'emploi de vos rêves.",
     image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=1200",
     modules: [
-      "CV impactant",
+      "Créer un CV impactant",
       "Lettre de motivation convaincante",
       "Préparation aux entretiens d'embauche",
       "Recherche du premier ou nouveau emploi",

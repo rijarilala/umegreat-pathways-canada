@@ -65,7 +65,6 @@ const DetailModal = ({
   useEffect(() => {
     if (!isOpen) return;
     const checkScrollable = () => {
-      // Use querySelectorAll to get all scrollable content elements inside this modal
       const contentDiv = document.querySelector('.detail-modal-content');
       if (!contentDiv) {
         console.log("Scroll content element not found");
@@ -77,11 +76,9 @@ const DetailModal = ({
       setShowScrollIndicator(hasOverflow);
     };
 
-    // Check multiple times to ensure content has fully rendered
     const timeoutId = setTimeout(checkScrollable, 100);
     const secondCheckId = setTimeout(checkScrollable, 300);
 
-    // Also check on window resize
     window.addEventListener('resize', checkScrollable);
     return () => {
       window.removeEventListener('resize', checkScrollable);
@@ -97,102 +94,154 @@ const DetailModal = ({
     const scrolledToBottom = Math.abs(target.scrollHeight - target.scrollTop - target.clientHeight) < 10;
     console.log("Scroll detected:", scrolledAmount);
 
-    // Hide indicator as soon as user scrolls or reaches bottom
     if (scrolledAmount > 10 || scrolledToBottom) {
       setShowScrollIndicator(false);
     }
   };
 
-  return <Dialog open={isOpen} onOpenChange={open => !open && onClose()}>
-      <DialogContent className="max-w-[90%] md:max-w-[70%] lg:max-w-[60%] xl:max-w-2xl p-0 rounded-xl border-0 shadow-lg overflow-hidden">
-        {/* Adding DialogTitle and DialogDescription for accessibility */}
+  return (
+    <Dialog open={isOpen} onOpenChange={open => !open && onClose()}>
+      <DialogContent className="max-w-[95vw] sm:max-w-[85vw] md:max-w-[75vw] lg:max-w-[65vw] xl:max-w-3xl p-0 rounded-xl border-0 shadow-lg overflow-hidden max-h-[95vh] sm:max-h-[90vh]">
         <VisuallyHidden>
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>{description || "Détails du service"}</DialogDescription>
         </VisuallyHidden>
         
-        <div className="relative flex flex-col max-h-[90vh]">
-          {/* Removed duplicate close button - the X button will be the only one */}
-
+        <div className="relative flex flex-col h-full">
           {/* Header image */}
-          {image && <div className="w-full h-48 md:h-56 overflow-hidden flex-shrink-0">
+          {image && (
+            <div className="w-full h-32 sm:h-40 md:h-48 lg:h-56 overflow-hidden flex-shrink-0">
               <img src={image} alt="" className="w-full h-full object-cover" aria-hidden="true" />
-            </div>}
+            </div>
+          )}
 
           {/* Content container with ScrollArea for proper scrolling */}
-          <ScrollArea className="flex-grow detail-modal-content" onScrollCapture={handleScroll} style={{
-          maxHeight: `calc(90vh - ${image ? '14rem' : '0'})`
-        }}>
-            <div className="p-5 md:p-6">
+          <ScrollArea 
+            className="flex-grow detail-modal-content" 
+            onScrollCapture={handleScroll} 
+            style={{
+              maxHeight: `calc(95vh - ${image ? '8rem' : '0'} - 2rem)`
+            }}
+          >
+            <div className="p-4 sm:p-5 md:p-6">
               {/* Title and description */}
-              <div className="mb-6">
-                <h3 className="text-2xl font-bold mb-3 pr-8">{title}</h3>
-                {description && <p className="text-gray-600 text-lg">{description}</p>}
+              <div className="mb-4 sm:mb-6">
+                <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-2 sm:mb-3 pr-8 text-left text-orange-500">
+                  {title}
+                </h3>
+                {description && (
+                  <p className="text-gray-600 text-sm sm:text-base md:text-lg">
+                    {description}
+                  </p>
+                )}
               </div>
 
               {/* Details content */}
-              <div className="space-y-6">
-                {details?.objectif && <div>
-                    <h4 className="text-lg font-semibold text-gray-900 mb-2">Objectif</h4>
-                    <p className="text-gray-600">{details.objectif}</p>
-                  </div>}
+              <div className="space-y-4 sm:space-y-6">
+                {details?.objectif && (
+                  <div>
+                    <h4 className="text-base sm:text-lg font-semibold text-gray-900 mb-2 text-center">
+                      Objectif
+                    </h4>
+                    <p className="text-gray-600 text-sm sm:text-base">{details.objectif}</p>
+                  </div>
+                )}
                 
-                {details?.publicCible && <div>
-                    <h4 className="text-lg font-semibold text-gray-900 mb-2">Public cible</h4>
-                    <p className="text-gray-600">{details.publicCible}</p>
-                  </div>}
+                {details?.publicCible && (
+                  <div>
+                    <h4 className="text-base sm:text-lg font-semibold text-gray-900 mb-2 text-center">
+                      Public cible
+                    </h4>
+                    <p className="text-gray-600 text-sm sm:text-base">{details.publicCible}</p>
+                  </div>
+                )}
                 
-                {details?.duree && <div>
-                    <h4 className="text-lg font-semibold text-gray-900 mb-2">Durée</h4>
-                    <p className="text-gray-600">{details.duree}</p>
-                  </div>}
+                {details?.duree && (
+                  <div>
+                    <h4 className="text-base sm:text-lg font-semibold text-gray-900 mb-2 text-center">
+                      Durée
+                    </h4>
+                    <p className="text-gray-600 text-sm sm:text-base">{details.duree}</p>
+                  </div>
+                )}
                 
-                {details?.format && <div>
-                    <h4 className="text-lg font-semibold text-gray-900 mb-2">Format</h4>
-                    <p className="text-gray-600">{details.format}</p>
-                  </div>}
+                {details?.format && (
+                  <div>
+                    <h4 className="text-base sm:text-lg font-semibold text-gray-900 mb-2 text-center">
+                      Format
+                    </h4>
+                    <p className="text-gray-600 text-sm sm:text-base">{details.format}</p>
+                  </div>
+                )}
                 
-                {details?.modules && details.modules.length > 0 && <div>
-                    <h4 className="text-lg font-semibold text-gray-900 mb-2">Modules inclus</h4>
-                    <ul className="list-disc list-inside text-gray-600 space-y-2 pl-2">
-                      {details.modules.map((module, index) => <li key={index} className="pl-1">{module}</li>)}
+                {details?.modules && details.modules.length > 0 && (
+                  <div>
+                    <h4 className="text-base sm:text-lg font-semibold text-gray-900 mb-2 text-center">
+                      Résultats attendus
+                    </h4>
+                    <ul className="list-disc list-inside text-gray-600 space-y-2 pl-2 text-sm sm:text-base">
+                      {details.modules.map((module, index) => (
+                        <li key={index} className="pl-1">{module}</li>
+                      ))}
                     </ul>
-                  </div>}
+                  </div>
+                )}
 
                 {/* Pack references */}
-                {packReferences && packReferences.length > 0 && <div className="pt-2 pb-6">
-                    <h4 className="text-lg font-semibold text-gray-900 mb-3">Cette formation est incluse dans ces packs</h4>
+                {packReferences && packReferences.length > 0 && (
+                  <div className="pt-2 pb-6">
+                    <h4 className="text-base sm:text-lg font-semibold text-gray-900 mb-3">
+                      Cette formation est incluse dans ces packs
+                    </h4>
                     <div className="space-y-3">
-                      {packReferences.map(pack => <div key={pack.id} className="bg-blue-50 p-4 rounded-lg transition-all hover:bg-blue-100">
-                          <Link to={pack.linkTo} className="flex items-center justify-between text-blue-600 hover:text-blue-800 font-medium" onClick={onClose}>
+                      {packReferences.map(pack => (
+                        <div key={pack.id} className="bg-blue-50 p-3 sm:p-4 rounded-lg transition-all hover:bg-blue-100">
+                          <Link 
+                            to={pack.linkTo} 
+                            className="flex items-center justify-between text-blue-600 hover:text-blue-800 font-medium text-sm sm:text-base" 
+                            onClick={onClose}
+                          >
                             <span>{pack.title}</span>
                             <span className="text-lg">→</span>
                           </Link>
-                        </div>)}
+                        </div>
+                      ))}
                     </div>
-                  </div>}
+                  </div>
+                )}
 
-                {/* Call to action buttons - MODIFIÉ ICI */}
-                <div className="mt-6 pt-4 border-t border-gray-100">
+                {/* Call to action buttons */}
+                <div className="mt-4 sm:mt-6 pt-4 border-t border-gray-100">
                   {/* Original CTA */}
-                  {linkTo && <Button asChild className="w-full bg-primary hover:bg-primary/90 mb-3">
+                  {linkTo && (
+                    <Button asChild className="w-full bg-primary hover:bg-primary/90 mb-3 text-sm sm:text-base">
                       <Link to={linkTo} onClick={onClose}>
                         {linkText}
                       </Link>
-                    </Button>}
+                    </Button>
+                  )}
                   
-                  {/* New CTAs avec boutons réajustés */}
-                  <div className="grid grid-cols-12 gap-3">
-                    <Button variant="outline" className="col-span-2 flex items-center justify-center gap-1" asChild>
+                  {/* New CTAs with responsive buttons */}
+                  <div className="grid grid-cols-12 gap-2 sm:gap-3">
+                    <Button 
+                      variant="outline" 
+                      className="col-span-2 flex items-center justify-center p-2" 
+                      asChild
+                    >
                       <Link to="/services/formation" onClick={onClose}>
-                        <ArrowLeft className="h-3 w-3" />
+                        <ArrowLeft className="h-3 w-3 sm:h-4 sm:w-4" />
                       </Link>
                     </Button>
                     
-                    <Button variant="secondary" className="col-span-10 flex items-center justify-center gap-2" asChild>
+                    <Button 
+                      variant="secondary" 
+                      className="col-span-10 flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-sm" 
+                      asChild
+                    >
                       <Link to="/contact" onClick={onClose}>
-                        <Info className="h-4 w-4" />
-                        <span>Demandez plus d'infos</span>
+                        <Info className="h-3 w-3 sm:h-4 sm:w-4" />
+                        <span className="hidden xs:inline">Demandez plus d'infos</span>
+                        <span className="xs:hidden">Plus d'infos</span>
                       </Link>
                     </Button>
                   </div>
@@ -202,17 +251,26 @@ const DetailModal = ({
           </ScrollArea>
           
           {/* Enhanced scroll indicator with gradient background */}
-          {showScrollIndicator && <div className="absolute bottom-0 left-0 right-0 pb-6 pt-16 pointer-events-none 
+          {showScrollIndicator && (
+            <div 
+              className="absolute bottom-0 left-0 right-0 pb-4 sm:pb-6 pt-12 sm:pt-16 pointer-events-none 
               flex flex-col items-center justify-end transition-opacity duration-300
-              bg-gradient-to-t from-white via-white/90 to-transparent z-10" aria-hidden="true" style={{
-          opacity: showScrollIndicator ? 1 : 0
-        }}>
-              <ChevronDown className="h-6 w-6 text-gray-500 animate-bounce mb-2" />
-              <p className="text-sm text-gray-700 font-medium">Faites défiler pour voir plus</p>
-            </div>}
+              bg-gradient-to-t from-white via-white/90 to-transparent z-10" 
+              aria-hidden="true" 
+              style={{
+                opacity: showScrollIndicator ? 1 : 0
+              }}
+            >
+              <ChevronDown className="h-5 w-5 sm:h-6 sm:w-6 text-gray-500 animate-bounce mb-2" />
+              <p className="text-xs sm:text-sm text-gray-700 font-medium px-4 text-center">
+                Faites défiler pour voir plus
+              </p>
+            </div>
+          )}
         </div>
       </DialogContent>
-    </Dialog>;
+    </Dialog>
+  );
 };
 
 export default DetailModal;
