@@ -57,9 +57,9 @@ const searchDatabase: SearchResult[] = [
   // Formations - Updated with correct formationId values
   {
     id: "1",
-    title: "Créer un CV impactant",
+    title: "CV impactant",
     category: "formation",
-    description: "Donnez un coup de boost à votre carrière ! Apprenez à rédiger un CV qui attire l'attention des recruteurs et valorise votre parcours professionnel",
+    description: "Apprenez à créer un CV qui attire l'attention des recruteurs",
     url: "/services/formation",
     formationId: 1
   },
