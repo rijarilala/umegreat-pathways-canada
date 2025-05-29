@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { X, Home, Users, BookOpen, MessageCircle, Phone, GraduationCap, MapPin, HelpCircle, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { Sheet, SheetContent } from "@/components/ui/sheet";
 
 interface MobileNavigationProps {
   isOpen: boolean;
@@ -125,35 +125,20 @@ const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
           onClose();
         }}
       >
-        {/* Header moderne avec dégradé */}
-        <SheetHeader className="p-5 bg-gradient-to-r from-primary to-primary/90 text-white flex-shrink-0 relative overflow-hidden">
-          <div 
-            className="absolute inset-0 opacity-20"
-            style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='grid' width='20' height='20' patternUnits='userSpaceOnUse'%3E%3Cpath d='M 20 0 L 0 0 0 20' fill='none' stroke='white' stroke-width='0.5' opacity='0.1'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23grid)' /%3E%3C/svg%3E")`
-            }}
-          ></div>
-          <div className="flex items-center justify-between relative z-10">
-            <SheetTitle className="text-xl font-bold text-white flex items-center gap-2">
-              <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center backdrop-blur-sm">
-                <Home className="h-4 w-4 text-white" />
-              </div>
-              UMEGREAT Pro
-            </SheetTitle>
-            <button
-              onClick={handleCloseClick}
-              className="p-2.5 rounded-xl bg-white/10 hover:bg-white/20 transition-all duration-300 backdrop-blur-sm group"
-              aria-label="Fermer le menu"
-            >
-              <X className="h-5 w-5 text-white group-hover:rotate-90 transition-transform duration-300" />
-            </button>
-          </div>
-          <p className="text-white/90 text-sm mt-1 relative z-10">Votre partenaire mobilité</p>
-        </SheetHeader>
+        {/* Bouton de fermeture en haut à droite */}
+        <div className="flex justify-end p-4">
+          <button
+            onClick={handleCloseClick}
+            className="p-2.5 rounded-xl bg-gray-100 hover:bg-gray-200 transition-all duration-300 group"
+            aria-label="Fermer le menu"
+          >
+            <X className="h-5 w-5 text-gray-600 group-hover:rotate-90 transition-transform duration-300" />
+          </button>
+        </div>
 
-        {/* Container avec scroll pour la navigation */}
-        <div className="flex-1 overflow-y-auto min-h-0">
-          <nav className="p-4">
+        {/* Navigation principale */}
+        <div className="flex-1 overflow-y-auto min-h-0 px-4 pb-4">
+          <nav>
             <div className="space-y-1">
               {navigationItems.map((item, index) => {
                 const Icon = item.icon;
@@ -335,26 +320,6 @@ const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
               })}
             </div>
           </nav>
-        </div>
-
-        {/* Footer moderne avec dégradé */}
-        <div className="border-t border-gray-200/50 p-4 flex-shrink-0 bg-gradient-to-r from-gray-50 to-blue-50/30">
-          <div className="text-center space-y-2">
-            <div className="flex items-center justify-center gap-2 mb-2">
-              <div className="w-6 h-6 bg-primary/10 rounded-lg flex items-center justify-center">
-                <Home className="h-3 w-3 text-primary" />
-              </div>
-              <p className="text-xs font-semibold text-gray-700">© 2024 UMEGREAT Pro</p>
-            </div>
-            <p className="text-xs text-gray-500 leading-relaxed">
-              Votre partenaire de confiance pour la mobilité internationale
-            </p>
-            <div className="flex justify-center gap-1 pt-1">
-              <div className="w-1 h-1 bg-primary rounded-full animate-pulse"></div>
-              <div className="w-1 h-1 bg-primary/60 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
-              <div className="w-1 h-1 bg-primary/40 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
-            </div>
-          </div>
         </div>
       </SheetContent>
     </Sheet>
