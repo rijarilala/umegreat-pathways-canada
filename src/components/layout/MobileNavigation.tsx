@@ -114,7 +114,7 @@ const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
     <Sheet open={isOpen} onOpenChange={onClose}>
       <SheetContent 
         side="left" 
-        className="w-[320px] p-0 bg-gradient-to-br from-white via-gray-50 to-blue-50/30 border-r border-gray-200/50 flex flex-col max-h-screen backdrop-blur-sm"
+        className="w-[320px] p-0 bg-gradient-to-br from-white via-gray-50 to-blue-50/30 border-r border-gray-200/50 flex flex-col h-screen backdrop-blur-sm"
         hideCloseButton={true}
         onPointerDownOutside={(e) => {
           e.preventDefault();
@@ -125,38 +125,44 @@ const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
           onClose();
         }}
       >
-        {/* Bouton de fermeture en haut à droite */}
-        <div className="flex justify-end p-4">
+        {/* Header compact */}
+        <div className="flex items-center justify-between p-3 bg-gradient-to-r from-primary to-primary/90 text-white flex-shrink-0">
+          <div className="flex items-center gap-2">
+            <div className="w-6 h-6 bg-white/20 rounded-md flex items-center justify-center">
+              <Home className="h-3 w-3 text-white" />
+            </div>
+            <span className="text-sm font-semibold">UMEGREAT Pro</span>
+          </div>
           <button
             onClick={handleCloseClick}
-            className="p-2.5 rounded-xl bg-gray-100 hover:bg-gray-200 transition-all duration-300 group"
+            className="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 transition-all duration-300 group"
             aria-label="Fermer le menu"
           >
-            <X className="h-5 w-5 text-gray-600 group-hover:rotate-90 transition-transform duration-300" />
+            <X className="h-4 w-4 text-white group-hover:rotate-90 transition-transform duration-300" />
           </button>
         </div>
 
-        {/* Navigation principale */}
-        <div className="flex-1 overflow-y-auto min-h-0 px-4 pb-4">
+        {/* Navigation principale sans scroll */}
+        <div className="flex-1 px-3 py-2">
           <nav>
-            <div className="space-y-1">
+            <div className="space-y-0.5">
               {navigationItems.map((item, index) => {
                 const Icon = item.icon;
                 const isExpanded = expandedItems.includes(item.title);
                 const isActive = item.path ? isActiveLink(item.path) : hasActiveSubItem(item.subItems);
 
                 return (
-                  <div key={item.title} className="space-y-1">
+                  <div key={item.title} className="space-y-0.5">
                     {item.path ? (
-                      // Lien direct avec design moderne
+                      // Lien direct avec design compact
                       <Link
                         to={item.path}
                         onClick={handleLinkClick}
                         className={cn(
-                          "flex items-center gap-4 px-4 py-4 rounded-2xl transition-all duration-300 group relative overflow-hidden",
+                          "flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-300 group relative overflow-hidden",
                           isActive
-                            ? "bg-gradient-to-r from-primary to-primary/90 text-white shadow-lg transform scale-[1.02] shadow-primary/25"
-                            : "text-gray-700 hover:bg-white hover:shadow-md active:scale-95"
+                            ? "bg-gradient-to-r from-primary to-primary/90 text-white shadow-md transform scale-[1.02] shadow-primary/25"
+                            : "text-gray-700 hover:bg-white hover:shadow-sm active:scale-95"
                         )}
                         style={{
                           animationDelay: `${index * 50}ms`,
@@ -169,14 +175,14 @@ const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
                         )}
                         
                         <div className={cn(
-                          "w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110",
+                          "w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-300 group-hover:scale-110",
                           isActive 
                             ? "bg-white/20 backdrop-blur-sm" 
                             : "bg-gray-100 group-hover:bg-primary/10"
                         )}>
                           <Icon 
                             className={cn(
-                              "h-5 w-5 transition-all duration-300",
+                              "h-4 w-4 transition-all duration-300",
                               isActive ? "text-white" : `${item.color} group-hover:text-primary`
                             )} 
                           />
@@ -184,7 +190,7 @@ const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
                         
                         <div className="flex-1 min-w-0">
                           <div className={cn(
-                            "font-semibold text-sm truncate transition-colors duration-300",
+                            "font-medium text-xs truncate transition-colors duration-300",
                             isActive ? "text-white" : "text-gray-900 group-hover:text-primary"
                           )}>
                             {item.title}
@@ -198,7 +204,7 @@ const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
                         </div>
                         
                         {isActive && (
-                          <div className="w-2 h-2 bg-white rounded-full animate-pulse shadow-sm" />
+                          <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse shadow-sm" />
                         )}
                       </Link>
                     ) : (
@@ -207,10 +213,10 @@ const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
                         <button
                           onClick={() => toggleExpanded(item.title)}
                           className={cn(
-                            "w-full flex items-center gap-4 px-4 py-4 rounded-2xl transition-all duration-300 group relative overflow-hidden",
+                            "w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-300 group relative overflow-hidden",
                             isActive || isExpanded
                               ? "bg-gradient-to-r from-primary/10 to-primary/5 text-primary shadow-sm"
-                              : "text-gray-700 hover:bg-white hover:shadow-md active:scale-95"
+                              : "text-gray-700 hover:bg-white hover:shadow-sm active:scale-95"
                           )}
                           style={{
                             animationDelay: `${index * 50}ms`,
@@ -218,14 +224,14 @@ const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
                           }}
                         >
                           <div className={cn(
-                            "w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110",
+                            "w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-300 group-hover:scale-110",
                             isActive || isExpanded
                               ? "bg-primary/10 backdrop-blur-sm" 
                               : "bg-gray-100 group-hover:bg-primary/10"
                           )}>
                             <Icon 
                               className={cn(
-                                "h-5 w-5 transition-all duration-300",
+                                "h-4 w-4 transition-all duration-300",
                                 isActive || isExpanded ? "text-primary" : `${item.color} group-hover:text-primary`
                               )} 
                             />
@@ -233,7 +239,7 @@ const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
                           
                           <div className="flex-1 min-w-0 text-left">
                             <div className={cn(
-                              "font-semibold text-sm truncate transition-colors duration-300",
+                              "font-medium text-xs truncate transition-colors duration-300",
                               isActive || isExpanded ? "text-primary" : "text-gray-900 group-hover:text-primary"
                             )}>
                               {item.title}
@@ -244,26 +250,26 @@ const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
                           </div>
                           
                           <div className={cn(
-                            "w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300",
+                            "w-6 h-6 rounded-full flex items-center justify-center transition-all duration-300",
                             isExpanded ? "bg-primary/10 rotate-90" : "group-hover:bg-primary/5"
                           )}>
                             <ChevronRight 
                               className={cn(
-                                "w-4 h-4 transition-all duration-300",
+                                "w-3 h-3 transition-all duration-300",
                                 isExpanded ? "text-primary" : "text-gray-400 group-hover:text-primary"
                               )}
                             />
                           </div>
                         </button>
 
-                        {/* Sous-éléments avec animation améliorée */}
+                        {/* Sous-éléments avec animation compacte */}
                         <div 
                           className={cn(
                             "overflow-hidden transition-all duration-500 ease-out",
-                            isExpanded ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+                            isExpanded ? "max-h-48 opacity-100" : "max-h-0 opacity-0"
                           )}
                         >
-                          <div className="ml-6 space-y-1 py-2">
+                          <div className="ml-4 space-y-0.5 py-1">
                             {item.subItems?.map((subItem, subIndex) => {
                               const SubIcon = subItem.icon;
                               const isSubActive = isActiveLink(subItem.path);
@@ -274,9 +280,9 @@ const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
                                   to={subItem.path}
                                   onClick={handleLinkClick}
                                   className={cn(
-                                    "flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 group relative",
+                                    "flex items-center gap-2.5 px-3 py-2 rounded-lg transition-all duration-300 group relative",
                                     isSubActive
-                                      ? "bg-gradient-to-r from-primary to-primary/90 text-white shadow-md transform scale-[1.02]"
+                                      ? "bg-gradient-to-r from-primary to-primary/90 text-white shadow-sm transform scale-[1.02]"
                                       : "text-gray-600 hover:bg-white hover:shadow-sm active:scale-95"
                                   )}
                                   style={{
@@ -285,28 +291,28 @@ const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
                                   }}
                                 >
                                   <div className={cn(
-                                    "w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-300 group-hover:scale-110",
+                                    "w-6 h-6 rounded-md flex items-center justify-center transition-all duration-300 group-hover:scale-110",
                                     isSubActive 
                                       ? "bg-white/20 backdrop-blur-sm" 
                                       : "bg-gray-100 group-hover:bg-primary/10"
                                   )}>
                                     <SubIcon 
                                       className={cn(
-                                        "h-4 w-4 transition-all duration-300",
+                                        "h-3 w-3 transition-all duration-300",
                                         isSubActive ? "text-white" : `${subItem.color} group-hover:text-primary`
                                       )} 
                                     />
                                   </div>
                                   
                                   <span className={cn(
-                                    "text-sm font-medium truncate transition-colors duration-300",
+                                    "text-xs font-medium truncate transition-colors duration-300",
                                     isSubActive ? "text-white" : "text-gray-700 group-hover:text-primary"
                                   )}>
                                     {subItem.title}
                                   </span>
                                   
                                   {isSubActive && (
-                                    <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse ml-auto" />
+                                    <div className="w-1 h-1 bg-white rounded-full animate-pulse ml-auto" />
                                   )}
                                 </Link>
                               );
