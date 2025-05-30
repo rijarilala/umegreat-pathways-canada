@@ -42,7 +42,7 @@ const ServiceCard = ({
           <CardTitle className="text-xl mx-0 my-0 py-0 px-0 text-center">{title}</CardTitle>
         </CardHeader>
         <CardContent className="p-4 pt-0 flex-grow">
-          <CardDescription className="text-gray-600">
+          <CardDescription className="text-gray-600 text-center">
             {description}
           </CardDescription>
         </CardContent>
