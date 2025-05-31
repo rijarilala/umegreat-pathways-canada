@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { X, Home, Users, BookOpen, MessageCircle, Phone, GraduationCap, MapPin, HelpCircle, ChevronRight } from "lucide-react";
+import { X, Users, BookOpen, MessageCircle, Phone, GraduationCap, MapPin, HelpCircle, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
 
@@ -12,13 +12,6 @@ interface MobileNavigationProps {
 
 // Configuration des éléments de navigation avec icônes Material Design
 const navigationItems = [
-  {
-    title: "Accueil",
-    path: "/",
-    icon: Home,
-    description: "Page principale",
-    color: "text-blue-600"
-  },
   {
     title: "Accompagnement",
     icon: Users,
@@ -125,13 +118,14 @@ const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
           onClose();
         }}
       >
-        {/* Header compact */}
+        {/* Header compact avec logo */}
         <div className="flex items-center justify-between p-3 bg-gradient-to-r from-primary to-primary/90 text-white flex-shrink-0">
           <div className="flex items-center gap-2">
-            <div className="w-6 h-6 bg-white/20 rounded-md flex items-center justify-center">
-              <Home className="h-3 w-3 text-white" />
-            </div>
-            <span className="text-sm font-semibold">UMEGREAT Pro</span>
+            <img 
+              src="/lovable-uploads/53f33ad3-38a7-4707-b013-4210f93683fe.png" 
+              alt="UMEGREAT Pro Logo" 
+              className="h-6 w-auto"
+            />
           </div>
           <button
             onClick={handleCloseClick}
@@ -140,6 +134,52 @@ const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
           >
             <X className="h-4 w-4 text-white group-hover:rotate-90 transition-transform duration-300" />
           </button>
+        </div>
+
+        {/* Lien vers l'accueil */}
+        <div className="px-3 py-2">
+          <Link
+            to="/"
+            onClick={handleLinkClick}
+            className={cn(
+              "flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-300 group relative overflow-hidden",
+              location.pathname === "/"
+                ? "bg-gradient-to-r from-primary to-primary/90 text-white shadow-md transform scale-[1.02] shadow-primary/25"
+                : "text-gray-700 hover:bg-white hover:shadow-sm active:scale-95"
+            )}
+          >
+            <div className={cn(
+              "w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-300 group-hover:scale-110",
+              location.pathname === "/" 
+                ? "bg-white/20 backdrop-blur-sm" 
+                : "bg-gray-100 group-hover:bg-primary/10"
+            )}>
+              <img 
+                src="/lovable-uploads/53f33ad3-38a7-4707-b013-4210f93683fe.png" 
+                alt="Home" 
+                className="h-4 w-4"
+              />
+            </div>
+            
+            <div className="flex-1 min-w-0">
+              <div className={cn(
+                "font-medium text-xs truncate transition-colors duration-300",
+                location.pathname === "/" ? "text-white" : "text-gray-900 group-hover:text-primary"
+              )}>
+                Accueil
+              </div>
+              <div className={cn(
+                "text-xs opacity-75 truncate transition-colors duration-300",
+                location.pathname === "/" ? "text-white/90" : "text-gray-500 group-hover:text-primary/70"
+              )}>
+                Page principale
+              </div>
+            </div>
+            
+            {location.pathname === "/" && (
+              <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse shadow-sm" />
+            )}
+          </Link>
         </div>
 
         {/* Navigation principale sans scroll */}

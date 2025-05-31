@@ -129,9 +129,14 @@ const Navbar = () => {
                 className="flex items-center group"
                 onClick={handleLinkClick}
               >
-                <span className="font-bold text-base md:text-lg text-primary group-hover:text-primary/90 transition-colors duration-200">
-                  UMEGREAT Pro
-                </span>
+                <img 
+                  src="/lovable-uploads/53f33ad3-38a7-4707-b013-4210f93683fe.png" 
+                  alt="UMEGREAT Pro Logo" 
+                  className={cn(
+                    "transition-all duration-300 group-hover:scale-105",
+                    scrolled ? "h-8" : "h-10"
+                  )}
+                />
               </Link>
             </div>
 
