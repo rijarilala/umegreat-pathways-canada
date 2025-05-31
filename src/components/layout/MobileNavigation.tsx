@@ -122,9 +122,9 @@ const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
         <div className="flex items-center justify-between p-3 bg-gradient-to-r from-primary to-primary/90 text-white flex-shrink-0">
           <div className="flex items-center gap-2">
             <img 
-              src="/lovable-uploads/53f33ad3-38a7-4707-b013-4210f93683fe.png" 
+              src="/lovable-uploads/0bca4632-3fca-423c-9b5f-e130fad23d05.png" 
               alt="UMEGREAT Pro Logo" 
-              className="h-6 w-auto"
+              className="h-8 w-auto"
             />
           </div>
           <button
@@ -155,9 +155,9 @@ const MobileNavigation = ({ isOpen, onClose }: MobileNavigationProps) => {
                 : "bg-gray-100 group-hover:bg-primary/10"
             )}>
               <img 
-                src="/lovable-uploads/53f33ad3-38a7-4707-b013-4210f93683fe.png" 
+                src="/lovable-uploads/0bca4632-3fca-423c-9b5f-e130fad23d05.png" 
                 alt="Home" 
-                className="h-4 w-4"
+                className="h-6 w-6"
               />
             </div>
             

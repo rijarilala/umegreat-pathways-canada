@@ -119,7 +119,7 @@ const Navbar = () => {
           <div 
             className={cn(
               "flex items-center justify-between transition-all duration-300",
-              scrolled ? "h-14" : "h-16"
+              scrolled ? "h-18" : "h-20"
             )}
           >
             {/* Logo */}
@@ -130,18 +130,18 @@ const Navbar = () => {
                 onClick={handleLinkClick}
               >
                 <img 
-                  src="/lovable-uploads/53f33ad3-38a7-4707-b013-4210f93683fe.png" 
+                  src="/lovable-uploads/0bca4632-3fca-423c-9b5f-e130fad23d05.png" 
                   alt="UMEGREAT Pro Logo" 
                   className={cn(
                     "transition-all duration-300 group-hover:scale-105",
-                    scrolled ? "h-8" : "h-10"
+                    scrolled ? "h-12" : "h-16"
                   )}
                 />
               </Link>
             </div>
 
             {/* Vertical separator between logo and nav */}
-            <Separator orientation="vertical" className="h-6 mx-2 bg-gray-200 hidden sm:block" />
+            <Separator orientation="vertical" className="h-8 mx-3 bg-gray-200 hidden sm:block" />
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center ml-4 space-x-4">
