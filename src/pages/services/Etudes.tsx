@@ -53,8 +53,8 @@ const Etudes = () => {
                 <div className="absolute -top-6 -right-6 w-32 h-32 bg-primary/10 rounded-full"></div>
                 <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-secondary/10 rounded-full"></div>
                 <img 
-                  src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&q=80&w=1200" 
-                  alt="Études au Canada" 
+                  src="/lovable-uploads/0c3736b2-dd5d-4bea-b946-7ccc22f22891.png" 
+                  alt="Étudiants au Canada" 
                   className="rounded-lg shadow-xl relative z-10"
                 />
               </div>
