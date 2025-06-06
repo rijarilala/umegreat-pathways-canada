@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import ServiceBanner from "@/components/shared/ServiceBanner";
@@ -220,7 +221,7 @@ const Contact = () => {
           <div className="max-w-4xl mx-auto">
             <div className="rounded-lg overflow-hidden shadow-lg">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3797.8!2d48.22874078464929!3d-18.946057195545922!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sfr!2smg!4v1234567890"
+                src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3797.8!2d48.2277808602959!3d-18.946188440996615!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sfr!2smg!4v1234567890"
                 width="100%"
                 height="450"
                 style={{ border: 0 }}
