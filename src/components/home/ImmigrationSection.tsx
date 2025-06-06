@@ -2,6 +2,7 @@
 import { Link } from "react-router-dom";
 import SectionTitle from "../shared/SectionTitle";
 import { Button } from "@/components/ui/button";
+import { Plane } from "lucide-react";
 
 const ImmigrationSection = () => {
   return (
@@ -19,10 +20,20 @@ const ImmigrationSection = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
           <div className="order-2 md:order-1">
-            <SectionTitle 
-              title="Immigration au Canada" 
-              subtitle="Réalisez votre rêve de vivre au Canada avec notre expertise en immigration"
-            />
+            <div className="flex items-center mb-4">
+              <div className="bg-primary/10 p-3 rounded-full mr-4">
+                <Plane className="h-8 w-8 text-primary" />
+              </div>
+              <SectionTitle 
+                title="Immigration au Canada" 
+                subtitle=""
+                className="mb-0"
+              />
+            </div>
+            
+            <p className="text-gray-600 text-lg mb-8">
+              Réalisez votre rêve de vivre au Canada avec notre expertise en immigration
+            </p>
             
             <div className="space-y-4 mb-8">
               <p>

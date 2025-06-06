@@ -2,6 +2,7 @@
 import { Link } from "react-router-dom";
 import SectionTitle from "../shared/SectionTitle";
 import { Button } from "@/components/ui/button";
+import { GraduationCap } from "lucide-react";
 
 const EtudesSection = () => {
   return (
@@ -31,10 +32,20 @@ const EtudesSection = () => {
           </div>
           
           <div className="order-2 md:order-2">
-            <SectionTitle 
-              title="Études au Canada" 
-              subtitle="Concrétisez votre projet d'études dans les institutions canadiennes renommées"
-            />
+            <div className="flex items-center mb-4">
+              <div className="bg-primary/10 p-3 rounded-full mr-4">
+                <GraduationCap className="h-8 w-8 text-primary" />
+              </div>
+              <SectionTitle 
+                title="Études au Canada" 
+                subtitle=""
+                className="mb-0"
+              />
+            </div>
+            
+            <p className="text-gray-600 text-lg mb-8">
+              Concrétisez votre projet d'études dans les institutions canadiennes renommées
+            </p>
             
             <div className="space-y-4 mb-8">
               <p>
