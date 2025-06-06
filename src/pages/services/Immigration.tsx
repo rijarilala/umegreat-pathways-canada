@@ -13,7 +13,7 @@ const Immigration = () => {
       <ServiceBanner 
         title="Immigration & Accompagnement" 
         description="Réalisez votre rêve d'immigrer au Canada avec notre expertise et notre accompagnement personnalisé"
-        backgroundImage="https://images.unsplash.com/photo-1501854140801-50d01698950b?auto=format&fit=crop&q=80&w=1920"
+        backgroundImage="/lovable-uploads/858a1319-5693-4c03-aa6a-a5fec66c7066.png"
       />
       
       <section className="py-16">
@@ -56,7 +56,7 @@ const Immigration = () => {
                 <div className="absolute -top-6 -left-6 w-32 h-32 bg-primary/10 rounded-full"></div>
                 <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-secondary/10 rounded-full"></div>
                 <img 
-                  src="https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&q=80&w=1200" 
+                  src="/lovable-uploads/858a1319-5693-4c03-aa6a-a5fec66c7066.png" 
                   alt="Immigration au Canada" 
                   className="rounded-lg shadow-xl relative z-10"
                 />

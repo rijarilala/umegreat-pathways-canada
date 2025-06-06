@@ -40,7 +40,7 @@ const ImmigrationSection = () => {
               <div className="absolute -top-4 -left-4 w-24 h-24 bg-primary/10 rounded-full"></div>
               <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-secondary/10 rounded-full"></div>
               <img 
-                src="https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&q=80&w=1200" 
+                src="/lovable-uploads/858a1319-5693-4c03-aa6a-a5fec66c7066.png" 
                 alt="Immigration au Canada" 
                 className="rounded-lg shadow-xl relative z-10 w-full"
               />
