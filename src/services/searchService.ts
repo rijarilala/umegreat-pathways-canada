@@ -104,6 +104,29 @@ const searchDatabase: SearchResult[] = [
     formationId: 7
   },
 
+  // Packs - Added the new pack
+  {
+    id: "pack-insertion-pro",
+    title: "Pack Insertion Pro",
+    category: "pack",
+    description: "Tout ce qu'il vous faut pour réussir votre insertion professionnelle",
+    url: "/services/formation?tab=packs"
+  },
+  {
+    id: "pack-rh-starter",
+    title: "Pack RH Starter",
+    category: "pack",
+    description: "Maîtrisez les fondamentaux de la gestion des ressources humaines",
+    url: "/services/formation?tab=packs"
+  },
+  {
+    id: "pack-entretien-reussite",
+    title: "Pack Entretien Réussite",
+    category: "pack",
+    description: "Préparez-vous efficacement à vos entretiens d'embauche avec les outils essentiels",
+    url: "/services/formation?tab=packs"
+  },
+
   // Coaching - Add "Préparation aux entretiens" here
   {
     id: "entretiens-coaching",

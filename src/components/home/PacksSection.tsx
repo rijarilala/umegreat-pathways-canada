@@ -30,6 +30,18 @@ const packs = [
       "Assimilation pratique RH"
     ],
     linkTo: "/services/formation?tab=packs"
+  },
+  {
+    id: 3,
+    title: "Pack Entretien Réussite",
+    description: "Préparez-vous efficacement à vos entretiens d'embauche avec les outils essentiels pour convaincre les recruteurs.",
+    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=1200",
+    modules: [
+      "Préparation aux entretiens d'embauche",
+      "CV impactant",
+      "Lettre de motivation convaincante"
+    ],
+    linkTo: "/services/formation?tab=packs"
   }
 ];
 
@@ -43,7 +55,7 @@ const PacksSection = () => {
           centered
         />
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-10">
           {packs.map((pack) => (
             <PackCard 
               key={pack.id}

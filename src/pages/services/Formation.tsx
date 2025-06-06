@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useSearchParams, useLocation } from "react-router-dom";
 import MainLayout from "@/components/layout/MainLayout";
@@ -128,6 +129,13 @@ const packs = [{
   description: "Maîtrisez les fondamentaux de la gestion des ressources humaines et développez vos compétences RH.",
   image: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&q=80&w=1200",
   modules: ["Fondamentaux de la GRH", "Stratégies RH", "Mise en œuvre des politiques RH", "Assimilation pratique", "Outils RH modernes"],
+  linkTo: "/contact"
+}, {
+  id: 3,
+  title: "Pack Entretien Réussite",
+  description: "Préparez-vous efficacement à vos entretiens d'embauche avec les outils essentiels pour convaincre les recruteurs.",
+  image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=1200",
+  modules: ["Préparation aux entretiens d'embauche", "CV impactant", "Lettre de motivation convaincante"],
   linkTo: "/contact"
 }];
 
