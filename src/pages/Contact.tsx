@@ -79,7 +79,7 @@ const Contact = () => {
                   </div>
                   <div className="ml-4">
                     <h3 className="text-lg font-semibold">Email</h3>
-                    <p className="text-gray-600">contact@umegreat-pro.com</p>
+                    <p className="text-gray-600">contact@umegreatpro.com</p>
                   </div>
                 </div>
                 
@@ -91,7 +91,7 @@ const Contact = () => {
                   </div>
                   <div className="ml-4">
                     <h3 className="text-lg font-semibold">Téléphone</h3>
-                    <p className="text-gray-600">+1 XXX-XXX-XXXX</p>
+                    <p className="text-gray-600">+261 37 51 808 75</p>
                   </div>
                 </div>
                 
@@ -104,7 +104,7 @@ const Contact = () => {
                   </div>
                   <div className="ml-4">
                     <h3 className="text-lg font-semibold">Adresse</h3>
-                    <p className="text-gray-600">Canada</p>
+                    <p className="text-gray-600">Lot A251, Moramanga Ville 514</p>
                   </div>
                 </div>
               </div>
@@ -203,6 +203,43 @@ const Contact = () => {
                   </CardFooter>
                 </form>
               </Card>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Section Google Maps */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold mb-4">Notre localisation</h2>
+            <p className="text-gray-600">
+              Visitez-nous à notre bureau à Moramanga pour un rendez-vous personnalisé
+            </p>
+          </div>
+          
+          <div className="max-w-4xl mx-auto">
+            <div className="rounded-lg overflow-hidden shadow-lg">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3797.8!2d48.223!3d-18.941!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x21f07e7b8b7b8b7b%3A0x1!2sUMEGREAT%20Pro!5e0!3m2!1sfr!2smg!4v1234567890"
+                width="100%"
+                height="450"
+                style={{ border: 0 }}
+                allowFullScreen={true}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="UMEGREAT Pro - Moramanga"
+              ></iframe>
+            </div>
+            
+            <div className="mt-8 text-center">
+              <div className="inline-flex items-center justify-center space-x-2 bg-white rounded-lg px-6 py-4 shadow-md">
+                <svg className="h-5 w-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg>
+                <span className="font-semibold">Lot A251, Moramanga Ville 514</span>
+              </div>
             </div>
           </div>
         </div>
