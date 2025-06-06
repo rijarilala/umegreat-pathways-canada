@@ -1,7 +1,9 @@
+
 import MainLayout from "@/components/layout/MainLayout";
 import HeroSection from "@/components/home/HeroSection";
 import FeaturedServices from "@/components/home/FeaturedServices";
 import ImmigrationSection from "@/components/home/ImmigrationSection";
+import EtudesSection from "@/components/home/EtudesSection";
 import PacksSection from "@/components/home/PacksSection";
 import TestimonialsSection from "@/components/home/TestimonialsSection";
 import FaqPreview from "@/components/home/FaqPreview";
@@ -13,6 +15,7 @@ const Index = () => {
       
       <FeaturedServices />
       <ImmigrationSection />
+      <EtudesSection />
       <PacksSection />
       <TestimonialsSection />
       <FaqPreview />

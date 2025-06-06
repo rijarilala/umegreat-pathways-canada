@@ -5,8 +5,18 @@ import { Button } from "@/components/ui/button";
 
 const ImmigrationSection = () => {
   return (
-    <section className="py-16 bg-white">
-      <div className="container mx-auto px-4">
+    <section className="py-16 relative overflow-hidden">
+      {/* Background image */}
+      <div className="absolute inset-0 z-0">
+        <img 
+          src="/lovable-uploads/e78144cd-09f5-4ddd-9707-d4d92b074db8.png" 
+          alt="Famille avec bagages" 
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-white/85"></div>
+      </div>
+      
+      <div className="container mx-auto px-4 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
           <div className="order-2 md:order-1">
             <SectionTitle 
