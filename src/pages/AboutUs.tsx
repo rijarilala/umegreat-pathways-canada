@@ -1,9 +1,36 @@
-
 import MainLayout from "@/components/layout/MainLayout";
 import ServiceBanner from "@/components/shared/ServiceBanner";
 import SectionTitle from "@/components/shared/SectionTitle";
+import TeamMemberCard from "@/components/shared/TeamMemberCard";
 
 const AboutUs = () => {
+  const teamMembers = [
+    {
+      name: "Marie Dubois",
+      title: "Directrice Générale",
+      image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?auto=format&fit=crop&q=80&w=400",
+      description: "Experte en orientation professionnelle avec plus de 15 ans d'expérience."
+    },
+    {
+      name: "Jean Martin",
+      title: "Consultant Immigration",
+      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=400",
+      description: "Spécialiste en immigration canadienne et processus de visa."
+    },
+    {
+      name: "Sophie Leclerc",
+      title: "Coach Professionnel",
+      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=400",
+      description: "Coach certifiée en développement professionnel et personnel."
+    },
+    {
+      name: "Ahmed Hassan",
+      title: "Conseiller Formation",
+      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400",
+      description: "Expert en programmes de formation et certification professionnelle."
+    }
+  ];
+
   return (
     <MainLayout>
       <ServiceBanner 
@@ -73,6 +100,28 @@ const AboutUs = () => {
               d'exploiter pleinement son potentiel, et nous nous engageons à être le partenaire de confiance qui 
               les aide à y parvenir.
             </p>
+          </div>
+        </div>
+      </section>
+      
+      <section className="py-16">
+        <div className="container mx-auto px-4">
+          <SectionTitle 
+            title="Notre équipe" 
+            subtitle="Rencontrez les professionnels qui vous accompagnent vers la réussite"
+            centered
+          />
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-10">
+            {teamMembers.map((member, index) => (
+              <TeamMemberCard
+                key={index}
+                name={member.name}
+                title={member.title}
+                image={member.image}
+                description={member.description}
+              />
+            ))}
           </div>
         </div>
       </section>
