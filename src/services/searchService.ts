@@ -54,7 +54,7 @@ const searchDatabase: SearchResult[] = [
     url: "/services/recrutement"
   },
   
-  // Formations - Updated with correct formationId values
+  // Formations - Updated to remove "Préparation aux entretiens"
   {
     id: "1",
     title: "CV impactant",
@@ -70,14 +70,6 @@ const searchDatabase: SearchResult[] = [
     description: "Maîtrisez l'art d'écrire des lettres de motivation convaincantes",
     url: "/services/formation",
     formationId: 2
-  },
-  {
-    id: "3",
-    title: "Préparation aux entretiens",
-    category: "formation",
-    description: "Préparez-vous efficacement pour réussir vos entretiens d'embauche",
-    url: "/services/formation",
-    formationId: 3
   },
   {
     id: "4",
@@ -110,6 +102,15 @@ const searchDatabase: SearchResult[] = [
     description: "Acquérez les fondamentaux de la GRH pour votre entreprise",
     url: "/services/formation",
     formationId: 7
+  },
+
+  // Coaching - Add "Préparation aux entretiens" here
+  {
+    id: "entretiens-coaching",
+    title: "Préparation aux entretiens d'embauche",
+    category: "service",
+    description: "Coaching spécialisé pour réussir vos entretiens d'embauche avec confiance",
+    url: "/services/coaching"
   },
   
   // Pages

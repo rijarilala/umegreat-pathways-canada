@@ -105,6 +105,36 @@ const Coaching = () => {
             <Card className="hover-card h-full">
               <CardHeader>
                 <User className="h-10 w-10 text-secondary mb-4" />
+                <CardTitle>Préparation aux entretiens d'embauche</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600 mb-4">
+                  Un coaching spécialisé pour vous préparer efficacement aux entretiens d'embauche et mettre toutes les chances de votre côté.
+                </p>
+                <ul className="space-y-2">
+                  <li className="flex items-center text-sm">
+                    <div className="mr-2 h-1.5 w-1.5 rounded-full bg-secondary"></div>
+                    Techniques d'entretien et gestion du stress
+                  </li>
+                  <li className="flex items-center text-sm">
+                    <div className="mr-2 h-1.5 w-1.5 rounded-full bg-secondary"></div>
+                    Simulations d'entretiens personnalisées
+                  </li>
+                  <li className="flex items-center text-sm">
+                    <div className="mr-2 h-1.5 w-1.5 rounded-full bg-secondary"></div>
+                    Développement de la confiance en soi
+                  </li>
+                  <li className="flex items-center text-sm">
+                    <div className="mr-2 h-1.5 w-1.5 rounded-full bg-secondary"></div>
+                    Feedback personnalisé et conseils d'amélioration
+                  </li>
+                </ul>
+              </CardContent>
+            </Card>
+            
+            <Card className="hover-card h-full">
+              <CardHeader>
+                <User className="h-10 w-10 text-secondary mb-4" />
                 <CardTitle>Coaching de leadership</CardTitle>
               </CardHeader>
               <CardContent>

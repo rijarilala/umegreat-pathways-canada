@@ -11,7 +11,6 @@ const packs = [
     modules: [
       "CV impactant",
       "Lettre de motivation convaincante",
-      "Préparation aux entretiens d'embauche",
       "Recherche du premier/nouveau emploi",
       "Transition vers la vie active",
       "Création et optimisation LinkedIn"

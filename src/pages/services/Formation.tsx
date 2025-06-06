@@ -7,6 +7,7 @@ import ServiceCard from "@/components/shared/ServiceCard";
 import PackCard from "@/components/shared/PackCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FileText, PenTool, Users, Building, GraduationCap, Briefcase } from "lucide-react";
+
 const formations = {
   insertion: [{
     id: 1,
@@ -36,23 +37,6 @@ const formations = {
       publicCible: "Demandeurs d'emploi, personnes en reconversion professionnelle, jeunes diplômés",
       duree: "4 heures",
       format: "Atelier interactif en groupe restreint ou coaching individuel"
-    },
-    packReferences: [{
-      id: 1,
-      title: "Pack Insertion Pro",
-      linkTo: "/services/formation?tab=packs"
-    }]
-  }, {
-    id: 3,
-    title: "Préparation aux entretiens d'embauche",
-    description: "Préparez-vous efficacement aux entretiens d'embauche pour mettre toutes les chances de votre côté.",
-    image: "https://images.unsplash.com/photo-1573497019236-17f8177b81e8?auto=format&fit=crop&q=80&w=1200",
-    icon: "users",
-    details: {
-      objectif: "Maîtriser les techniques d'entretien et développer votre confiance pour réussir vos entretiens d'embauche",
-      publicCible: "Demandeurs d'emploi, personnes en reconversion professionnelle, jeunes diplômés",
-      duree: "8 heures",
-      format: "Atelier pratique avec simulations d'entretiens et feedback personnalisé"
     },
     packReferences: [{
       id: 1,
@@ -130,12 +114,13 @@ const formations = {
     }]
   }]
 };
+
 const packs = [{
   id: 1,
   title: "Pack Insertion Pro",
   description: "Tout ce qu'il vous faut pour réussir votre insertion professionnelle et décrocher l'emploi de vos rêves.",
   image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=1200",
-  modules: ["CV impactant", "Lettre de motivation convaincante", "Préparation aux entretiens d'embauche", "Recherche du premier ou nouveau emploi", "Transition vers la vie active professionnelle", "Création et optimisation de compte LinkedIn"],
+  modules: ["CV impactant", "Lettre de motivation convaincante", "Recherche du premier ou nouveau emploi", "Transition vers la vie active professionnelle", "Création et optimisation de compte LinkedIn"],
   linkTo: "/contact"
 }, {
   id: 2,
@@ -177,6 +162,7 @@ const FormationIcon = ({
       return null;
   }
 };
+
 const Formation = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [activeTab, setActiveTab] = useState("categories");
@@ -346,4 +332,5 @@ const Formation = () => {
       </section>
     </MainLayout>;
 };
+
 export default Formation;
