@@ -4,40 +4,50 @@ import { Button } from '@/components/ui/button';
 
 const HeroSection = () => {
   return (
-    <div className="relative bg-gray-900 text-white">
-      {/* Background Image with Overlay */}
-      <div className="absolute inset-0 z-0">
-        <img 
-          src="/lovable-uploads/27929dc8-d730-4fdb-9a0a-4a6f7e7bf026.png" 
-          alt="Étudiants marchant vers un campus universitaire" 
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-black opacity-60"></div>
-      </div>
+    <div className="relative min-h-screen bg-gradient-to-br from-primary via-primary/90 to-blue-700 overflow-hidden">
+      {/* Background overlay */}
+      <div className="absolute inset-0 bg-black/20"></div>
       
       {/* Content */}
-      <div className="container mx-auto px-4 relative z-10 py-20 md:py-28 lg:py-36">
-        <div className="max-w-3xl">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 animate-fade-in">
+      <div className="container mx-auto px-4 relative z-10 py-20 flex items-center justify-center min-h-screen">
+        <div className="text-center text-white space-y-8 max-w-4xl">
+          {/* Main title */}
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 animate-fade-in">
             UMEGREAT Pro
           </h1>
-          <p className="text-xl md:text-2xl mb-6 font-light animate-fade-in" style={{ animationDelay: '0.2s' }}>
+          
+          {/* Subtitle */}
+          <p className="text-2xl md:text-3xl font-light mb-8 animate-fade-in" style={{ animationDelay: '0.2s' }}>
             Ensemble vers la vie que vous méritez
           </p>
-          <p className="text-base md:text-lg mb-8 max-w-xl animate-fade-in" style={{ animationDelay: '0.4s' }}>
-            Nous vous accompagnons dans votre orientation professionnelle, 
+          
+          {/* Description */}
+          <p className="text-lg md:text-xl mb-12 max-w-3xl mx-auto leading-relaxed animate-fade-in" style={{ animationDelay: '0.4s' }}>
+            Nous vous accompagnons dans votre orientation professionnelle,
             votre formation, votre coaching et votre immigration au Canada.
           </p>
-          <div className="flex flex-wrap gap-4 animate-fade-in" style={{ animationDelay: '0.6s' }}>
-            <Button size="lg" className="bg-secondary hover:bg-secondary/90" asChild>
-              <Link to="/contact">Nous contacter</Link>
-            </Button>
-            <Button size="lg" variant="outline" className="bg-transparent text-white border-white hover:bg-white/10 backdrop-blur-sm" asChild>
+          
+          {/* Search prompt */}
+          <p className="text-lg md:text-xl mb-8 animate-fade-in" style={{ animationDelay: '0.6s' }}>
+            Trouvez rapidement nos services
+          </p>
+          
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in" style={{ animationDelay: '0.8s' }}>
+            <Button size="lg" className="bg-secondary hover:bg-secondary/90 text-lg px-8 py-4" asChild>
               <Link to="/services">Découvrir nos services</Link>
+            </Button>
+            <Button size="lg" variant="outline" className="bg-transparent text-white border-white hover:bg-white/10 backdrop-blur-sm text-lg px-8 py-4" asChild>
+              <Link to="/contact">Nous contacter</Link>
             </Button>
           </div>
         </div>
       </div>
+
+      {/* Floating elements for visual interest */}
+      <div className="absolute top-20 left-10 w-16 h-16 bg-secondary/20 rounded-full blur-xl animate-pulse"></div>
+      <div className="absolute bottom-32 right-20 w-12 h-12 bg-white/10 rounded-full blur-lg animate-pulse delay-1000"></div>
+      <div className="absolute top-1/2 left-1/4 w-8 h-8 bg-secondary/30 rounded-full blur-md animate-pulse delay-500"></div>
     </div>
   );
 };
