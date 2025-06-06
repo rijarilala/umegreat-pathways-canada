@@ -5,9 +5,8 @@ import { Button } from '@/components/ui/button';
 const HeroSection = () => {
   return (
     <div className="relative min-h-screen overflow-hidden">
-      {/* Background with overlay */}
+      {/* Background without overlay */}
       <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/95 via-primary/90 to-blue-700/95 z-10"></div>
         <img 
           src="/lovable-uploads/67db002d-dbba-46b0-a0f4-e256b7e0aaf3.png" 
           alt="Personnes en route vers leur avenir" 
@@ -21,23 +20,23 @@ const HeroSection = () => {
           {/* Text Content */}
           <div className="text-center lg:text-left text-white space-y-6">
             {/* Main title */}
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 animate-fade-in">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 animate-fade-in drop-shadow-lg">
               UMEGREAT Pro
             </h1>
             
             {/* Subtitle */}
-            <p className="text-2xl md:text-3xl font-light mb-8 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+            <p className="text-2xl md:text-3xl font-light mb-8 animate-fade-in drop-shadow-lg" style={{ animationDelay: '0.2s' }}>
               Ensemble vers la vie que vous méritez
             </p>
             
             {/* Description */}
-            <p className="text-lg md:text-xl mb-12 leading-relaxed animate-fade-in" style={{ animationDelay: '0.4s' }}>
+            <p className="text-lg md:text-xl mb-12 leading-relaxed animate-fade-in drop-shadow-lg" style={{ animationDelay: '0.4s' }}>
               Nous vous accompagnons dans votre orientation professionnelle,
               votre formation, votre coaching et votre immigration au Canada.
             </p>
             
             {/* Search prompt */}
-            <p className="text-lg md:text-xl mb-8 animate-fade-in" style={{ animationDelay: '0.6s' }}>
+            <p className="text-lg md:text-xl mb-8 animate-fade-in drop-shadow-lg" style={{ animationDelay: '0.6s' }}>
               Trouvez rapidement nos services
             </p>
             
@@ -46,7 +45,7 @@ const HeroSection = () => {
               <Button size="lg" className="bg-secondary hover:bg-secondary/90 text-lg px-8 py-4" asChild>
                 <Link to="/services">Découvrir nos services</Link>
               </Button>
-              <Button size="lg" variant="outline" className="bg-transparent text-white border-white hover:bg-white/10 backdrop-blur-sm text-lg px-8 py-4" asChild>
+              <Button size="lg" variant="outline" className="bg-white/20 text-white border-white hover:bg-white/30 backdrop-blur-sm text-lg px-8 py-4" asChild>
                 <Link to="/contact">Nous contacter</Link>
               </Button>
             </div>
