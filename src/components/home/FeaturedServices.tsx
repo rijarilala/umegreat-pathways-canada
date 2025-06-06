@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import SectionTitle from "../shared/SectionTitle";
@@ -48,7 +49,43 @@ const serviceCategories = [{
 
 // Fonction pour aplatir les services pour l'affichage
 const flattenedServices = serviceCategories.flatMap(category => category.services);
+
 const FeaturedServices = () => {
-  return;
+  return (
+    <section className="py-16 bg-gray-50">
+      <div className="container mx-auto px-4">
+        <SectionTitle 
+          title="Nos services" 
+          subtitle="Découvrez notre gamme complète de services pour votre réussite professionnelle"
+          centered
+        />
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
+          {flattenedServices.map((service, index) => (
+            <Card key={index} className="hover:shadow-lg transition-shadow duration-300">
+              <CardHeader className="text-center">
+                <div className="text-4xl mb-4">{service.icon}</div>
+                <CardTitle className="text-xl">{service.title}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <CardDescription className="text-center text-gray-600">
+                  {service.description}
+                </CardDescription>
+              </CardContent>
+              <CardFooter className="justify-center">
+                <Button asChild>
+                  <Link to={service.link} className="flex items-center gap-2">
+                    En savoir plus
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </Button>
+              </CardFooter>
+            </Card>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
 };
+
 export default FeaturedServices;
