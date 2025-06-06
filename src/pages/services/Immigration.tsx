@@ -56,7 +56,7 @@ const Immigration = () => {
                 <div className="absolute -top-6 -left-6 w-32 h-32 bg-primary/10 rounded-full"></div>
                 <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-secondary/10 rounded-full"></div>
                 <img 
-                  src="https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&q=80&w=1200" 
+                  src="/lovable-uploads/d8516e82-7c9c-4aee-80af-bc48fa783a4a.png" 
                   alt="Immigration au Canada" 
                   className="rounded-lg shadow-xl relative z-10"
                 />
