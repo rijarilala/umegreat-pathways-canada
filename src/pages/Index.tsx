@@ -1,3 +1,4 @@
+
 import MainLayout from "@/components/layout/MainLayout";
 import HeroSection from "@/components/home/HeroSection";
 import FeaturedServices from "@/components/home/FeaturedServices";
@@ -9,8 +10,8 @@ import FaqPreview from "@/components/home/FaqPreview";
 const Index = () => {
   return (
     <MainLayout>
-      {/* New Hero Section with Visrox-inspired design */}
-      <section className="relative min-h-screen bg-gradient-to-br from-primary via-primary/90 to-blue-600 overflow-hidden">
+      {/* New Hero Section with balanced blue and orange color scheme */}
+      <section className="relative min-h-screen bg-gradient-to-br from-primary via-primary/90 to-blue-700 overflow-hidden">
         {/* Background overlay */}
         <div className="absolute inset-0 bg-black/20"></div>
         
