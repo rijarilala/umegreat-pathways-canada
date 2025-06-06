@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import MainLayout from "@/components/layout/MainLayout";
 import ServiceBanner from "@/components/shared/ServiceBanner";
@@ -6,24 +5,15 @@ import SectionTitle from "@/components/shared/SectionTitle";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Briefcase } from "lucide-react";
-
 const Immigration = () => {
-  return (
-    <MainLayout>
-      <ServiceBanner 
-        title="Immigration & Accompagnement" 
-        description="Réalisez votre rêve d'immigrer au Canada avec notre expertise et notre accompagnement personnalisé"
-        backgroundImage="https://images.unsplash.com/photo-1501854140801-50d01698950b?auto=format&fit=crop&q=80&w=1920"
-      />
+  return <MainLayout>
+      <ServiceBanner title="Immigration & Accompagnement" description="Réalisez votre rêve d'immigrer au Canada avec notre expertise et notre accompagnement personnalisé" backgroundImage="https://images.unsplash.com/photo-1501854140801-50d01698950b?auto=format&fit=crop&q=80&w=1920" />
       
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <SectionTitle 
-                title="Votre nouvelle vie au Canada" 
-                subtitle="Un accompagnement sur mesure pour concrétiser votre projet d'immigration"
-              />
+              <SectionTitle title="Votre nouvelle vie au Canada" subtitle="Un accompagnement sur mesure pour concrétiser votre projet d'immigration" />
               
               <div className="space-y-4 text-gray-600">
                 <p>
@@ -55,11 +45,7 @@ const Immigration = () => {
               <div className="relative max-w-md">
                 <div className="absolute -top-6 -left-6 w-32 h-32 bg-primary/10 rounded-full"></div>
                 <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-secondary/10 rounded-full"></div>
-                <img 
-                  src="/lovable-uploads/d8516e82-7c9c-4aee-80af-bc48fa783a4a.png" 
-                  alt="Immigration au Canada" 
-                  className="rounded-lg shadow-xl relative z-10"
-                />
+                <img src="/lovable-uploads/d8516e82-7c9c-4aee-80af-bc48fa783a4a.png" alt="Immigration au Canada" className="rounded-lg shadow-xl relative z-10" />
               </div>
             </div>
           </div>
@@ -67,204 +53,12 @@ const Immigration = () => {
       </section>
       
       <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <SectionTitle 
-            title="Nos services d'immigration" 
-            subtitle="Des solutions complètes pour tous vos besoins en matière d'immigration"
-            centered
-          />
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-10">
-            <Card className="hover-card h-full">
-              <CardHeader>
-                <Briefcase className="h-10 w-10 text-primary mb-4" />
-                <CardTitle>Résidence permanente</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600 mb-4">
-                  Un accompagnement complet pour obtenir votre résidence permanente au Canada, à travers les programmes d'immigration économique, familiale ou humanitaire.
-                </p>
-                <ul className="space-y-2">
-                  <li className="flex items-start">
-                    <div className="mr-2 mt-1 h-1.5 w-1.5 rounded-full bg-primary"></div>
-                    <span className="text-gray-600">Entrée express et programmes provinciaux</span>
-                  </li>
-                  <li className="flex items-start">
-                    <div className="mr-2 mt-1 h-1.5 w-1.5 rounded-full bg-primary"></div>
-                    <span className="text-gray-600">Programme des travailleurs qualifiés</span>
-                  </li>
-                  <li className="flex items-start">
-                    <div className="mr-2 mt-1 h-1.5 w-1.5 rounded-full bg-primary"></div>
-                    <span className="text-gray-600">Parrainage familial</span>
-                  </li>
-                  <li className="flex items-start">
-                    <div className="mr-2 mt-1 h-1.5 w-1.5 rounded-full bg-primary"></div>
-                    <span className="text-gray-600">Programme des entrepreneurs et investisseurs</span>
-                  </li>
-                </ul>
-              </CardContent>
-            </Card>
-            
-            <Card className="hover-card h-full">
-              <CardHeader>
-                <Briefcase className="h-10 w-10 text-primary mb-4" />
-                <CardTitle>Visa de travail</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600 mb-4">
-                  Un soutien pour obtenir votre permis de travail temporaire au Canada, que ce soit dans le cadre d'une mutation, d'une offre d'emploi ou d'un programme spécifique.
-                </p>
-                <ul className="space-y-2">
-                  <li className="flex items-start">
-                    <div className="mr-2 mt-1 h-1.5 w-1.5 rounded-full bg-primary"></div>
-                    <span className="text-gray-600">Permis de travail avec EIMT</span>
-                  </li>
-                  <li className="flex items-start">
-                    <div className="mr-2 mt-1 h-1.5 w-1.5 rounded-full bg-primary"></div>
-                    <span className="text-gray-600">Mobilité internationale</span>
-                  </li>
-                  <li className="flex items-start">
-                    <div className="mr-2 mt-1 h-1.5 w-1.5 rounded-full bg-primary"></div>
-                    <span className="text-gray-600">Permis de travail post-diplôme</span>
-                  </li>
-                  <li className="flex items-start">
-                    <div className="mr-2 mt-1 h-1.5 w-1.5 rounded-full bg-primary"></div>
-                    <span className="text-gray-600">Visa pour conjoints et personnes à charge</span>
-                  </li>
-                </ul>
-              </CardContent>
-            </Card>
-            
-            <Card className="hover-card h-full">
-              <CardHeader>
-                <Briefcase className="h-10 w-10 text-primary mb-4" />
-                <CardTitle>Immigration d'affaires</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600 mb-4">
-                  Un accompagnement spécialisé pour les entrepreneurs, investisseurs et travailleurs autonomes souhaitant s'établir au Canada.
-                </p>
-                <ul className="space-y-2">
-                  <li className="flex items-start">
-                    <div className="mr-2 mt-1 h-1.5 w-1.5 rounded-full bg-primary"></div>
-                    <span className="text-gray-600">Programme des entrepreneurs</span>
-                  </li>
-                  <li className="flex items-start">
-                    <div className="mr-2 mt-1 h-1.5 w-1.5 rounded-full bg-primary"></div>
-                    <span className="text-gray-600">Programme des investisseurs</span>
-                  </li>
-                  <li className="flex items-start">
-                    <div className="mr-2 mt-1 h-1.5 w-1.5 rounded-full bg-primary"></div>
-                    <span className="text-gray-600">Démarrage d'entreprise au Canada</span>
-                  </li>
-                  <li className="flex items-start">
-                    <div className="mr-2 mt-1 h-1.5 w-1.5 rounded-full bg-primary"></div>
-                    <span className="text-gray-600">Visa de travailleur autonome</span>
-                  </li>
-                </ul>
-              </CardContent>
-            </Card>
-            
-            <Card className="hover-card h-full">
-              <CardHeader>
-                <Briefcase className="h-10 w-10 text-primary mb-4" />
-                <CardTitle>Accompagnement à l'installation</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600 mb-4">
-                  Un soutien pratique pour faciliter votre intégration et votre installation au Canada.
-                </p>
-                <ul className="space-y-2">
-                  <li className="flex items-start">
-                    <div className="mr-2 mt-1 h-1.5 w-1.5 rounded-full bg-primary"></div>
-                    <span className="text-gray-600">Recherche de logement</span>
-                  </li>
-                  <li className="flex items-start">
-                    <div className="mr-2 mt-1 h-1.5 w-1.5 rounded-full bg-primary"></div>
-                    <span className="text-gray-600">Intégration sociale et culturelle</span>
-                  </li>
-                  <li className="flex items-start">
-                    <div className="mr-2 mt-1 h-1.5 w-1.5 rounded-full bg-primary"></div>
-                    <span className="text-gray-600">Scolarisation des enfants</span>
-                  </li>
-                  <li className="flex items-start">
-                    <div className="mr-2 mt-1 h-1.5 w-1.5 rounded-full bg-primary"></div>
-                    <span className="text-gray-600">Démarches administratives locales</span>
-                  </li>
-                </ul>
-              </CardContent>
-            </Card>
-            
-            <Card className="hover-card h-full">
-              <CardHeader>
-                <Briefcase className="h-10 w-10 text-primary mb-4" />
-                <CardTitle>Réunification familiale</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600 mb-4">
-                  Un accompagnement pour réunir votre famille au Canada, que vous soyez citoyen canadien, résident permanent ou titulaire d'un permis de travail.
-                </p>
-                <ul className="space-y-2">
-                  <li className="flex items-start">
-                    <div className="mr-2 mt-1 h-1.5 w-1.5 rounded-full bg-primary"></div>
-                    <span className="text-gray-600">Parrainage de conjoint, partenaire et enfants</span>
-                  </li>
-                  <li className="flex items-start">
-                    <div className="mr-2 mt-1 h-1.5 w-1.5 rounded-full bg-primary"></div>
-                    <span className="text-gray-600">Parrainage de parents et grands-parents</span>
-                  </li>
-                  <li className="flex items-start">
-                    <div className="mr-2 mt-1 h-1.5 w-1.5 rounded-full bg-primary"></div>
-                    <span className="text-gray-600">Visa de visiteur pour la famille</span>
-                  </li>
-                  <li className="flex items-start">
-                    <div className="mr-2 mt-1 h-1.5 w-1.5 rounded-full bg-primary"></div>
-                    <span className="text-gray-600">Super visa pour parents et grands-parents</span>
-                  </li>
-                </ul>
-              </CardContent>
-            </Card>
-            
-            <Card className="hover-card h-full">
-              <CardHeader>
-                <Briefcase className="h-10 w-10 text-primary mb-4" />
-                <CardTitle>Citoyenneté canadienne</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600 mb-4">
-                  Un soutien pour votre demande de citoyenneté canadienne, l'étape ultime de votre parcours d'immigration.
-                </p>
-                <ul className="space-y-2">
-                  <li className="flex items-start">
-                    <div className="mr-2 mt-1 h-1.5 w-1.5 rounded-full bg-primary"></div>
-                    <span className="text-gray-600">Évaluation de l'éligibilité</span>
-                  </li>
-                  <li className="flex items-start">
-                    <div className="mr-2 mt-1 h-1.5 w-1.5 rounded-full bg-primary"></div>
-                    <span className="text-gray-600">Préparation du dossier</span>
-                  </li>
-                  <li className="flex items-start">
-                    <div className="mr-2 mt-1 h-1.5 w-1.5 rounded-full bg-primary"></div>
-                    <span className="text-gray-600">Préparation au test de citoyenneté</span>
-                  </li>
-                  <li className="flex items-start">
-                    <div className="mr-2 mt-1 h-1.5 w-1.5 rounded-full bg-primary"></div>
-                    <span className="text-gray-600">Suivi de la demande</span>
-                  </li>
-                </ul>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
+        
       </section>
       
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <SectionTitle 
-            title="Notre approche" 
-            subtitle="Un processus éprouvé pour maximiser vos chances de succès"
-            centered
-          />
+          <SectionTitle title="Notre approche" subtitle="Un processus éprouvé pour maximiser vos chances de succès" centered />
           
           <div className="mt-10 max-w-4xl mx-auto">
             <div className="relative">
@@ -378,8 +172,6 @@ const Immigration = () => {
           </div>
         </div>
       </section>
-    </MainLayout>
-  );
+    </MainLayout>;
 };
-
 export default Immigration;
