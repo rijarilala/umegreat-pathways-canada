@@ -57,18 +57,6 @@ const HeroSection = () => {
             {/* Main illustration area */}
             <div className="relative bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
               <div className="space-y-6">
-                {/* Success indicators */}
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-white/20 backdrop-blur-sm rounded-lg p-4 text-center">
-                    <div className="text-2xl font-bold text-white mb-2">95%</div>
-                    <div className="text-sm text-white/90">Taux de réussite</div>
-                  </div>
-                  <div className="bg-white/20 backdrop-blur-sm rounded-lg p-4 text-center">
-                    <div className="text-2xl font-bold text-white mb-2">500+</div>
-                    <div className="text-sm text-white/90">Clients satisfaits</div>
-                  </div>
-                </div>
-
                 {/* Journey illustration */}
                 <div className="bg-white/20 backdrop-blur-sm rounded-lg p-6">
                   <h3 className="text-lg font-semibold text-white mb-4">Votre parcours avec nous</h3>
@@ -97,9 +85,6 @@ const HeroSection = () => {
             {/* Floating success elements */}
             <div className="absolute -top-4 -right-4 bg-secondary text-white px-4 py-2 rounded-full text-sm font-semibold animate-pulse">
               ✓ Expertise Canada
-            </div>
-            <div className="absolute -bottom-4 -left-4 bg-white text-primary px-4 py-2 rounded-full text-sm font-semibold animate-pulse delay-1000">
-              ✓ Accompagnement 24/7
             </div>
           </div>
         </div>
