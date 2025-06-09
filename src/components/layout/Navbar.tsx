@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { ChevronDown, Menu } from "lucide-react";
@@ -184,6 +183,7 @@ const Navbar = () => {
               </DropdownMenu>
               
               <NavbarLink to="/services/formation">Formations</NavbarLink>
+              <NavbarLink to="/services/recrutement">Recrutement</NavbarLink>
               <NavbarLink to="/about">À propos</NavbarLink>
               <NavbarLink to="/testimonials">Témoignages</NavbarLink>
               <NavbarLink to="/faq">FAQ</NavbarLink>
