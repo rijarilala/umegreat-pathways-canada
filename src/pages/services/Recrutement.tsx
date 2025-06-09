@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import MainLayout from "@/components/layout/MainLayout";
 import ServiceBanner from "@/components/shared/ServiceBanner";
@@ -10,9 +9,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle, Users, Briefcase, Shield } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-
 const Recrutement = () => {
-  const { toast } = useToast();
+  const {
+    toast
+  } = useToast();
   const [formData, setFormData] = useState({
     nom: "",
     prenom: "",
@@ -22,24 +22,23 @@ const Recrutement = () => {
     experience: "",
     message: ""
   });
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
+    const {
+      name,
+      value
+    } = e.target;
     setFormData(prev => ({
       ...prev,
       [name]: value
     }));
   };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Inscription au service recrutement:", formData);
-    
     toast({
       title: "Inscription enregistrée",
-      description: "Merci ! Nous vous contacterons dès le lancement de notre service de recrutement.",
+      description: "Merci ! Nous vous contacterons dès le lancement de notre service de recrutement."
     });
-
     setFormData({
       nom: "",
       prenom: "",
@@ -50,14 +49,8 @@ const Recrutement = () => {
       message: ""
     });
   };
-
-  return (
-    <MainLayout>
-      <ServiceBanner
-        title="Service de Recrutement"
-        subtitle="Bientôt disponible : notre service de mise en relation entre talents et entreprises canadiennes à la recherche de compétences."
-        badge="Prochainement"
-      />
+  return <MainLayout>
+      <ServiceBanner title="Service de Recrutement" subtitle="Bientôt disponible : notre service de mise en relation entre talents et entreprises canadiennes à la recherche de compétences." badge="Prochainement" />
 
       <div className="container mx-auto px-4 py-16">
         {/* Section d'introduction */}
@@ -89,24 +82,7 @@ const Recrutement = () => {
                   Accès à des offres d'emploi exclusives au Canada avec des entreprises partenaires.
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex items-start space-x-3">
-                  <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
-                  <p className="text-sm">Offres d'emploi exclusives auprès d'entreprises canadiennes</p>
-                </div>
-                <div className="flex items-start space-x-3">
-                  <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
-                  <p className="text-sm">Accompagnement personnalisé dans votre recherche</p>
-                </div>
-                <div className="flex items-start space-x-3">
-                  <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
-                  <p className="text-sm">Mise en relation directe avec les recruteurs</p>
-                </div>
-                <div className="flex items-start space-x-3">
-                  <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
-                  <p className="text-sm">Support dans les démarches d'immigration professionnelle</p>
-                </div>
-              </CardContent>
+              
             </Card>
 
             <Card>
@@ -137,80 +113,37 @@ const Recrutement = () => {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="nom">Nom *</Label>
-                    <Input
-                      id="nom"
-                      name="nom"
-                      value={formData.nom}
-                      onChange={handleInputChange}
-                      required
-                    />
+                    <Input id="nom" name="nom" value={formData.nom} onChange={handleInputChange} required />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="prenom">Prénom *</Label>
-                    <Input
-                      id="prenom"
-                      name="prenom"
-                      value={formData.prenom}
-                      onChange={handleInputChange}
-                      required
-                    />
+                    <Input id="prenom" name="prenom" value={formData.prenom} onChange={handleInputChange} required />
                   </div>
                 </div>
 
                 <div className="space-y-2">
                   <Label htmlFor="email">Email *</Label>
-                  <Input
-                    id="email"
-                    name="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    required
-                  />
+                  <Input id="email" name="email" type="email" value={formData.email} onChange={handleInputChange} required />
                 </div>
 
                 <div className="space-y-2">
                   <Label htmlFor="telephone">Téléphone</Label>
-                  <Input
-                    id="telephone"
-                    name="telephone"
-                    type="tel"
-                    value={formData.telephone}
-                    onChange={handleInputChange}
-                  />
+                  <Input id="telephone" name="telephone" type="tel" value={formData.telephone} onChange={handleInputChange} />
                 </div>
 
                 <div className="space-y-2">
                   <Label htmlFor="profession">Profession actuelle</Label>
-                  <Input
-                    id="profession"
-                    name="profession"
-                    value={formData.profession}
-                    onChange={handleInputChange}
-                  />
+                  <Input id="profession" name="profession" value={formData.profession} onChange={handleInputChange} />
                 </div>
 
                 <div className="space-y-2">
                   <Label htmlFor="experience">Années d'expérience</Label>
-                  <Input
-                    id="experience"
-                    name="experience"
-                    value={formData.experience}
-                    onChange={handleInputChange}
-                    placeholder="Ex: 5 ans"
-                  />
+                  <Input id="experience" name="experience" value={formData.experience} onChange={handleInputChange} placeholder="Ex: 5 ans" />
                 </div>
 
                 <div className="space-y-2">
                   <Label htmlFor="message">Message (optionnel)</Label>
-                  <Textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleInputChange}
-                    placeholder="Parlez-nous de vos objectifs professionnels au Canada..."
-                    rows={4}
-                  />
+                  <Textarea id="message" name="message" value={formData.message} onChange={handleInputChange} placeholder="Parlez-nous de vos objectifs professionnels au Canada..." rows={4} />
                 </div>
 
                 <Button type="submit" className="w-full">
@@ -225,8 +158,6 @@ const Recrutement = () => {
           </Card>
         </div>
       </div>
-    </MainLayout>
-  );
+    </MainLayout>;
 };
-
 export default Recrutement;
