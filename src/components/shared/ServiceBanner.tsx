@@ -2,6 +2,8 @@
 interface ServiceBannerProps {
   title: string;
   description?: string;
+  subtitle?: string;
+  badge?: string;
   backgroundImage?: string;
   color?: "primary" | "secondary";
 }
@@ -9,6 +11,8 @@ interface ServiceBannerProps {
 const ServiceBanner = ({
   title,
   description,
+  subtitle,
+  badge,
   backgroundImage,
   color = "primary"
 }: ServiceBannerProps) => {
@@ -31,8 +35,19 @@ const ServiceBanner = ({
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-3xl mx-auto text-center">
+          {badge && (
+            <div className="flex justify-center mb-4">
+              <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-white/20 text-white border border-white/30">
+                {badge}
+              </span>
+            </div>
+          )}
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">{title}</h1>
-          {description && <p className="text-lg md:text-xl opacity-90">{description}</p>}
+          {(description || subtitle) && (
+            <p className="text-lg md:text-xl opacity-90">
+              {description || subtitle}
+            </p>
+          )}
         </div>
       </div>
     </div>
