@@ -1,91 +1,496 @@
 
-import { useState } from "react";
-import { useToast } from "@/components/ui/use-toast";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 import MainLayout from "@/components/layout/MainLayout";
 import ServiceBanner from "@/components/shared/ServiceBanner";
-import SectionTitle from "@/components/shared/SectionTitle";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+
+interface CheckboxOption {
+  id: string;
+  label: string;
+  value: string;
+}
+
+interface EligibilityResult {
+  eligible: boolean;
+  message: string;
+  details: string;
+  level: "high" | "medium" | "low";
+}
 
 const TestEligibility = () => {
-  const { toast } = useToast();
-  const [formData, setFormData] = useState({
+  const navigate = useNavigate();
+  const initialFormData = {
     age: "",
     education: "",
     experience: "",
-    language: "",
-    languageLevel: "",
-    goals: ""
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showResults, setShowResults] = useState(false);
-  const [eligibilityResult, setEligibilityResult] = useState("");
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    frenchLevel: "",
+    englishLevel: "",
+    profession: "",
+    familyTies: "",
+    canadaProject: "",
+    name: "",
+    email: "",
+    phone: "",
   };
 
-  const handleSelectChange = (name: string, value: string) => {
-    setFormData(prev => ({ ...prev, [name]: value }));
+  const [currentStep, setCurrentStep] = useState(1);
+  const [formData, setFormData] = useState(initialFormData);
+  const [globalEligibilityResult, setGlobalEligibilityResult] = useState<EligibilityResult | null>(null);
+  const [attemptedSubmit, setAttemptedSubmit] = useState(false);
+
+  const ageOptions: CheckboxOption[] = [
+    { id: "age-18-29", label: "18 - 29 ans", value: "18-29" },
+    { id: "age-30-39", label: "30 - 39 ans", value: "30-39" },
+    { id: "age-40-44", label: "40 - 44 ans", value: "40-44" },
+    { id: "age-45-plus", label: "45 ans et plus", value: "45+" },
+  ];
+
+  const educationOptions: CheckboxOption[] = [
+    { id: "edu-none", label: "Aucun diplôme", value: "none" },
+    { id: "edu-highschool", label: "Diplôme d'études secondaires", value: "highschool" },
+    { id: "edu-postsecondary", label: "Diplôme postsecondaire (Bac+2)", value: "postsecondary" },
+    { id: "edu-bachelor", label: "Licence (Bac+3)", value: "bachelor" },
+    { id: "edu-master", label: "Master ou Doctorat", value: "master" },
+  ];
+
+  const experienceOptions: CheckboxOption[] = [
+    { id: "exp-none", label: "Aucune expérience", value: "none" },
+    { id: "exp-less1", label: "Moins d'un an", value: "less1" },
+    { id: "exp-1-3", label: "1 - 3 ans", value: "1-3" },
+    { id: "exp-4-5", label: "4 - 5 ans", value: "4-5" },
+    { id: "exp-more5", label: "Plus de 5 ans", value: "more5" },
+  ];
+
+  const frenchLevelOptions: CheckboxOption[] = [
+    { id: "french-none", label: "Aucune compétence", value: "none" },
+    { id: "french-intermediate", label: "Niveau intermédiaire", value: "intermediate" },
+    { id: "french-fluent", label: "Courant", value: "fluent" },
+  ];
+
+  const englishLevelOptions: CheckboxOption[] = [
+    { id: "english-none", label: "Aucune compétence", value: "none" },
+    { id: "english-intermediate", label: "Niveau intermédiaire", value: "intermediate" },
+    { id: "english-fluent", label: "Courant", value: "fluent" },
+  ];
+
+  const projectOptions: CheckboxOption[] = [
+    { id: "project-study", label: "Étudier", value: "study" },
+    { id: "project-work", label: "Travailler", value: "work" },
+    { id: "project-settle", label: "M'établir de façon permanente", value: "settle" },
+    { id: "project-family", label: "Rejoindre un membre de ma famille", value: "family" },
+  ];
+
+  const handleSingleOptionChange = (fieldName: string, value: string) => {
+    setFormData({ ...formData, [fieldName]: value });
   };
 
-  const determineEligibility = () => {
-    // Très simple logique d'évaluation basée sur l'âge, l'éducation et l'expérience
-    const { age, education, experience, languageLevel } = formData;
-    const ageNum = parseInt(age);
-    
-    if ((ageNum >= 21 && ageNum <= 45) && 
-        (education === "bachelor" || education === "master" || education === "phd") && 
-        (experience === "three_to_five" || experience === "more_than_five") &&
-        (languageLevel === "intermediate" || languageLevel === "advanced" || languageLevel === "fluent")) {
-      return "positive";
-    } else if ((ageNum >= 18 && ageNum <= 50) && 
-              (education !== "none") && 
-              (experience !== "none")) {
-      return "neutral";
-    } else {
-      return "negative";
+  const handleTextChange = (fieldName: string, value: string) => {
+    setFormData({ ...formData, [fieldName]: value });
+  };
+
+  const handleNextStep = () => {
+    if (validateCurrentStep()) {
+      setCurrentStep(currentStep + 1);
+      
+      setTimeout(() => {
+        const formContainer = document.querySelector('.immigration-evaluation-container');
+        if (formContainer) {
+          const headerOffset = 100;
+          const elementPosition = formContainer.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      }, 100);
     }
+  };
+
+  const handlePrevStep = () => {
+    setCurrentStep(currentStep - 1);
+    
+    setTimeout(() => {
+      const formContainer = document.querySelector('.immigration-evaluation-container');
+      if (formContainer) {
+        const headerOffset = 100;
+        const elementPosition = formContainer.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
+    }, 100);
+  };
+
+  const resetForm = () => {
+    setFormData(initialFormData);
+    setGlobalEligibilityResult(null);
+    setAttemptedSubmit(false);
+    setCurrentStep(1);
+    const formContainer = document.querySelector('.immigration-evaluation-container');
+    if (formContainer) {
+      formContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    toast.success("Le formulaire a été réinitialisé");
+  };
+
+  const handleNavigation = (path: string) => {
+    navigate(path);
+    window.scrollTo(0, 0);
+  };
+
+  const validateCurrentStep = () => {
+    if (currentStep === 1) {
+      if (!formData.age) {
+        toast.error("Veuillez sélectionner votre tranche d'âge");
+        return false;
+      }
+      if (!formData.education) {
+        toast.error("Veuillez sélectionner votre niveau d'études");
+        return false;
+      }
+      if (!formData.experience) {
+        toast.error("Veuillez sélectionner votre expérience professionnelle");
+        return false;
+      }
+      if (!formData.frenchLevel) {
+        toast.error("Veuillez indiquer votre niveau de français");
+        return false;
+      }
+      if (!formData.englishLevel) {
+        toast.error("Veuillez indiquer votre niveau d'anglais");
+        return false;
+      }
+    } else if (currentStep === 2) {
+      if (!formData.canadaProject) {
+        toast.error("Veuillez sélectionner au moins un projet au Canada");
+        return false;
+      }
+      if (!formData.familyTies) {
+        toast.error("Veuillez indiquer si vous avez des liens familiaux au Canada");
+        return false;
+      }
+    } else if (currentStep === 3) {
+      if (attemptedSubmit) {
+        if (!formData.name || !formData.email || !formData.phone) {
+          toast.error("Veuillez remplir tous les champs de contact");
+          return false;
+        }
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(formData.email)) {
+          toast.error("Veuillez entrer une adresse email valide");
+          return false;
+        }
+      }
+      return true;
+    }
+    return true;
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    
-    // Simuler un traitement
-    setTimeout(() => {
-      const result = determineEligibility();
-      
-      let resultMessage = "";
-      if (result === "positive") {
-        resultMessage = "Selon les informations fournies, votre profil semble prometteur pour une potentielle immigration au Canada. Nous vous recommandons de prendre rendez-vous avec l'un de nos conseillers pour une évaluation complète et personnalisée.";
-      } else if (result === "neutral") {
-        resultMessage = "Votre profil présente des aspects intéressants, mais une évaluation plus approfondie est nécessaire pour déterminer les meilleures options pour votre situation. Nous vous invitons à contacter un de nos conseillers pour discuter de votre cas en détail.";
-      } else {
-        resultMessage = "Votre profil actuel pourrait présenter certains défis pour l'immigration immédiate. Nous vous recommandons de consulter un de nos experts pour explorer d'autres options ou des stratégies pour renforcer votre candidature.";
+    setAttemptedSubmit(true);
+
+    if (currentStep === 3) {
+      if (!formData.name || !formData.email || !formData.phone) {
+        toast.error("Veuillez remplir tous les champs de contact");
+        return;
       }
-      
-      setEligibilityResult(resultMessage);
-      setShowResults(true);
-      setIsSubmitting(false);
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(formData.email)) {
+        toast.error("Veuillez entrer une adresse email valide");
+        return;
+      }
+    }
+    
+    setCurrentStep(4);
+    const formContainer = document.querySelector('.immigration-evaluation-container');
+    if (formContainer) {
+      formContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    setTimeout(() => {
+      const eligibilityResults = calculateEligibilityBehindTheScenes();
+      setGlobalEligibilityResult(determineGlobalEligibility(eligibilityResults));
     }, 1500);
   };
 
-  const resetForm = () => {
-    setFormData({
-      age: "",
-      education: "",
-      experience: "",
-      language: "",
-      languageLevel: "",
-      goals: ""
+  const calculateEligibilityBehindTheScenes = () => {
+    const results = [];
+    
+    let expressPoints = 0;
+    let expressMaxPoints = 100;
+    
+    switch(formData.age) {
+      case "18-29":
+        expressPoints += 25;
+        break;
+      case "30-39":
+        expressPoints += 20;
+        break;
+      case "40-44":
+        expressPoints += 10;
+        break;
+      case "45+":
+        expressPoints += 0;
+        break;
+    }
+    
+    switch(formData.education) {
+      case "none":
+        expressPoints += 0;
+        break;
+      case "highschool":
+        expressPoints += 5;
+        break;
+      case "postsecondary":
+        expressPoints += 15;
+        break;
+      case "bachelor":
+        expressPoints += 20;
+        break;
+      case "master":
+        expressPoints += 25;
+        break;
+    }
+    
+    switch(formData.experience) {
+      case "none":
+        expressPoints += 0;
+        break;
+      case "less1":
+        expressPoints += 5;
+        break;
+      case "1-3":
+        expressPoints += 10;
+        break;
+      case "4-5":
+        expressPoints += 15;
+        break;
+      case "more5":
+        expressPoints += 20;
+        break;
+    }
+    
+    switch(formData.frenchLevel) {
+      case "fluent":
+        expressPoints += 15;
+        break;
+      case "intermediate":
+        expressPoints += 8;
+        break;
+      case "none":
+        expressPoints += 0;
+        break;
+    }
+    
+    switch(formData.englishLevel) {
+      case "fluent":
+        expressPoints += 15;
+        break;
+      case "intermediate":
+        expressPoints += 8;
+        break;
+      case "none":
+        expressPoints += 0;
+        break;
+    }
+    
+    let expressLevel: "high" | "medium" | "low" = "low";
+    let expressMessage = "";
+    let expressDetails = "";
+    
+    const expressPercentage = expressPoints / expressMaxPoints;
+    if (expressPercentage >= 0.7) {
+      expressLevel = "high";
+    } else if (expressPercentage >= 0.5) {
+      expressLevel = "medium";
+    } else {
+      expressLevel = "low";
+    }
+    
+    results.push({
+      eligible: expressLevel === "high",
+      message: expressMessage,
+      details: expressDetails,
+      level: expressLevel
     });
-    setShowResults(false);
+    
+    let genericPoints = 0;
+    let genericMaxPoints = 100;
+    
+    switch(formData.age) {
+      case "18-29":
+        genericPoints += 20;
+        break;
+      case "30-39":
+        genericPoints += 16;
+        break;
+      case "40-44":
+        genericPoints += 8;
+        break;
+      case "45+":
+        genericPoints += 0;
+        break;
+    }
+    
+    switch(formData.education) {
+      case "none":
+        genericPoints += 0;
+        break;
+      case "highschool":
+        genericPoints += 4;
+        break;
+      case "postsecondary":
+        genericPoints += 8;
+        break;
+      case "bachelor":
+        genericPoints += 14;
+        break;
+      case "master":
+        genericPoints += 18;
+        break;
+    }
+    
+    switch(formData.experience) {
+      case "none":
+        genericPoints += 0;
+        break;
+      case "less1":
+        genericPoints += 4;
+        break;
+      case "1-3":
+        genericPoints += 8;
+        break;
+      case "4-5":
+        genericPoints += 12;
+        break;
+      case "more5":
+        genericPoints += 16;
+        break;
+    }
+    
+    switch(formData.frenchLevel) {
+      case "fluent":
+        genericPoints += 20;
+        break;
+      case "intermediate":
+        genericPoints += 10;
+        break;
+      case "none":
+        genericPoints += 0;
+        break;
+    }
+    
+    switch(formData.englishLevel) {
+      case "fluent":
+        genericPoints += 10;
+        break;
+      case "intermediate":
+        genericPoints += 5;
+        break;
+      case "none":
+        genericPoints += 0;
+        break;
+    }
+    
+    let genericLevel: "high" | "medium" | "low" = "low";
+    let genericMessage = "";
+    let genericDetails = "";
+    
+    const genericPercentage = genericPoints / genericMaxPoints;
+    if (genericPercentage >= 0.7) {
+      genericLevel = "high";
+    } else if (genericPercentage >= 0.5) {
+      genericLevel = "medium";
+    } else {
+      genericLevel = "low";
+    }
+    
+    results.push({
+      eligible: genericLevel === "high",
+      message: genericMessage,
+      details: genericDetails,
+      level: genericLevel
+    });
+    
+    const isPeqEligible = formData.frenchLevel === "fluent" || formData.frenchLevel === "intermediate";
+    const peqLevel: "high" | "medium" | "low" = isPeqEligible ? 
+      (formData.experience !== "none" ? "high" : "medium") : "low";
+    
+    let peqMessage = "";
+    let peqDetails = "";
+    
+    results.push({
+      eligible: peqLevel === "high",
+      message: peqMessage,
+      details: peqDetails,
+      level: peqLevel
+    });
+    
+    return results;
+  };
+
+  const determineGlobalEligibility = (results: EligibilityResult[]): EligibilityResult => {
+    if (results.some(result => result.level === "high")) {
+      return {
+        eligible: true,
+        level: "high",
+        message: "✅ Félicitations ! Votre profil correspond à nos critères d'éligibilité.",
+        details: "Selon notre analyse, vous avez d'excellentes chances d'être admissible à l'immigration canadienne. Nous vous recommandons de poursuivre votre démarche avec un conseiller en immigration."
+      };
+    }
+    
+    if (results.some(result => result.level === "medium")) {
+      return {
+        eligible: true,
+        level: "medium",
+        message: "⚠️ Éligibilité possible. Votre profil présente un potentiel intéressant.",
+        details: "Notre évaluation préliminaire indique que vous pourriez être admissible à l'immigration canadienne, mais certains aspects de votre profil nécessitent une analyse plus approfondie par un expert."
+      };
+    }
+    
+    return {
+      eligible: false,
+      level: "low",
+      message: "ℹ️ Faible chance d'éligibilité avec votre profil actuel.",
+      details: "Votre profil actuel pourrait ne pas correspondre entièrement aux critères d'admissibilité, mais d'autres options peuvent être envisageables. Un conseiller pourrait vous suggérer des alternatives ou des moyens d'améliorer votre candidature."
+    };
+  };
+
+  const getStatusBadgeClass = (level: "high" | "medium" | "low") => {
+    switch (level) {
+      case "high":
+        return "bg-green-100 text-green-800";
+      case "medium":
+        return "bg-yellow-100 text-yellow-800";
+      case "low":
+        return "bg-blue-100 text-blue-800";
+      default:
+        return "bg-gray-100 text-gray-800";
+    }
+  };
+
+  const getStatusText = (level: "high" | "medium" | "low") => {
+    switch (level) {
+      case "high":
+        return "Excellente éligibilité";
+      case "medium":
+        return "Éligibilité possible";
+      case "low":
+        return "Potentiel à développer";
+      default:
+        return "Indéterminé";
+    }
   };
 
   return (
@@ -98,237 +503,266 @@ const TestEligibility = () => {
       
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-            <div className="lg:col-span-1">
-              <SectionTitle 
-                title="Pourquoi faire le test ?" 
-                subtitle="Une première étape essentielle dans votre parcours d'immigration"
-              />
-              
-              <div className="space-y-6 text-gray-600">
-                <p>
-                  Notre test d'éligibilité gratuit vous permet d'obtenir une première évaluation 
-                  de vos chances d'immigrer au Canada selon votre profil.
-                </p>
-                <div className="bg-secondary/10 p-4 rounded-lg">
-                  <h3 className="font-semibold text-gray-900 mb-2">Ce que vous obtiendrez :</h3>
-                  <ul className="space-y-2">
-                    <li className="flex items-start">
-                      <div className="mr-2 mt-1 h-1.5 w-1.5 rounded-full bg-secondary"></div>
-                      <span>Une évaluation préliminaire de votre éligibilité</span>
-                    </li>
-                    <li className="flex items-start">
-                      <div className="mr-2 mt-1 h-1.5 w-1.5 rounded-full bg-secondary"></div>
-                      <span>Une première indication de vos chances d'immigration</span>
-                    </li>
-                    <li className="flex items-start">
-                      <div className="mr-2 mt-1 h-1.5 w-1.5 rounded-full bg-secondary"></div>
-                      <span>Des conseils personnalisés pour améliorer votre profil</span>
-                    </li>
-                    <li className="flex items-start">
-                      <div className="mr-2 mt-1 h-1.5 w-1.5 rounded-full bg-secondary"></div>
-                      <span>Une idée des prochaines étapes à suivre</span>
-                    </li>
-                  </ul>
-                </div>
-                <p>
-                  Notre équipe d'experts analysera votre profil et vous contactera pour vous présenter les résultats 
-                  et discuter des options qui s'offrent à vous.
-                </p>
-                <div className="bg-primary/10 p-4 rounded-lg">
-                  <h3 className="font-semibold text-gray-900 mb-2">Protection de vos données :</h3>
-                  <p className="text-sm">
-                    Les informations que vous partagez sont confidentielles et ne seront utilisées que pour évaluer 
-                    votre éligibilité et vous contacter avec les résultats de notre analyse.
-                  </p>
-                </div>
+          <div className="w-full max-w-3xl mx-auto immigration-evaluation-container">
+            <div className="mb-8">
+              <div className="flex justify-between items-center">
+                {[1, 2, 3, 4].map((step) => (
+                  <div key={step} className="flex flex-col items-center">
+                    <div
+                      className={`w-10 h-10 rounded-full flex items-center justify-center mb-2 ${
+                        step === currentStep
+                          ? "bg-secondary text-white"
+                          : step < currentStep
+                          ? "bg-green-500 text-white"
+                          : "bg-gray-200 text-gray-500"
+                      }`}
+                    >
+                      {step < currentStep ? "✓" : step}
+                    </div>
+                    <div className="text-xs text-gray-500">
+                      {step === 1
+                        ? "Profil"
+                        : step === 2
+                        ? "Projet"
+                        : step === 3
+                        ? "Contact"
+                        : "Résultat"}
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="w-full bg-gray-200 h-1 mt-4 rounded-full">
+                <div
+                  className="bg-secondary h-1 rounded-full transition-all duration-300"
+                  style={{ width: `${((currentStep - 1) / 3) * 100}%` }}
+                ></div>
               </div>
             </div>
-            
-            <div className="lg:col-span-2">
-              <Card className="overflow-hidden">
-                {!showResults ? (
-                  <>
-                    <CardHeader>
-                      <CardTitle>Test d'éligibilité gratuit</CardTitle>
-                      <CardDescription>
-                        Répondez à ces quelques questions pour évaluer votre potentiel d'immigration
-                      </CardDescription>
-                    </CardHeader>
-                    <form onSubmit={handleSubmit}>
-                      <CardContent className="space-y-6">
-                        <div className="space-y-2">
-                          <Label htmlFor="age">Quel est votre âge ?</Label>
-                          <Input 
-                            id="age" 
-                            name="age" 
-                            type="number"
-                            placeholder="Entrez votre âge"
-                            value={formData.age}
-                            onChange={handleChange}
-                            required
-                          />
+
+            <form onSubmit={handleSubmit} className="space-y-8">
+              {currentStep === 1 && (
+                <div className="space-y-8 animate-fade-in">
+                  <h2 className="text-2xl font-semibold mb-6">Informations personnelles</h2>
+                  
+                  <div className="space-y-4">
+                    <h3 className="text-lg font-medium">Âge (Sélectionner une tranche d'âge)</h3>
+                    <RadioGroup value={formData.age} onValueChange={(value) => handleSingleOptionChange("age", value)} className="grid gap-3">
+                      {ageOptions.map((option) => (
+                        <div key={option.id} className="flex items-center space-x-2">
+                          <RadioGroupItem id={option.id} value={option.value} />
+                          <Label htmlFor={option.id}>{option.label}</Label>
                         </div>
-                        
-                        <div className="space-y-2">
-                          <Label htmlFor="education">Quel est votre niveau d'éducation le plus élevé ?</Label>
-                          <Select 
-                            value={formData.education} 
-                            onValueChange={(value) => handleSelectChange("education", value)}
-                            required
-                          >
-                            <SelectTrigger id="education" name="education">
-                              <SelectValue placeholder="Sélectionnez votre niveau" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="none">Aucun diplôme formel</SelectItem>
-                              <SelectItem value="secondary">Diplôme secondaire</SelectItem>
-                              <SelectItem value="diploma">Diplôme post-secondaire</SelectItem>
-                              <SelectItem value="bachelor">Baccalauréat</SelectItem>
-                              <SelectItem value="master">Maîtrise</SelectItem>
-                              <SelectItem value="phd">Doctorat</SelectItem>
-                            </SelectContent>
-                          </Select>
+                      ))}
+                    </RadioGroup>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <h3 className="text-lg font-medium">Niveau d'études</h3>
+                    <RadioGroup value={formData.education} onValueChange={(value) => handleSingleOptionChange("education", value)} className="grid gap-3">
+                      {educationOptions.map((option) => (
+                        <div key={option.id} className="flex items-center space-x-2">
+                          <RadioGroupItem id={option.id} value={option.value} />
+                          <Label htmlFor={option.id}>{option.label}</Label>
                         </div>
-                        
-                        <div className="space-y-2">
-                          <Label htmlFor="experience">Combien d'années d'expérience professionnelle possédez-vous ?</Label>
-                          <Select 
-                            value={formData.experience} 
-                            onValueChange={(value) => handleSelectChange("experience", value)}
-                            required
-                          >
-                            <SelectTrigger id="experience" name="experience">
-                              <SelectValue placeholder="Sélectionnez votre expérience" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="none">Aucune expérience</SelectItem>
-                              <SelectItem value="less_than_one">Moins d'un an</SelectItem>
-                              <SelectItem value="one_to_three">1 à 3 ans</SelectItem>
-                              <SelectItem value="three_to_five">3 à 5 ans</SelectItem>
-                              <SelectItem value="more_than_five">Plus de 5 ans</SelectItem>
-                            </SelectContent>
-                          </Select>
+                      ))}
+                    </RadioGroup>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <h3 className="text-lg font-medium">Expérience professionnelle</h3>
+                    <RadioGroup value={formData.experience} onValueChange={(value) => handleSingleOptionChange("experience", value)} className="grid gap-3">
+                      {experienceOptions.map((option) => (
+                        <div key={option.id} className="flex items-center space-x-2">
+                          <RadioGroupItem id={option.id} value={option.value} />
+                          <Label htmlFor={option.id}>{option.label}</Label>
                         </div>
-                        
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          <div className="space-y-2">
-                            <Label htmlFor="language">Quelle langue maîtrisez-vous le mieux ?</Label>
-                            <Select 
-                              value={formData.language} 
-                              onValueChange={(value) => handleSelectChange("language", value)}
-                              required
-                            >
-                              <SelectTrigger id="language" name="language">
-                                <SelectValue placeholder="Sélectionnez une langue" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="english">Anglais</SelectItem>
-                                <SelectItem value="french">Français</SelectItem>
-                                <SelectItem value="both">Les deux</SelectItem>
-                              </SelectContent>
-                            </Select>
+                      ))}
+                    </RadioGroup>
+                  </div>
+                  
+                  <div className="space-y-6">
+                    <h3 className="text-lg font-medium">Compétences linguistiques</h3>
+                    
+                    <div className="bg-blue-50 rounded-lg p-4 space-y-4">
+                      <h4 className="font-medium text-blue-800">Français</h4>
+                      <RadioGroup value={formData.frenchLevel} onValueChange={(value) => handleSingleOptionChange("frenchLevel", value)} className="grid gap-3">
+                        {frenchLevelOptions.map((option) => (
+                          <div key={option.id} className="flex items-center space-x-2">
+                            <RadioGroupItem id={option.id} value={option.value} />
+                            <Label htmlFor={option.id}>{option.label}</Label>
                           </div>
-                          <div className="space-y-2">
-                            <Label htmlFor="languageLevel">Quel est votre niveau ?</Label>
-                            <Select 
-                              value={formData.languageLevel} 
-                              onValueChange={(value) => handleSelectChange("languageLevel", value)}
-                              required
-                            >
-                              <SelectTrigger id="languageLevel" name="languageLevel">
-                                <SelectValue placeholder="Sélectionnez votre niveau" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="beginner">Débutant</SelectItem>
-                                <SelectItem value="intermediate">Intermédiaire</SelectItem>
-                                <SelectItem value="advanced">Avancé</SelectItem>
-                                <SelectItem value="fluent">Courant</SelectItem>
-                              </SelectContent>
-                            </Select>
+                        ))}
+                      </RadioGroup>
+                    </div>
+                    
+                    <div className="bg-red-50 rounded-lg p-4 space-y-4">
+                      <h4 className="font-medium text-red-800">Anglais</h4>
+                      <RadioGroup value={formData.englishLevel} onValueChange={(value) => handleSingleOptionChange("englishLevel", value)} className="grid gap-3">
+                        {englishLevelOptions.map((option) => (
+                          <div key={option.id} className="flex items-center space-x-2">
+                            <RadioGroupItem id={option.id} value={option.value} />
+                            <Label htmlFor={option.id}>{option.label}</Label>
                           </div>
+                        ))}
+                      </RadioGroup>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {currentStep === 2 && (
+                <div className="space-y-8 animate-fade-in">
+                  <h2 className="text-2xl font-semibold mb-6">Votre projet d'immigration</h2>
+                  
+                  <div className="space-y-4">
+                    <h3 className="text-lg font-medium">Votre projet au Canada</h3>
+                    <RadioGroup value={formData.canadaProject} onValueChange={(value) => handleSingleOptionChange("canadaProject", value)} className="grid gap-3">
+                      {projectOptions.map((option) => (
+                        <div key={option.id} className="flex items-center space-x-2">
+                          <RadioGroupItem id={option.id} value={option.value} />
+                          <Label htmlFor={option.id}>{option.label}</Label>
                         </div>
-                        
-                        <div className="space-y-2">
-                          <Label htmlFor="goals">Quels sont vos objectifs en venant au Canada ?</Label>
-                          <Textarea 
-                            id="goals" 
-                            name="goals" 
-                            placeholder="Décrivez brièvement pourquoi vous souhaitez venir au Canada (travail, études, famille, etc.)"
-                            rows={3}
-                            value={formData.goals}
-                            onChange={handleChange}
-                            required
-                          />
+                      ))}
+                    </RadioGroup>
+                  </div>
+
+                  <div className="space-y-4">
+                    <h3 className="text-lg font-medium">Avez-vous des liens familiaux au Canada ?</h3>
+                    <RadioGroup value={formData.familyTies} onValueChange={(value) => handleSingleOptionChange("familyTies", value)} className="grid gap-3">
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem id="family-yes" value="yes" />
+                        <Label htmlFor="family-yes">Oui (famille directe: parents, frères/sœurs, enfants)</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem id="family-no" value="no" />
+                        <Label htmlFor="family-no">Non</Label>
+                      </div>
+                    </RadioGroup>
+                  </div>
+                </div>
+              )}
+
+              {currentStep === 3 && (
+                <div className="space-y-8 animate-fade-in">
+                  <h2 className="text-2xl font-semibold mb-6">Vos coordonnées</h2>
+                  
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="name">Nom complet</Label>
+                      <Input
+                        id="name"
+                        value={formData.name}
+                        onChange={(e) => handleTextChange("name", e.target.value)}
+                        placeholder="Entrez votre nom complet"
+                      />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label htmlFor="email">Adresse email</Label>
+                      <Input
+                        id="email"
+                        type="email"
+                        value={formData.email}
+                        onChange={(e) => handleTextChange("email", e.target.value)}
+                        placeholder="votre@email.com"
+                      />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label htmlFor="phone">Numéro de téléphone</Label>
+                      <Input
+                        id="phone"
+                        type="tel"
+                        value={formData.phone}
+                        onChange={(e) => handleTextChange("phone", e.target.value)}
+                        placeholder="+33 6 12 34 56 78"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                    <p className="text-sm text-blue-800">
+                      En soumettant ce formulaire, vous acceptez d'être contacté par notre équipe pour une analyse plus approfondie de votre situation.
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {currentStep === 4 && (
+                <div className="space-y-8 animate-fade-in">
+                  <div className="text-center mb-6">
+                    {globalEligibilityResult ? (
+                      <>
+                        <div className={`inline-flex items-center justify-center p-2 px-4 rounded-full ${getStatusBadgeClass(globalEligibilityResult.level)}`}>
+                          {getStatusText(globalEligibilityResult.level)}
                         </div>
-                      </CardContent>
-                      <CardFooter>
-                        <Button 
-                          type="submit" 
-                          disabled={isSubmitting} 
-                          className="w-full bg-secondary hover:bg-secondary/90"
-                        >
-                          {isSubmitting ? "Analyse en cours..." : "Évaluer mon éligibilité"}
-                        </Button>
-                      </CardFooter>
-                    </form>
-                  </>
-                ) : (
-                  <>
-                    <CardHeader>
-                      <CardTitle className="text-center">Résultat de votre évaluation</CardTitle>
-                      <div className="flex justify-center my-6">
-                        <div className="w-16 h-16 bg-secondary/20 rounded-full flex items-center justify-center">
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                          </svg>
+                        <h2 className="text-2xl font-semibold mt-4 mb-2">{globalEligibilityResult.message}</h2>
+                        <p className="text-gray-600">{globalEligibilityResult.details}</p>
+                      </>
+                    ) : (
+                      <>
+                        <div className="flex items-center justify-center mb-4">
+                          <div className="w-12 h-12 border-t-4 border-b-4 border-primary rounded-full animate-spin"></div>
                         </div>
-                      </div>
-                    </CardHeader>
-                    <CardContent className="space-y-6">
-                      <div className="bg-secondary/10 p-4 rounded-lg">
-                        <p className="text-gray-800">{eligibilityResult}</p>
-                      </div>
-                      
-                      <div className="bg-gray-50 p-4 rounded-lg">
-                        <h3 className="font-semibold text-gray-800 mb-3">Prochaines étapes suggérées :</h3>
-                        <ul className="space-y-3">
-                          <li className="flex items-start">
-                            <div className="mr-3 mt-1 h-1.5 w-1.5 rounded-full bg-secondary"></div>
-                            <span>Prenez rendez-vous avec l'un de nos conseillers en immigration pour une évaluation complète</span>
+                        <h2 className="text-xl font-medium">Évaluation en cours...</h2>
+                        <p className="text-sm text-gray-500 mt-2">
+                          Veuillez patienter pendant que nous analysons votre profil
+                        </p>
+                      </>
+                    )}
+                  </div>
+
+                  {globalEligibilityResult && (
+                    <div className="space-y-6">
+                      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                        <h3 className="text-lg font-medium mb-4">Prochaines étapes recommandées</h3>
+                        <ol className="list-decimal pl-5 space-y-3">
+                          <li className="pl-2">
+                            <span className="font-medium">Consultation personnalisée</span> - Prenez rendez-vous avec l'un de nos conseillers en immigration pour une analyse approfondie de votre profil.
                           </li>
-                          <li className="flex items-start">
-                            <div className="mr-3 mt-1 h-1.5 w-1.5 rounded-full bg-secondary"></div>
-                            <span>Rassemblez vos documents essentiels (diplômes, certificats de langue, expérience de travail)</span>
+                          <li className="pl-2">
+                            <span className="font-medium">Préparation du dossier</span> - Commencez à rassembler les documents nécessaires pour votre demande d'immigration.
                           </li>
-                          <li className="flex items-start">
-                            <div className="mr-3 mt-1 h-1.5 w-1.5 rounded-full bg-secondary"></div>
-                            <span>Explorez nos ressources gratuites pour vous préparer à votre projet d'immigration</span>
+                          <li className="pl-2">
+                            <span className="font-medium">Plan d'action</span> - Nous vous aiderons à élaborer un plan d'action sur mesure pour maximiser vos chances.
                           </li>
-                        </ul>
+                        </ol>
                       </div>
-                    </CardContent>
-                    <CardFooter>
-                      <div className="w-full space-y-4">
-                        <Button 
-                          onClick={resetForm}
-                          variant="outline" 
-                          className="w-full"
-                        >
-                          Recommencer le test
+
+                      <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                        <Button onClick={resetForm} variant="outline">
+                          Refaire l'évaluation
                         </Button>
-                        <Button 
-                          className="w-full bg-secondary hover:bg-secondary/90" 
-                          asChild
-                        >
-                          <a href="/contact">Contacter un conseiller</a>
+                        <Button onClick={() => handleNavigation("/contact")}>
+                          Prendre rendez-vous
                         </Button>
                       </div>
-                    </CardFooter>
-                  </>
-                )}
-              </Card>
-            </div>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {currentStep < 4 && (
+                <div className="flex justify-between mt-8">
+                  {currentStep > 1 ? (
+                    <Button type="button" variant="outline" onClick={handlePrevStep}>
+                      Précédent
+                    </Button>
+                  ) : (
+                    <div></div>
+                  )}
+                  {currentStep < 3 ? (
+                    <Button type="button" onClick={handleNextStep}>
+                      Suivant
+                    </Button>
+                  ) : currentStep === 3 ? (
+                    <Button type="submit">
+                      Évaluer mon admissibilité
+                    </Button>
+                  ) : null}
+                </div>
+              )}
+            </form>
           </div>
         </div>
       </section>
